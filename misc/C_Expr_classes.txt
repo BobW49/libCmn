@@ -1,0 +1,80 @@
+# genEnum --prefix=C_Expr --name=Class --files misc/C_Expr_classes.txt
+# Note - The first 32 entries match NODE_CLASSES found in Node.h
+#	 and the empty lines must be kept as is. Do NOT edit the
+#	 first 32 lines! The first entry after the blank lines 
+#	 must be number 32 when generated.
+UNKNOWN
+ROOT
+ANY,"?"
+KLEENE,"*"
+INTEGER
+STRING
+OPEN,"("
+CLOSE,")"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ADD,"Bin Op +"
+AND,"Bin Op &"
+EQ,"Bin Op =="
+CON_INT,"Integer Constant"
+CON_BOOL,"Boolean Constant"
+CON_CHAR,"Character Constant"
+CON_REAL,"Real Constant"
+CON_STRING,"Real Constant"
+DEC_POST,"Unary Op value--"
+DEC_PRE,"Unary Op --value"
+DIV,"Bin Op /"
+EOL,"End-of-Line"
+EXPR_BOOL
+EXPR_INT
+EXPR_REAL
+GE,"Bin Op >="
+GT,"Bin Op >"
+INC_POST,"Unary Op value++"
+INC_PRE,"Unary Op ++value"
+LE,"Bin Op <="
+LOG_AND,"Bin Op &&"
+LOG_NOT,"Unary Op !"
+LOG_OR,"Bin Op ||"
+LT,"Bin Op <"
+MOD,"Bin Op %"
+MUL,"Bin Op *"
+NE,"Bin Op !="
+NEG,"Unary Op -"
+NOT,"Unary Op ~"
+OR,"Bin Op |"
+PAREN_LEFT,"("
+PAREN_RIGHT,")"
+PLUS,"Unary Op +"
+PTR,"Bin Op ->"
+SHIFT_LEFT,"Bin Op <<"
+SHIFT_RIGHT,"Bin Op >>"
+SUB,"Bin Op -"
+SYM_BOOL,"Boolean Variable Symbol"
+SYM_INT,"Integer Variable Symbol"
+SYM_REAL,"Real Variable Symbol"
+SYM_REL,"Relative Variable Symbol"
+SYM_UNK,"Unknown Symbol"
+XOR,"Bin Op ^"

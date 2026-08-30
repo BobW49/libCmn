@@ -1,0 +1,146 @@
+To wrap your existing C W32Str object in Cython for use in Python, we'll create a Cython extension that exposes the C structs and functions as Python classes/methods. This allows you to call your C methods from Python while keeping the internals hidden, maintaining your Objective-C-like design.
+
+### Prerequisites
+- Compile your C code (e.g., W32Str.c, W32Str_object.c, W32Str_json.c) into a static library (e.g., libw32str.a) using gcc:
+  ```bash
+  gcc -c -fPIC W32Str.c W32Str_object.c W32Str_json.c -o libw32str.o
+  ar rcs libw32str.a libw32str.o
+  ```
+- Include all necessary headers (e.g., cmn_defs.h, AStr.h, etc.) in your build path.
+
+### Cython Wrapper Code
+Create two files: `w32str.pxd` (C declarations) and `w32str.pyx` (Python wrapper).
+
+#### w32str.pxd (C Declarations)
+This declares the C structs and functions from your headers.
+
+```cython
+# distutils: language = c
+# cython: language_level=3
+
+from libc.stdint cimport uint32_t
+from libc.stdlib cimport malloc, free
+
+cdef extern from "cmn_defs.h":
+    pass  # Include common definitions if needed
+
+cdef extern from "W32Str.h":
+    ctypedef struct W32STR_DATA:
+        pass  # Opaque struct to hide internals
+
+    ctypedef struct W32STR_VTBL:
+        pass  # Opaque vtbl
+
+    W32STR_DATA* W32Str_Alloc()
+    void W32Str_Dealloc(W32STR_DATA* this)
+    W32STR_DATA* W32Str_New()
+    W32STR_DATA* W32Str_NewA(const char* pStrA)
+    W32STR_DATA* W32Str_NewAStr(AStr_DATA* pStr)
+    W32STR_DATA* W32Str_NewLen(const W32CHR_T* pData, uint32_t len)
+    W32STR_DATA* W32Str_NewUtf8(const char* pStrA)
+    W32STR_DATA* W32Str_NewW32(const W32CHR_T* pStrW32)
+    W32STR_DATA* W32Str_NewW32Len(const W32CHR_T* pStrW32, uint32_t len)
+    W32STR_DATA* W32Str_Copy(W32STR_DATA* this)
+    ERESULT W32Str_AppendData(W32STR_DATA* this, const W32CHR_T* pData, uint32_t len)
+    ERESULT W32Str_AppendStr(W32STR_DATA* this, W32STR_DATA* pOther)
+    ERESULT W32Str_AppendW32(W32STR_DATA* this, W32CHR_T chr)
+    int32_t W32Str_Compare(W32STR_DATA* this, W32STR_DATA* pOther)
+    ERESULT W32Str_DeleteFirstChar(W32STR_DATA* this)
+    ERESULT W32Str_DeleteLastChar(W32STR_DATA* this)
+    const W32CHR_T* W32Str_getData(W32STR_DATA* this)
+    uint32_t W32Str_getLength(W32STR_DATA* this)
+    uint32_t W32Str_getSize(W32STR_DATA* this)
+    ERESULT W32Str_InsertData(W32STR_DATA* this, uint32_t offset, const W32CHR_T* pData, uint32_t len)
+    ERESULT W32Str_InsertW32(W32STR_DATA* this, uint32_t offset, W32CHR_T chr)
+    ERESULT W32Str_Lower(W32STR_DATA* this)
+    ERESULT W32Str_RemoveData(W32STR_DATA* this, uint32_t offset, uint32_t len)
+    ERESULT W32Str_SetData(W32STR_DATA* this, const W32CHR_T* pData, uint32_t len)
+    ERESULT W32Str_Truncate(W32STR_DATA* this, uint32_t len)
+    ERESULT W32Str_Upper(W32STR_DATA* this)
+    # Add more functions from W32Str.h as needed, e.g., parsing methods
+
+# Include other headers if needed (e.g., for AStr, array, etc.)
+cdef extern from "AStr.h":
+    typedef struct ASTR_DATA:
+        pass
+
+    ASTR_DATA* AStr_NewFromUtf8(const char* pStrA)
+
+# Add declarations from W32Str_json.c if JSON support is needed
+cdef extern from "W32Str_json.c":
+    ASTR_DATA* W32Str_ToJson(W32STR_DATA* this)
+```
+
+#### w32str.pyx (Python Wrapper)
+This wraps the C object in a Python class, simulating your Objective-C style with methods.
+
+```cython
+# distutils: language = c
+# cython: language_level=3
+
+cimport w32str  # Import the .pxd declarations
+
+cdef class LexJ:
+    cdef w32str.W32STR_DATA* c_this
+    # ... (your existing LexJ code, but replace Python string handling with calls to c_this methods)
+
+    def __cinit__(self, source, tab_size=4):
+        self.c_this = w32str.W32Str_NewUtf8(source.encode('utf-8'))
+        if self.c_this == NULL:
+            raise MemoryError("Failed to allocate W32Str")
+
+    def __deinit__(self):
+        if self.c_this != NULL:
+            w32str.W32Str_Dealloc(self.c_this)
+            self.c_this = NULL
+
+    def get_length(self):
+        return w32str.W32Str_getLength(self.c_this)
+
+    def append(self, str):
+        w32str.W32Str_AppendStr(self.c_this, w32str.W32Str_NewUtf8(str.encode('utf-8')))
+
+    # Add wrappers for other methods, e.g., parse_number
+    def parse_number(self):
+        # Call your C Lex_ParseNumber, adapting parameters
+        return w32str.Lex_ParseNumber(self.c_this, ...)
+
+    # Property example
+    @property
+    def data(self):
+        # Convert C data to Python string
+        c_data = w32str.W32Str_getData(self.c_this)
+        return c_data.decode('utf-32')  # Adjust encoding if needed
+```
+
+### setup.py (Build Script)
+To build the Cython module:
+
+```python
+from setuptools import Extension, setup
+from Cython.Build import cythonize
+
+extensions = [
+    Extension(
+        "w32str",
+        sources=["w32str.pyx", "W32Str.c", "W32Str_object.c", "W32Str_json.c"],  # Add your C files
+        libraries=[],  # Add libw32str.a if separate
+        include_dirs=["."],  # Path to headers
+        extra_compile_args=["-O3"],  # Optimization
+    )
+]
+
+setup(
+    ext_modules=cythonize(extensions, language_level="3"),
+)
+```
+
+Run `python setup.py build_ext --inplace` to build. Then import in Python: `from w32str import LexJ`.
+
+### Notes
+- **Internals Hidden**: The `PyToken` wrapper exposes methods like your Objective-C style, keeping internals hidden.
+- **Memory Management**: Use `__cinit__` and `__dealloc__` to manage C memory.
+- **Parsing Methods**: Adapt `Lex_ParseNumber`, `Lex_ParseChrCon` by declaring them in .pxd and calling from .pyx.
+- **Testing**: Test the wrapper with your `hjson_lexj_test.py` to ensure C methods work in Python.
+
+If you share specific C structs/functions (e.g., LEX_DATA, Lex_ParseNumber signature), I can refine the examples. Let me know the next step! 😊

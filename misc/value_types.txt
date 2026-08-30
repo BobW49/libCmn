@@ -1,0 +1,25 @@
+# genEnum --prefix=Value --name=Type --files misc/value_type.txt
+UNKNOWN
+ASTR,"String Object"           
+DOUBLE
+FALSE,"False Object"
+INT8
+INT16
+INT32
+INT64
+UINT8
+UINT16
+UINT32
+UINT64
+MONEY64,"Money64 Object"
+NODE,"Node Object"
+NULL,"Null Object"
+OBJECT,"Generic Object"
+TRUE,"True Object"
+STR,"UTF-8 String"
+SYM,"Sym Object"
+DATA,"In-memory Data, not freed at release"
+DATA_FREE,"In-memory Data, freed at release"
+* *** End of Base Types ***
+HIGHEST
+

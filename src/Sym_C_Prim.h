@@ -1,0 +1,58 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+
+
+	/* The following enum was generated from:
+	 * "sym_c_prim.txt"
+	 * If you want to change this enum, you
+	 * should alter the above file and
+	 * regenerate using genEnum!
+	 */
+
+	typedef enum Sym_C_Prim_e {
+		SYM_C_PRIM_UNKNOWN=0,
+		SYM_C_PRIM_CODE_PTR=1,                             // Label in Code Segment
+		SYM_C_PRIM_FUNC_PTR=2,                             // Subroutine Entry in Code Segment
+		SYM_C_PRIM_CHAR=3,
+		SYM_C_PRIM_CHAR_PTR=4,
+		SYM_C_PRIM_SCHAR=5,
+		SYM_C_PRIM_SCHAR_PTR=6,
+		SYM_C_PRIM_UCHAR=7,
+		SYM_C_PRIM_UCHAR_PTR=8,
+		SYM_C_PRIM_SHORT=9,
+		SYM_C_PRIM_SHORT_PTR=10,
+		SYM_C_PRIM_SSHORT=11,
+		SYM_C_PRIM_SSHORT_PTR=12,
+		SYM_C_PRIM_USHORT=13,
+		SYM_C_PRIM_USHORT_PTR=14,
+		SYM_C_PRIM_INT=15,
+		SYM_C_PRIM_INT_PTR=16,
+		SYM_C_PRIM_SINT=17,
+		SYM_C_PRIM_SINT_PTR=18,
+		SYM_C_PRIM_UINT=19,
+		SYM_C_PRIM_UINT_PTR=20,
+		SYM_C_PRIM_LONG=21,
+		SYM_C_PRIM_LONG_PTR=22,
+		SYM_C_PRIM_SLONG=23,
+		SYM_C_PRIM_SLONG_PTR=24,
+		SYM_C_PRIM_ULONG=25,
+		SYM_C_PRIM_ULONG_PTR=26,
+		SYM_C_PRIM_LONGLONG=27,
+		SYM_C_PRIM_LONGLONG_PTR=28,
+		SYM_C_PRIM_SLONGLONG=29,
+		SYM_C_PRIM_SLONGLONG_PTR=30,
+		SYM_C_PRIM_ULONGLONG=31,
+		SYM_C_PRIM_ULONGLONG_PTR=32,
+		SYM_C_PRIM_VOID=33,
+		SYM_C_PRIM_VOID_PTR=34,
+		SYM_C_PRIM_ENUM=35,
+		SYM_C_PRIM_ENUM_PTR=36,
+		SYM_C_PRIM_STRUCT=37,
+		SYM_C_PRIM_STRUCT_PTR=38,
+		SYM_C_PRIM_UNION=39,
+		SYM_C_PRIM_UNION_PTR=40,
+		SYM_C_PRIM_MACRO=41,
+	} SYM_C_PRIMS;
+
+
+
+

@@ -1,0 +1,297 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+/* 
+ * File:   BlkdRcds16_internal.h
+ *  Generated 09/18/2021 09:48:13
+ *
+ * Notes:
+ *  --  N/A
+ *
+ */
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+#include        <BlkdRcds16.h>
+#include        <JsonIn.h>
+
+
+#ifndef BLKDRCDS16_INTERNAL_H
+#define BLKDRCDS16_INTERNAL_H
+
+
+
+
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
+
+
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+    typedef struct index_record_s {
+        uint16_t        idxSize;        // Size of Data including this header
+    } INDEX_RECORD;
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+
+
+    //                      Main Control Block
+    /* This control block resides at the beginning of block and is
+     * the information necessary to access the block data. The block
+     * size is limited to 32,768.
+     * The block index immediately follows the DATA_BLOCK and builds towards
+     * the data. The data is added at the top of the block towards the
+     * index. The reserved area is just above the data or at the end of block.
+     * WARNING -- Only use offsets, NO pointers/addresses within the block!
+     */
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+    typedef struct data_block_s {
+        uint16_t        cbSize;         // Total Size of BLock including this header
+#define DATA_BLOCK_MAX_SIZE 0xFFFF
+        uint16_t        unusedSize;     // Amount of Data Unused between Index and
+        //                              // data records
+        uint16_t        rsvdSize;       // Reserved amount at Top of Block
+        uint16_t        numRecords;
+        INDEX_RECORD    index[0];       // Index
+    } DATA_BLOCK;
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //                  Object Data Description
+    //---------------------------------------------------------------
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+struct BlkdRcds16_data_s  {
+    /* Warning - OBJ_DATA must be first in this object!
+     */
+    OBJ_DATA        super;
+    OBJ_IUNKNOWN    *pSuperVtbl;    // Needed for Inheritance
+#define BLOCK_ALLOC     OBJ_FLAG_USER1
+
+    // Common Data
+    // NOTE: All variables should be kept within the block so that
+    //      the block can be read from disk and simply set into this
+    //      object.
+    DATA_BLOCK      *pBlock;
+
+};
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+    extern
+    struct BlkdRcds16_class_data_s  BlkdRcds16_ClassObj;
+
+    extern
+    const
+    BLKDRCDS16_VTBL         BlkdRcds16_Vtbl;
+
+
+
+    //---------------------------------------------------------------
+    //              Class Object Method Forward Definitions
+    //---------------------------------------------------------------
+
+#ifdef  BLKDRCDS16_SINGLETON
+    BLKDRCDS16_DATA * BlkdRcds16_getSingleton (
+        void
+    );
+
+    bool            BlkdRcds16_setSingleton (
+     BLKDRCDS16_DATA       *pValue
+);
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //              Internal Method Forward Definitions
+    //---------------------------------------------------------------
+
+    uint16_t        BlkdRcds16_getBlockSize (
+        BLKDRCDS16_DATA *this
+    );
+
+    bool            BlkdRcds16_setBlockSize (
+        BLKDRCDS16_DATA *this,
+        uint16_t        value
+    );
+
+
+    uint16_t        BlkdRcds16_getNumRecords (
+        BLKDRCDS16_DATA *this
+    );
+
+    bool            BlkdRcds16_setNumRecords (
+        BLKDRCDS16_DATA *this,
+        uint16_t        value
+    );
+
+
+    uint16_t        BlkdRcds16_getReservedSize (
+        BLKDRCDS16_DATA *this
+    );
+
+    bool            BlkdRcds16_setReservedSize (
+        BLKDRCDS16_DATA *this,
+        uint16_t        value
+    );
+
+
+    uint16_t        BlkdRcds16_getUnused (
+        BLKDRCDS16_DATA *this
+    );
+
+    bool            BlkdRcds16_setUnused (
+        BLKDRCDS16_DATA *this,
+        uint16_t        value
+    );
+
+
+    OBJ_IUNKNOWN *  BlkdRcds16_getSuperVtbl (
+        BLKDRCDS16_DATA *this
+    );
+
+
+    ERESULT         BlkdRcds16_Assign (
+        BLKDRCDS16_DATA *this,
+        BLKDRCDS16_DATA *pOther
+    );
+
+
+    /*!
+    Initialize the supplied block.
+    @param     pBlock       block pointer
+    @param     blockSize    siae of data block required, 0 == Free current block and
+                            return without allocating a new one.
+    @param     rsvdSize     size of the supplied data area (can be 0)
+    @return    If successful, ERESULT_SUCCESS. An ERESULT_* error code.
+    */
+    ERESULT         BlkdRcds16_BlockInit (
+        uint8_t         *pBlock,
+        uint16_t        blockSize,
+        uint16_t        rsvdSize
+    );
+
+
+    BLKDRCDS16_DATA * BlkdRcds16_Copy (
+        BLKDRCDS16_DATA *this
+    );
+
+
+    /*!
+     Point to a Data Record in the buffer.
+     @param     this    object pointer
+     @param     index   record index (relative to 1)
+     @return    If successful, data record address in block and optionally its size;
+                otherwise, NULL.
+     */
+    void *          BlkdRcds16_DataAddr (
+        BLKDRCDS16_DATA *this,
+        uint32_t        index
+    );
+
+
+    /*!
+     Get a Data Record's offset within the data area. Normally, you would
+     supply both the index (relative to 1) and the record size. However,
+     if you supply 0 for the index and a record size, then the offset returned
+     will be for a first record with that record size. If you supply 1 for
+     the index and 0 for the record size, you will get the offset for the
+     first record.
+     @param     this        object pointer
+     @param     index       record index (relative to 1), 0 assumes first record
+     @param     recordSize  optional record size for a new record
+     @return    If successful, data record address in block and optionally its size;
+                otherwise, NULL.
+     */
+    uint16_t        BlkdRcds16_DataOffset (
+        BLKDRCDS16_DATA *this,
+        uint16_t        index,
+        uint16_t        recordSize
+    );
+
+
+    void            BlkdRcds16_Dealloc (
+        OBJ_ID          objId
+    );
+
+
+    BLKDRCDS16_DATA * BlkdRcds16_DeepCopy (
+        BLKDRCDS16_DATA *this
+    );
+
+
+    void *          BlkdRcds16_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    );
+
+
+    uint16_t        BlkdRcds16_RecordGetOffset (
+        BLKDRCDS16_DATA *this,
+        uint16_t        index
+    );
+
+
+
+
+#ifdef NDEBUG
+#else
+    bool            BlkdRcds16_Validate (
+        BLKDRCDS16_DATA       *this
+    );
+#endif
+
+
+
+#ifdef  __cplusplus
+}
+#endif
+
+#endif  /* BLKDRCDS16_INTERNAL_H */
+

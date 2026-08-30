@@ -1,0 +1,25 @@
+# genEnum --prefix=Sym --name=Phy_Prim --files misc/sym_phy_prim.txt
+        UNKNOWN
+	LABEL,"Label in Code"
+	SUBR,"Subroutine in Code"
+        CHAR,
+        SCHAR,"Signed Character"
+        UCHAR,"Unsigned Character"
+        HALF
+        SHALF,"Signed Half-Word"
+        UHALF,"Unsigned Half-Word"
+        WORD
+        SWORD,"Signed Word"
+        UWORD,"Unsigned Word"
+        DBLWORD
+        SDBLWORD,"Signed Double-Word"
+        UDBLWORD,"Unsigned Double-Word"
+        QUAD
+        SQUAD,"Signed Quad-Word"
+        UQUAD,"Unsigned Quad-Word"
+        VOID
+        POINTER
+	REGISTER
+	REGISTER_DOUBLE
+	STRUCT
+	UNION

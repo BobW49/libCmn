@@ -1,0 +1,12 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+The object of ??? is to be able to ???.
+
+The program has the following classes for performing certain jobs:
+    
+    "Main" inherits from "Appl" and provides the command line interface to the 
+    program.  "Appl" also provides a Dictionary of Data/Properties if needed.
+
+                             |
+                            
+

@@ -1,0 +1,14 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+
+{
+    program:{
+        name:"as",
+        deps:["Cmn"],
+        hdrs:["Main_defs.h"]
+        main:"mainProgram.c"
+    },
+    "objects":[
+        //{name:"ClassFile",  desc:"Class File Generation"},
+        {name:"Main"},
+    ],
+}

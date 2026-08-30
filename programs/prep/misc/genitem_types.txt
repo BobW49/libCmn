@@ -1,0 +1,4 @@
+# genEnum --prefix=GenItem --name=type --files misc/genitem_types.txt
+        object
+	enum
+        property

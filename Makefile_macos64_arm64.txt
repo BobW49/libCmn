@@ -1,0 +1,3254 @@
+# Generated file - Edits will be discarded by next file generation!
+# vi:nu:sts=4 ts=4 sw=4
+# ( 8/29/2026 15:13:38.000)
+
+.DEFAULT_GOAL := all
+SHELL=/bin/sh
+
+LIBNAM=libCmn
+SYS=macos64
+ARCH=arm64
+BUILD=./.build
+BASE_OBJ = $(BUILD)/$(LIBNAM)/$(SYS)/$(ARCH)
+SRCDIR = ./src
+TEST_SRC = ./tests
+INSTALL_BASE = $(HOME)/lib/$(SYS)/$(ARCH)
+LIB_BASE = $(HOME)/lib/$(SYS)/$(ARCH)
+
+CFLAGS += -g -Werror -mmacosx-version-min=13.0 -I$(SRCDIR)
+ifdef  NDEBUG
+CFLAGS += -DNDEBUG
+else   #DEBUG
+CFLAGS += -D_DEBUG
+endif  #NDEBUG
+CFLAGS += -D__MACOS64_ENV__
+CFLAGS_LIBS = 
+CFLAGS_TEST = -I$(TEST_SRC) $(CFLAGS_LIBS) -lcurses -lsqlite3
+
+INSTALL_DIR = $(INSTALL_BASE)/$(LIBNAM)
+LIB_DIR = $(BASE_OBJ)
+LIBOBJ = $(BASE_OBJ)/$(LIBNAM)
+ifdef  NDEBUG
+LIB_FILENAME=$(LIBNAM)R.a
+OBJDIR = $(LIBOBJ)/o/r
+else   #DEBUG
+LIB_FILENAME=$(LIBNAM)D.a
+OBJDIR = $(LIBOBJ)/o/d
+endif  #NDEBUG
+TEST_OBJ = $(OBJDIR)/obj
+TEST_BIN = $(OBJDIR)/bin
+LIB_PATH = $(LIBOBJ)/$(LIB_FILENAME)
+
+.SUFFIXES:
+.SUFFIXES: .asm .c .cpp .o
+
+OBJS =
+
+TESTS =
+
+
+
+
+
+
+#------------------------------------------------
+#         Compile Objects and Routines
+#------------------------------------------------
+
+
+OBJS += $(OBJDIR)/AStr.o
+
+$(OBJDIR)/AStr.o: $(SRCDIR)/AStr.c $(SRCDIR)/AStr.h $(SRCDIR)/AStr_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrArray.o
+
+$(OBJDIR)/AStrArray.o: $(SRCDIR)/AStrArray.c $(SRCDIR)/AStr.h $(SRCDIR)/AStrArray.h $(SRCDIR)/AStrArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrArray_json.o
+
+$(OBJDIR)/AStrArray_json.o: $(SRCDIR)/AStrArray_json.c $(SRCDIR)/AStrArray.h $(SRCDIR)/AStrArray_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrArray_object.o
+
+$(OBJDIR)/AStrArray_object.o: $(SRCDIR)/AStrArray_object.c $(SRCDIR)/AStr.h $(SRCDIR)/AStrArray.h $(SRCDIR)/AStrArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrC.o
+
+$(OBJDIR)/AStrC.o: $(SRCDIR)/AStrC.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrCArray.o
+
+$(OBJDIR)/AStrCArray.o: $(SRCDIR)/AStrCArray.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrCArray.h $(SRCDIR)/AStrCArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrCArray_object.o
+
+$(OBJDIR)/AStrCArray_object.o: $(SRCDIR)/AStrCArray_object.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrCArray.h $(SRCDIR)/AStrCArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrCReader.o
+
+$(OBJDIR)/AStrCReader.o: $(SRCDIR)/AStrCReader.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrCReader.h $(SRCDIR)/AStrCReader_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrCReader_object.o
+
+$(OBJDIR)/AStrCReader_object.o: $(SRCDIR)/AStrCReader_object.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrCReader.h $(SRCDIR)/AStrCReader_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStrC_object.o
+
+$(OBJDIR)/AStrC_object.o: $(SRCDIR)/AStrC_object.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStr_json.o
+
+$(OBJDIR)/AStr_json.o: $(SRCDIR)/AStr_json.c $(SRCDIR)/AStr.h $(SRCDIR)/AStr_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AStr_object.o
+
+$(OBJDIR)/AStr_object.o: $(SRCDIR)/AStr_object.c $(SRCDIR)/AStr.h $(SRCDIR)/AStr_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ansi.o
+
+$(OBJDIR)/Ansi.o: $(SRCDIR)/Ansi.c $(SRCDIR)/Ansi.h $(SRCDIR)/Ansi_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ansi_object.o
+
+$(OBJDIR)/Ansi_object.o: $(SRCDIR)/Ansi_object.c $(SRCDIR)/Ansi.h $(SRCDIR)/Ansi_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Appl.o
+
+$(OBJDIR)/Appl.o: $(SRCDIR)/Appl.c $(SRCDIR)/Appl.h $(SRCDIR)/Appl_internal.h $(SRCDIR)/CmdUtl.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Appl_json.o
+
+$(OBJDIR)/Appl_json.o: $(SRCDIR)/Appl_json.c $(SRCDIR)/Appl.h $(SRCDIR)/Appl_internal.h $(SRCDIR)/CmdUtl.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Appl_object.o
+
+$(OBJDIR)/Appl_object.o: $(SRCDIR)/Appl_object.c $(SRCDIR)/Appl.h $(SRCDIR)/Appl_internal.h $(SRCDIR)/CmdUtl.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ast.o
+
+$(OBJDIR)/Ast.o: $(SRCDIR)/Ast.c $(SRCDIR)/Ast.h $(SRCDIR)/Ast_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AstScan.o
+
+$(OBJDIR)/AstScan.o: $(SRCDIR)/AstScan.c $(SRCDIR)/AstScan.h $(SRCDIR)/AstScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AstScan_object.o
+
+$(OBJDIR)/AstScan_object.o: $(SRCDIR)/AstScan_object.c $(SRCDIR)/AstScan.h $(SRCDIR)/AstScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ast_object.o
+
+$(OBJDIR)/Ast_object.o: $(SRCDIR)/Ast_object.c $(SRCDIR)/Ast.h $(SRCDIR)/Ast_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AudioCW.o
+
+$(OBJDIR)/AudioCW.o: $(SRCDIR)/AudioCW.c $(SRCDIR)/AStr.h $(SRCDIR)/AudioCW.h $(SRCDIR)/AudioCW_internal.h $(SRCDIR)/audioWAV.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AudioCW_object.o
+
+$(OBJDIR)/AudioCW_object.o: $(SRCDIR)/AudioCW_object.c $(SRCDIR)/AStr.h $(SRCDIR)/AudioCW.h $(SRCDIR)/AudioCW_internal.h $(SRCDIR)/audioWAV.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AudioWAV.o
+
+$(OBJDIR)/AudioWAV.o: $(SRCDIR)/AudioWAV.c $(SRCDIR)/AStr.h $(SRCDIR)/AudioWAV.h $(SRCDIR)/AudioWAV_internal.h $(SRCDIR)/fbso.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/AudioWAV_object.o
+
+$(OBJDIR)/AudioWAV_object.o: $(SRCDIR)/AudioWAV_object.c $(SRCDIR)/AStr.h $(SRCDIR)/AudioWAV.h $(SRCDIR)/AudioWAV_internal.h $(SRCDIR)/fbso.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Base64.o
+
+$(OBJDIR)/Base64.o: $(SRCDIR)/Base64.c $(SRCDIR)/Base64.h $(SRCDIR)/Base64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Base64_object.o
+
+$(OBJDIR)/Base64_object.o: $(SRCDIR)/Base64_object.c $(SRCDIR)/Base64.h $(SRCDIR)/Base64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BitMatrix.o
+
+$(OBJDIR)/BitMatrix.o: $(SRCDIR)/BitMatrix.c $(SRCDIR)/AStr.h $(SRCDIR)/BitMatrix.h $(SRCDIR)/BitMatrix_internal.h $(SRCDIR)/BitSet.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BitMatrix_json.o
+
+$(OBJDIR)/BitMatrix_json.o: $(SRCDIR)/BitMatrix_json.c $(SRCDIR)/BitMatrix.h $(SRCDIR)/BitMatrix_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/BitSet.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BitMatrix_object.o
+
+$(OBJDIR)/BitMatrix_object.o: $(SRCDIR)/BitMatrix_object.c $(SRCDIR)/AStr.h $(SRCDIR)/BitMatrix.h $(SRCDIR)/BitMatrix_internal.h $(SRCDIR)/BitSet.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BitSet.o
+
+$(OBJDIR)/BitSet.o: $(SRCDIR)/BitSet.c $(SRCDIR)/BitSet.h $(SRCDIR)/BitSet_internal.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BitSet_object.o
+
+$(OBJDIR)/BitSet_object.o: $(SRCDIR)/BitSet_object.c $(SRCDIR)/BitSet.h $(SRCDIR)/BitSet_internal.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlkdRcds16.o
+
+$(OBJDIR)/BlkdRcds16.o: $(SRCDIR)/BlkdRcds16.c $(SRCDIR)/BlkdRcds16.h $(SRCDIR)/BlkdRcds16_internal.h $(SRCDIR)/Endian.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlkdRcds16_object.o
+
+$(OBJDIR)/BlkdRcds16_object.o: $(SRCDIR)/BlkdRcds16_object.c $(SRCDIR)/BlkdRcds16.h $(SRCDIR)/BlkdRcds16_internal.h $(SRCDIR)/Endian.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlockF16.o
+
+$(OBJDIR)/BlockF16.o: $(SRCDIR)/BlockF16.c $(SRCDIR)/BlockF16.h $(SRCDIR)/BlockF16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlockF16_object.o
+
+$(OBJDIR)/BlockF16_object.o: $(SRCDIR)/BlockF16_object.c $(SRCDIR)/BlockF16.h $(SRCDIR)/BlockF16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlockV16.o
+
+$(OBJDIR)/BlockV16.o: $(SRCDIR)/BlockV16.c $(SRCDIR)/BlockV16.h $(SRCDIR)/BlockV16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/BlockV16_object.o
+
+$(OBJDIR)/BlockV16_object.o: $(SRCDIR)/BlockV16_object.c $(SRCDIR)/BlockV16.h $(SRCDIR)/BlockV16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Blocks.o
+
+$(OBJDIR)/Blocks.o: $(SRCDIR)/Blocks.c $(SRCDIR)/Blocks.h $(SRCDIR)/Blocks_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Blocks_object.o
+
+$(OBJDIR)/Blocks_object.o: $(SRCDIR)/Blocks_object.c $(SRCDIR)/Blocks.h $(SRCDIR)/Blocks_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ChkSumMD5.o
+
+$(OBJDIR)/ChkSumMD5.o: $(SRCDIR)/ChkSumMD5.c $(SRCDIR)/ChkSumMD5.h $(SRCDIR)/ChkSumMD5_internal.h $(SRCDIR)/md5.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ChkSumMD5_json.o
+
+$(OBJDIR)/ChkSumMD5_json.o: $(SRCDIR)/ChkSumMD5_json.c $(SRCDIR)/ChkSumMD5.h $(SRCDIR)/ChkSumMD5_internal.h $(SRCDIR)/md5.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ChkSumMD5_object.o
+
+$(OBJDIR)/ChkSumMD5_object.o: $(SRCDIR)/ChkSumMD5_object.c $(SRCDIR)/ChkSumMD5.h $(SRCDIR)/ChkSumMD5_internal.h $(SRCDIR)/md5.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Cmd.o
+
+$(OBJDIR)/Cmd.o: $(SRCDIR)/Cmd.c $(SRCDIR)/Cmd.h $(SRCDIR)/Cmd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CmdUtl.o
+
+$(OBJDIR)/CmdUtl.o: $(SRCDIR)/CmdUtl.c $(SRCDIR)/CmdUtl.h $(SRCDIR)/CmdUtl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CmdUtl_object.o
+
+$(OBJDIR)/CmdUtl_object.o: $(SRCDIR)/CmdUtl_object.c $(SRCDIR)/CmdUtl.h $(SRCDIR)/CmdUtl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Cmd_object.o
+
+$(OBJDIR)/Cmd_object.o: $(SRCDIR)/Cmd_object.c $(SRCDIR)/Cmd.h $(SRCDIR)/Cmd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Cmds.o
+
+$(OBJDIR)/Cmds.o: $(SRCDIR)/Cmds.c $(SRCDIR)/Cmds.h $(SRCDIR)/Cmds_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Cmds_object.o
+
+$(OBJDIR)/Cmds_object.o: $(SRCDIR)/Cmds_object.c $(SRCDIR)/Cmds.h $(SRCDIR)/Cmds_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Compiler.o
+
+$(OBJDIR)/Compiler.o: $(SRCDIR)/Compiler.c $(SRCDIR)/Compiler.h $(SRCDIR)/Compiler_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Compiler_object.o
+
+$(OBJDIR)/Compiler_object.o: $(SRCDIR)/Compiler_object.c $(SRCDIR)/Compiler.h $(SRCDIR)/Compiler_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CsvFile.o
+
+$(OBJDIR)/CsvFile.o: $(SRCDIR)/CsvFile.c $(SRCDIR)/CsvFile.h $(SRCDIR)/CsvFile_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/srcFile.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CsvFile_object.o
+
+$(OBJDIR)/CsvFile_object.o: $(SRCDIR)/CsvFile_object.c $(SRCDIR)/CsvFile.h $(SRCDIR)/CsvFile_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/srcFile.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CsvRcd.o
+
+$(OBJDIR)/CsvRcd.o: $(SRCDIR)/CsvRcd.c $(SRCDIR)/CsvRcd.h $(SRCDIR)/CsvRcd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/CsvRcd_object.o
+
+$(OBJDIR)/CsvRcd_object.o: $(SRCDIR)/CsvRcd_object.c $(SRCDIR)/CsvRcd.h $(SRCDIR)/CsvRcd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Dir.o
+
+$(OBJDIR)/Dir.o: $(SRCDIR)/Dir.c $(SRCDIR)/Dir.h $(SRCDIR)/Dir_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/Path.h $(SRCDIR)/dirEntry.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/DirEntry.o
+
+$(OBJDIR)/DirEntry.o: $(SRCDIR)/DirEntry.c $(SRCDIR)/DirEntry.h $(SRCDIR)/DirEntry_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/DirEntry_json.o
+
+$(OBJDIR)/DirEntry_json.o: $(SRCDIR)/DirEntry_json.c $(SRCDIR)/DirEntry.h $(SRCDIR)/DirEntry_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/DirEntry_object.o
+
+$(OBJDIR)/DirEntry_object.o: $(SRCDIR)/DirEntry_object.c $(SRCDIR)/DirEntry.h $(SRCDIR)/DirEntry_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Dir_json.o
+
+$(OBJDIR)/Dir_json.o: $(SRCDIR)/Dir_json.c $(SRCDIR)/Dir.h $(SRCDIR)/Dir_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/Path.h $(SRCDIR)/dirEntry.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Dir_object.o
+
+$(OBJDIR)/Dir_object.o: $(SRCDIR)/Dir_object.c $(SRCDIR)/Dir.h $(SRCDIR)/Dir_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/Path.h $(SRCDIR)/dirEntry.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ebcdic.o
+
+$(OBJDIR)/Ebcdic.o: $(SRCDIR)/Ebcdic.c $(SRCDIR)/Ebcdic.h $(SRCDIR)/Ebcdic_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Ebcdic_object.o
+
+$(OBJDIR)/Ebcdic_object.o: $(SRCDIR)/Ebcdic_object.c $(SRCDIR)/Ebcdic.h $(SRCDIR)/Ebcdic_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Endian.o
+
+$(OBJDIR)/Endian.o: $(SRCDIR)/Endian.c $(SRCDIR)/Endian.h $(SRCDIR)/Endian_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Endian_object.o
+
+$(OBJDIR)/Endian_object.o: $(SRCDIR)/Endian_object.c $(SRCDIR)/Endian.h $(SRCDIR)/Endian_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Enum.o
+
+$(OBJDIR)/Enum.o: $(SRCDIR)/Enum.c $(SRCDIR)/Enum.h $(SRCDIR)/Enum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Enum_object.o
+
+$(OBJDIR)/Enum_object.o: $(SRCDIR)/Enum_object.c $(SRCDIR)/Enum.h $(SRCDIR)/Enum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Expr.o
+
+$(OBJDIR)/Expr.o: $(SRCDIR)/Expr.c $(SRCDIR)/Expr.h $(SRCDIR)/Expr_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Expr2Ast.o
+
+$(OBJDIR)/Expr2Ast.o: $(SRCDIR)/Expr2Ast.c $(SRCDIR)/Ast.h $(SRCDIR)/Expr2Ast.h $(SRCDIR)/Expr2Ast_internal.h $(SRCDIR)/ptrArray.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Expr2Ast_object.o
+
+$(OBJDIR)/Expr2Ast_object.o: $(SRCDIR)/Expr2Ast_object.c $(SRCDIR)/Ast.h $(SRCDIR)/Expr2Ast.h $(SRCDIR)/Expr2Ast_internal.h $(SRCDIR)/ptrArray.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Expr_object.o
+
+$(OBJDIR)/Expr_object.o: $(SRCDIR)/Expr_object.c $(SRCDIR)/Expr.h $(SRCDIR)/Expr_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/False.o
+
+$(OBJDIR)/False.o: $(SRCDIR)/False.c $(SRCDIR)/False.h $(SRCDIR)/False_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/False_json.o
+
+$(OBJDIR)/False_json.o: $(SRCDIR)/False_json.c $(SRCDIR)/False.h $(SRCDIR)/False_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/False_object.o
+
+$(OBJDIR)/False_object.o: $(SRCDIR)/False_object.c $(SRCDIR)/False.h $(SRCDIR)/False_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/File.o
+
+$(OBJDIR)/File.o: $(SRCDIR)/File.c $(SRCDIR)/File.h $(SRCDIR)/File_internal.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/FileIO.o
+
+$(OBJDIR)/FileIO.o: $(SRCDIR)/FileIO.c $(SRCDIR)/FileIO.h $(SRCDIR)/FileIO_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/FileIO_object.o
+
+$(OBJDIR)/FileIO_object.o: $(SRCDIR)/FileIO_object.c $(SRCDIR)/FileIO.h $(SRCDIR)/FileIO_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/FileRef.o
+
+$(OBJDIR)/FileRef.o: $(SRCDIR)/FileRef.c $(SRCDIR)/AStrC.h $(SRCDIR)/FileRef.h $(SRCDIR)/FileRef_internal.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/FileRef_object.o
+
+$(OBJDIR)/FileRef_object.o: $(SRCDIR)/FileRef_object.c $(SRCDIR)/AStrC.h $(SRCDIR)/FileRef.h $(SRCDIR)/FileRef_internal.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/File_object.o
+
+$(OBJDIR)/File_object.o: $(SRCDIR)/File_object.c $(SRCDIR)/File.h $(SRCDIR)/File_internal.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/HtmlOut.o
+
+$(OBJDIR)/HtmlOut.o: $(SRCDIR)/HtmlOut.c $(SRCDIR)/HtmlOut.h $(SRCDIR)/HtmlOut_internal.h $(SRCDIR)/TextOut.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/HtmlOut_object.o
+
+$(OBJDIR)/HtmlOut_object.o: $(SRCDIR)/HtmlOut_object.c $(SRCDIR)/HtmlOut.h $(SRCDIR)/HtmlOut_internal.h $(SRCDIR)/TextOut.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Array.o
+
+$(OBJDIR)/I16Array.o: $(SRCDIR)/I16Array.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Array_json.o
+
+$(OBJDIR)/I16Array_json.o: $(SRCDIR)/I16Array_json.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Array_object.o
+
+$(OBJDIR)/I16Array_object.o: $(SRCDIR)/I16Array_object.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Matrix.o
+
+$(OBJDIR)/I16Matrix.o: $(SRCDIR)/I16Matrix.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Matrix.h $(SRCDIR)/I16Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Matrix_json.o
+
+$(OBJDIR)/I16Matrix_json.o: $(SRCDIR)/I16Matrix_json.c $(SRCDIR)/I16Matrix.h $(SRCDIR)/I16Matrix_internal.h $(SRCDIR)/I16Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I16Matrix_object.o
+
+$(OBJDIR)/I16Matrix_object.o: $(SRCDIR)/I16Matrix_object.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Matrix.h $(SRCDIR)/I16Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Array.o
+
+$(OBJDIR)/I32Array.o: $(SRCDIR)/I32Array.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Array_json.o
+
+$(OBJDIR)/I32Array_json.o: $(SRCDIR)/I32Array_json.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Array_object.o
+
+$(OBJDIR)/I32Array_object.o: $(SRCDIR)/I32Array_object.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Matrix.o
+
+$(OBJDIR)/I32Matrix.o: $(SRCDIR)/I32Matrix.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Matrix.h $(SRCDIR)/I32Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Matrix_json.o
+
+$(OBJDIR)/I32Matrix_json.o: $(SRCDIR)/I32Matrix_json.c $(SRCDIR)/I32Matrix.h $(SRCDIR)/I32Matrix_internal.h $(SRCDIR)/I32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/I32Matrix_object.o
+
+$(OBJDIR)/I32Matrix_object.o: $(SRCDIR)/I32Matrix_object.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Matrix.h $(SRCDIR)/I32Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/IntLock.o
+
+$(OBJDIR)/IntLock.o: $(SRCDIR)/IntLock.c $(SRCDIR)/IntLock.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonIn.o
+
+$(OBJDIR)/JsonIn.o: $(SRCDIR)/JsonIn.c $(SRCDIR)/JsonIn.h $(SRCDIR)/JsonIn_internal.h $(SRCDIR)/LexJ.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonIn_object.o
+
+$(OBJDIR)/JsonIn_object.o: $(SRCDIR)/JsonIn_object.c $(SRCDIR)/JsonIn.h $(SRCDIR)/JsonIn_internal.h $(SRCDIR)/LexJ.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonOut.o
+
+$(OBJDIR)/JsonOut.o: $(SRCDIR)/JsonOut.c $(SRCDIR)/JsonOut.h $(SRCDIR)/JsonOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonOut_object.o
+
+$(OBJDIR)/JsonOut_object.o: $(SRCDIR)/JsonOut_object.c $(SRCDIR)/JsonOut.h $(SRCDIR)/JsonOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonPP.o
+
+$(OBJDIR)/JsonPP.o: $(SRCDIR)/JsonPP.c $(SRCDIR)/JsonPP.h $(SRCDIR)/JsonPP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/JsonPP_object.o
+
+$(OBJDIR)/JsonPP_object.o: $(SRCDIR)/JsonPP_object.c $(SRCDIR)/JsonPP.h $(SRCDIR)/JsonPP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LAScan.o
+
+$(OBJDIR)/LAScan.o: $(SRCDIR)/LAScan.c $(SRCDIR)/LAScan.h $(SRCDIR)/LAScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LAScan_object.o
+
+$(OBJDIR)/LAScan_object.o: $(SRCDIR)/LAScan_object.c $(SRCDIR)/LAScan.h $(SRCDIR)/LAScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Lex.o
+
+$(OBJDIR)/Lex.o: $(SRCDIR)/Lex.c $(SRCDIR)/Lex.h $(SRCDIR)/Lex_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Lex01.o
+
+$(OBJDIR)/Lex01.o: $(SRCDIR)/Lex01.c $(SRCDIR)/Lex.h $(SRCDIR)/Lex01.h $(SRCDIR)/Lex01_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Lex01_object.o
+
+$(OBJDIR)/Lex01_object.o: $(SRCDIR)/Lex01_object.c $(SRCDIR)/Lex.h $(SRCDIR)/Lex01.h $(SRCDIR)/Lex01_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexC.o
+
+$(OBJDIR)/LexC.o: $(SRCDIR)/LexC.c $(SRCDIR)/Lex.h $(SRCDIR)/LexC.h $(SRCDIR)/LexC_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexC_object.o
+
+$(OBJDIR)/LexC_object.o: $(SRCDIR)/LexC_object.c $(SRCDIR)/Lex.h $(SRCDIR)/LexC.h $(SRCDIR)/LexC_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexJ.o
+
+$(OBJDIR)/LexJ.o: $(SRCDIR)/LexJ.c $(SRCDIR)/Lex.h $(SRCDIR)/LexJ.h $(SRCDIR)/LexJ_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexJ_object.o
+
+$(OBJDIR)/LexJ_object.o: $(SRCDIR)/LexJ_object.c $(SRCDIR)/Lex.h $(SRCDIR)/LexJ.h $(SRCDIR)/LexJ_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexKW.o
+
+$(OBJDIR)/LexKW.o: $(SRCDIR)/LexKW.c $(SRCDIR)/Lex.h $(SRCDIR)/LexKW.h $(SRCDIR)/LexKW_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexKW_object.o
+
+$(OBJDIR)/LexKW_object.o: $(SRCDIR)/LexKW_object.c $(SRCDIR)/Lex.h $(SRCDIR)/LexKW.h $(SRCDIR)/LexKW_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexTri.o
+
+$(OBJDIR)/LexTri.o: $(SRCDIR)/LexTri.c $(SRCDIR)/Lex.h $(SRCDIR)/LexTri.h $(SRCDIR)/LexTri_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LexTri_object.o
+
+$(OBJDIR)/LexTri_object.o: $(SRCDIR)/LexTri_object.c $(SRCDIR)/Lex.h $(SRCDIR)/LexTri.h $(SRCDIR)/LexTri_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Lex_object.o
+
+$(OBJDIR)/Lex_object.o: $(SRCDIR)/Lex_object.c $(SRCDIR)/Lex.h $(SRCDIR)/Lex_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LineIn.o
+
+$(OBJDIR)/LineIn.o: $(SRCDIR)/LineIn.c $(SRCDIR)/FileIO.h $(SRCDIR)/LineIn.h $(SRCDIR)/LineIn_internal.h $(SRCDIR)/LineIndex.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LineIn_object.o
+
+$(OBJDIR)/LineIn_object.o: $(SRCDIR)/LineIn_object.c $(SRCDIR)/FileIO.h $(SRCDIR)/LineIn.h $(SRCDIR)/LineIn_internal.h $(SRCDIR)/LineIndex.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LineIndex.o
+
+$(OBJDIR)/LineIndex.o: $(SRCDIR)/LineIndex.c $(SRCDIR)/LineIndex.h $(SRCDIR)/LineIndex_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LineIndex_json.o
+
+$(OBJDIR)/LineIndex_json.o: $(SRCDIR)/LineIndex_json.c $(SRCDIR)/LineIndex.h $(SRCDIR)/LineIndex_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/LineIndex_object.o
+
+$(OBJDIR)/LineIndex_object.o: $(SRCDIR)/LineIndex_object.c $(SRCDIR)/LineIndex.h $(SRCDIR)/LineIndex_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ListDL32.o
+
+$(OBJDIR)/ListDL32.o: $(SRCDIR)/ListDL32.c $(SRCDIR)/ListDL32.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Log.o
+
+$(OBJDIR)/Log.o: $(SRCDIR)/Log.c $(SRCDIR)/Appl.h $(SRCDIR)/FileIO.h $(SRCDIR)/Log.h $(SRCDIR)/Log_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Log_object.o
+
+$(OBJDIR)/Log_object.o: $(SRCDIR)/Log_object.c $(SRCDIR)/Appl.h $(SRCDIR)/FileIO.h $(SRCDIR)/Log.h $(SRCDIR)/Log_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Misc.o
+
+$(OBJDIR)/Misc.o: $(SRCDIR)/Misc.c $(SRCDIR)/Misc.h $(SRCDIR)/Misc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Misc_object.o
+
+$(OBJDIR)/Misc_object.o: $(SRCDIR)/Misc_object.c $(SRCDIR)/Misc.h $(SRCDIR)/Misc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Money64.o
+
+$(OBJDIR)/Money64.o: $(SRCDIR)/Money64.c $(SRCDIR)/Money64.h $(SRCDIR)/Money64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Money64_json.o
+
+$(OBJDIR)/Money64_json.o: $(SRCDIR)/Money64_json.c $(SRCDIR)/Money64.h $(SRCDIR)/Money64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Money64_object.o
+
+$(OBJDIR)/Money64_object.o: $(SRCDIR)/Money64_object.c $(SRCDIR)/Money64.h $(SRCDIR)/Money64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/MsgData.o
+
+$(OBJDIR)/MsgData.o: $(SRCDIR)/MsgData.c $(SRCDIR)/MsgData.h $(SRCDIR)/MsgData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/MsgData_json.o
+
+$(OBJDIR)/MsgData_json.o: $(SRCDIR)/MsgData_json.c $(SRCDIR)/MsgData.h $(SRCDIR)/MsgData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/MsgData_object.o
+
+$(OBJDIR)/MsgData_object.o: $(SRCDIR)/MsgData_object.c $(SRCDIR)/MsgData.h $(SRCDIR)/MsgData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Name.o
+
+$(OBJDIR)/Name.o: $(SRCDIR)/Name.c $(SRCDIR)/Name.h $(SRCDIR)/Name_internal.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Name_json.o
+
+$(OBJDIR)/Name_json.o: $(SRCDIR)/Name_json.c $(SRCDIR)/Name.h $(SRCDIR)/Name_internal.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Name_object.o
+
+$(OBJDIR)/Name_object.o: $(SRCDIR)/Name_object.c $(SRCDIR)/Name.h $(SRCDIR)/Name_internal.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Net.o
+
+$(OBJDIR)/Net.o: $(SRCDIR)/Net.c $(SRCDIR)/Net.h $(SRCDIR)/Net_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTP.o
+
+$(OBJDIR)/NetHTTP.o: $(SRCDIR)/NetHTTP.c $(SRCDIR)/NetHTTP.h $(SRCDIR)/NetHTTP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPA.o
+
+$(OBJDIR)/NetHTTPA.o: $(SRCDIR)/NetHTTPA.c $(SRCDIR)/NetHTTPA.h $(SRCDIR)/NetHTTPA_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPA_json.o
+
+$(OBJDIR)/NetHTTPA_json.o: $(SRCDIR)/NetHTTPA_json.c $(SRCDIR)/NetHTTPA.h $(SRCDIR)/NetHTTPA_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPA_object.o
+
+$(OBJDIR)/NetHTTPA_object.o: $(SRCDIR)/NetHTTPA_object.c $(SRCDIR)/NetHTTPA.h $(SRCDIR)/NetHTTPA_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPR.o
+
+$(OBJDIR)/NetHTTPR.o: $(SRCDIR)/NetHTTPR.c $(SRCDIR)/NetHTTPR.h $(SRCDIR)/NetHTTPR_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPR_json.o
+
+$(OBJDIR)/NetHTTPR_json.o: $(SRCDIR)/NetHTTPR_json.c $(SRCDIR)/NetHTTPR.h $(SRCDIR)/NetHTTPR_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTPR_object.o
+
+$(OBJDIR)/NetHTTPR_object.o: $(SRCDIR)/NetHTTPR_object.c $(SRCDIR)/NetHTTPR.h $(SRCDIR)/NetHTTPR_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetHTTP_object.o
+
+$(OBJDIR)/NetHTTP_object.o: $(SRCDIR)/NetHTTP_object.c $(SRCDIR)/NetHTTP.h $(SRCDIR)/NetHTTP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetIO.o
+
+$(OBJDIR)/NetIO.o: $(SRCDIR)/NetIO.c $(SRCDIR)/NetIO.h $(SRCDIR)/NetIO_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetIO_object.o
+
+$(OBJDIR)/NetIO_object.o: $(SRCDIR)/NetIO_object.c $(SRCDIR)/NetIO.h $(SRCDIR)/NetIO_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetMIME.o
+
+$(OBJDIR)/NetMIME.o: $(SRCDIR)/NetMIME.c $(SRCDIR)/NetMIME.h $(SRCDIR)/NetMIME_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NetMIME_object.o
+
+$(OBJDIR)/NetMIME_object.o: $(SRCDIR)/NetMIME_object.c $(SRCDIR)/NetMIME.h $(SRCDIR)/NetMIME_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Net_object.o
+
+$(OBJDIR)/Net_object.o: $(SRCDIR)/Net_object.c $(SRCDIR)/Net.h $(SRCDIR)/Net_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Node.o
+
+$(OBJDIR)/Node.o: $(SRCDIR)/Node.c $(SRCDIR)/Name.h $(SRCDIR)/Node.h $(SRCDIR)/NodeBT.h $(SRCDIR)/Node_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeArray.o
+
+$(OBJDIR)/NodeArray.o: $(SRCDIR)/NodeArray.c $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeArray_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/node.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeArray_json.o
+
+$(OBJDIR)/NodeArray_json.o: $(SRCDIR)/NodeArray_json.c $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeArray_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/node.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeArray_object.o
+
+$(OBJDIR)/NodeArray_object.o: $(SRCDIR)/NodeArray_object.c $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeArray_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/node.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeBT.o
+
+$(OBJDIR)/NodeBT.o: $(SRCDIR)/NodeBT.c $(SRCDIR)/Node.h $(SRCDIR)/NodeBT.h $(SRCDIR)/NodeBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeBT_json.o
+
+$(OBJDIR)/NodeBT_json.o: $(SRCDIR)/NodeBT_json.c $(SRCDIR)/NodeBT.h $(SRCDIR)/NodeBT_internal.h $(SRCDIR)/Node.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeBT_object.o
+
+$(OBJDIR)/NodeBT_object.o: $(SRCDIR)/NodeBT_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeBT.h $(SRCDIR)/NodeBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeEnum.o
+
+$(OBJDIR)/NodeEnum.o: $(SRCDIR)/NodeEnum.c $(SRCDIR)/Node.h $(SRCDIR)/NodeEnum.h $(SRCDIR)/NodeEnum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeEnum_object.o
+
+$(OBJDIR)/NodeEnum_object.o: $(SRCDIR)/NodeEnum_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeEnum.h $(SRCDIR)/NodeEnum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeHash.o
+
+$(OBJDIR)/NodeHash.o: $(SRCDIR)/NodeHash.c $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeHash_json.o
+
+$(OBJDIR)/NodeHash_json.o: $(SRCDIR)/NodeHash_json.c $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeHash_internal.h $(SRCDIR)/Node.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeHash_object.o
+
+$(OBJDIR)/NodeHash_object.o: $(SRCDIR)/NodeHash_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeList.o
+
+$(OBJDIR)/NodeList.o: $(SRCDIR)/NodeList.c $(SRCDIR)/Node.h $(SRCDIR)/NodeList.h $(SRCDIR)/NodeList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeList_json.o
+
+$(OBJDIR)/NodeList_json.o: $(SRCDIR)/NodeList_json.c $(SRCDIR)/NodeList.h $(SRCDIR)/NodeList_internal.h $(SRCDIR)/Node.h $(SRCDIR)/listdl.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeList_object.o
+
+$(OBJDIR)/NodeList_object.o: $(SRCDIR)/NodeList_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeList.h $(SRCDIR)/NodeList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeScan.o
+
+$(OBJDIR)/NodeScan.o: $(SRCDIR)/NodeScan.c $(SRCDIR)/Node.h $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeScan.h $(SRCDIR)/NodeScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeScan_object.o
+
+$(OBJDIR)/NodeScan_object.o: $(SRCDIR)/NodeScan_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeScan.h $(SRCDIR)/NodeScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeTkn.o
+
+$(OBJDIR)/NodeTkn.o: $(SRCDIR)/NodeTkn.c $(SRCDIR)/NodeTkn.h $(SRCDIR)/NodeTkn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeTkn_object.o
+
+$(OBJDIR)/NodeTkn_object.o: $(SRCDIR)/NodeTkn_object.c $(SRCDIR)/NodeTkn.h $(SRCDIR)/NodeTkn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeTree.o
+
+$(OBJDIR)/NodeTree.o: $(SRCDIR)/NodeTree.c $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeTree.h $(SRCDIR)/NodeTree_internal.h $(SRCDIR)/ObjList.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeTree_json.o
+
+$(OBJDIR)/NodeTree_json.o: $(SRCDIR)/NodeTree_json.c $(SRCDIR)/NodeTree.h $(SRCDIR)/NodeTree_internal.h $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/ObjList.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/NodeTree_object.o
+
+$(OBJDIR)/NodeTree_object.o: $(SRCDIR)/NodeTree_object.c $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeTree.h $(SRCDIR)/NodeTree_internal.h $(SRCDIR)/ObjList.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Node_json.o
+
+$(OBJDIR)/Node_json.o: $(SRCDIR)/Node_json.c $(SRCDIR)/Node.h $(SRCDIR)/Node_internal.h $(SRCDIR)/Name.h $(SRCDIR)/NodeBT.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Node_object.o
+
+$(OBJDIR)/Node_object.o: $(SRCDIR)/Node_object.c $(SRCDIR)/Name.h $(SRCDIR)/Node.h $(SRCDIR)/NodeBT.h $(SRCDIR)/Node_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Null.o
+
+$(OBJDIR)/Null.o: $(SRCDIR)/Null.c $(SRCDIR)/Null.h $(SRCDIR)/Null_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Null_json.o
+
+$(OBJDIR)/Null_json.o: $(SRCDIR)/Null_json.c $(SRCDIR)/Null.h $(SRCDIR)/Null_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Null_object.o
+
+$(OBJDIR)/Null_object.o: $(SRCDIR)/Null_object.c $(SRCDIR)/Null.h $(SRCDIR)/Null_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Number.o
+
+$(OBJDIR)/Number.o: $(SRCDIR)/Number.c $(SRCDIR)/Number.h $(SRCDIR)/Number_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Number_json.o
+
+$(OBJDIR)/Number_json.o: $(SRCDIR)/Number_json.c $(SRCDIR)/Number.h $(SRCDIR)/Number_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Number_object.o
+
+$(OBJDIR)/Number_object.o: $(SRCDIR)/Number_object.c $(SRCDIR)/Number.h $(SRCDIR)/Number_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjArray.o
+
+$(OBJDIR)/ObjArray.o: $(SRCDIR)/ObjArray.c $(SRCDIR)/ObjArray.h $(SRCDIR)/ObjArray_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjArray_json.o
+
+$(OBJDIR)/ObjArray_json.o: $(SRCDIR)/ObjArray_json.c $(SRCDIR)/ObjArray.h $(SRCDIR)/ObjArray_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjArray_object.o
+
+$(OBJDIR)/ObjArray_object.o: $(SRCDIR)/ObjArray_object.c $(SRCDIR)/ObjArray.h $(SRCDIR)/ObjArray_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjBT.o
+
+$(OBJDIR)/ObjBT.o: $(SRCDIR)/ObjBT.c $(SRCDIR)/ObjBT.h $(SRCDIR)/ObjBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjBT_json.o
+
+$(OBJDIR)/ObjBT_json.o: $(SRCDIR)/ObjBT_json.c $(SRCDIR)/ObjBT.h $(SRCDIR)/ObjBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjBT_object.o
+
+$(OBJDIR)/ObjBT_object.o: $(SRCDIR)/ObjBT_object.c $(SRCDIR)/ObjBT.h $(SRCDIR)/ObjBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjCb.o
+
+$(OBJDIR)/ObjCb.o: $(SRCDIR)/ObjCb.c $(SRCDIR)/ObjCb.h $(SRCDIR)/ObjCb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjCb_object.o
+
+$(OBJDIR)/ObjCb_object.o: $(SRCDIR)/ObjCb_object.c $(SRCDIR)/ObjCb.h $(SRCDIR)/ObjCb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjEnum.o
+
+$(OBJDIR)/ObjEnum.o: $(SRCDIR)/ObjEnum.c $(SRCDIR)/ObjEnum.h $(SRCDIR)/ObjEnum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjEnum_object.o
+
+$(OBJDIR)/ObjEnum_object.o: $(SRCDIR)/ObjEnum_object.c $(SRCDIR)/ObjEnum.h $(SRCDIR)/ObjEnum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjHash.o
+
+$(OBJDIR)/ObjHash.o: $(SRCDIR)/ObjHash.c $(SRCDIR)/ObjHash.h $(SRCDIR)/ObjHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjHash_json.o
+
+$(OBJDIR)/ObjHash_json.o: $(SRCDIR)/ObjHash_json.c $(SRCDIR)/ObjHash.h $(SRCDIR)/ObjHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjHash_object.o
+
+$(OBJDIR)/ObjHash_object.o: $(SRCDIR)/ObjHash_object.c $(SRCDIR)/ObjHash.h $(SRCDIR)/ObjHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjList.o
+
+$(OBJDIR)/ObjList.o: $(SRCDIR)/ObjList.c $(SRCDIR)/ObjList.h $(SRCDIR)/ObjList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjList_json.o
+
+$(OBJDIR)/ObjList_json.o: $(SRCDIR)/ObjList_json.c $(SRCDIR)/ObjList.h $(SRCDIR)/ObjList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjList_object.o
+
+$(OBJDIR)/ObjList_object.o: $(SRCDIR)/ObjList_object.c $(SRCDIR)/ObjList.h $(SRCDIR)/ObjList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjMethod.o
+
+$(OBJDIR)/ObjMethod.o: $(SRCDIR)/ObjMethod.c $(SRCDIR)/ObjMethod.h $(SRCDIR)/ObjMethod_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjMethod_json.o
+
+$(OBJDIR)/ObjMethod_json.o: $(SRCDIR)/ObjMethod_json.c $(SRCDIR)/ObjMethod.h $(SRCDIR)/ObjMethod_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjMethod_object.o
+
+$(OBJDIR)/ObjMethod_object.o: $(SRCDIR)/ObjMethod_object.c $(SRCDIR)/ObjMethod.h $(SRCDIR)/ObjMethod_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjVLink.o
+
+$(OBJDIR)/ObjVLink.o: $(SRCDIR)/ObjVLink.c $(SRCDIR)/ObjVLink.h $(SRCDIR)/ObjVLink_internal.h $(SRCDIR)/i32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjVLink_json.o
+
+$(OBJDIR)/ObjVLink_json.o: $(SRCDIR)/ObjVLink_json.c $(SRCDIR)/ObjVLink.h $(SRCDIR)/ObjVLink_internal.h $(SRCDIR)/i32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ObjVLink_object.o
+
+$(OBJDIR)/ObjVLink_object.o: $(SRCDIR)/ObjVLink_object.c $(SRCDIR)/ObjVLink.h $(SRCDIR)/ObjVLink_internal.h $(SRCDIR)/i32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/OpPrec.o
+
+$(OBJDIR)/OpPrec.o: $(SRCDIR)/OpPrec.c $(SRCDIR)/OpPrec.h $(SRCDIR)/OpPrec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/OpPrec_object.o
+
+$(OBJDIR)/OpPrec_object.o: $(SRCDIR)/OpPrec_object.c $(SRCDIR)/OpPrec.h $(SRCDIR)/OpPrec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcode.o
+
+$(OBJDIR)/Opcode.o: $(SRCDIR)/Opcode.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcode_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcode_json.o
+
+$(OBJDIR)/Opcode_json.o: $(SRCDIR)/Opcode_json.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcode_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcode_object.o
+
+$(OBJDIR)/Opcode_object.o: $(SRCDIR)/Opcode_object.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcode_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcodes.o
+
+$(OBJDIR)/Opcodes.o: $(SRCDIR)/Opcodes.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcodes.h $(SRCDIR)/Opcodes_internal.h $(SRCDIR)/szBT.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcodes_json.o
+
+$(OBJDIR)/Opcodes_json.o: $(SRCDIR)/Opcodes_json.c $(SRCDIR)/Opcodes.h $(SRCDIR)/Opcodes_internal.h $(SRCDIR)/Opcode.h $(SRCDIR)/szBT.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Opcodes_object.o
+
+$(OBJDIR)/Opcodes_object.o: $(SRCDIR)/Opcodes_object.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcodes.h $(SRCDIR)/Opcodes_internal.h $(SRCDIR)/szBT.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Parser.o
+
+$(OBJDIR)/Parser.o: $(SRCDIR)/Parser.c $(SRCDIR)/Parser.h $(SRCDIR)/Parser_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Parser_object.o
+
+$(OBJDIR)/Parser_object.o: $(SRCDIR)/Parser_object.c $(SRCDIR)/Parser.h $(SRCDIR)/Parser_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Path.o
+
+$(OBJDIR)/Path.o: $(SRCDIR)/Path.c $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/Path_internal.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/PathArray.o
+
+$(OBJDIR)/PathArray.o: $(SRCDIR)/PathArray.c $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/PathArray.h $(SRCDIR)/PathArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/PathArray_json.o
+
+$(OBJDIR)/PathArray_json.o: $(SRCDIR)/PathArray_json.c $(SRCDIR)/PathArray.h $(SRCDIR)/PathArray_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/PathArray_object.o
+
+$(OBJDIR)/PathArray_object.o: $(SRCDIR)/PathArray_object.c $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/PathArray.h $(SRCDIR)/PathArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Path_json.o
+
+$(OBJDIR)/Path_json.o: $(SRCDIR)/Path_json.c $(SRCDIR)/Path.h $(SRCDIR)/Path_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Path_object.o
+
+$(OBJDIR)/Path_object.o: $(SRCDIR)/Path_object.c $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/Path_internal.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/PrepStrW32.o
+
+$(OBJDIR)/PrepStrW32.o: $(SRCDIR)/PrepStrW32.c $(SRCDIR)/PrepStrW32.h $(SRCDIR)/PrepStrW32_internal.h $(SRCDIR)/Scanner.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/PrepStrW32_object.o
+
+$(OBJDIR)/PrepStrW32_object.o: $(SRCDIR)/PrepStrW32_object.c $(SRCDIR)/PrepStrW32.h $(SRCDIR)/PrepStrW32_internal.h $(SRCDIR)/Scanner.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RRDS.o
+
+$(OBJDIR)/RRDS.o: $(SRCDIR)/RRDS.c $(SRCDIR)/FileIO.h $(SRCDIR)/Path.h $(SRCDIR)/RRDS.h $(SRCDIR)/RRDS_internal.h $(SRCDIR)/lru.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RRDS_object.o
+
+$(OBJDIR)/RRDS_object.o: $(SRCDIR)/RRDS_object.c $(SRCDIR)/FileIO.h $(SRCDIR)/Path.h $(SRCDIR)/RRDS.h $(SRCDIR)/RRDS_internal.h $(SRCDIR)/lru.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_BCD128.o
+
+$(OBJDIR)/RW_BCD128.o: $(SRCDIR)/RW_BCD128.c $(SRCDIR)/RW_BCD128.h $(SRCDIR)/RW_BCD128_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_BCD128_object.o
+
+$(OBJDIR)/RW_BCD128_object.o: $(SRCDIR)/RW_BCD128_object.c $(SRCDIR)/RW_BCD128.h $(SRCDIR)/RW_BCD128_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_DateTime.o
+
+$(OBJDIR)/RW_DateTime.o: $(SRCDIR)/RW_DateTime.c $(SRCDIR)/RW_DateTime.h $(SRCDIR)/RW_DateTime_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_DateTime_json.o
+
+$(OBJDIR)/RW_DateTime_json.o: $(SRCDIR)/RW_DateTime_json.c $(SRCDIR)/RW_DateTime.h $(SRCDIR)/RW_DateTime_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_DateTime_object.o
+
+$(OBJDIR)/RW_DateTime_object.o: $(SRCDIR)/RW_DateTime_object.c $(SRCDIR)/RW_DateTime.h $(SRCDIR)/RW_DateTime_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_RPG_Base.o
+
+$(OBJDIR)/RW_RPG_Base.o: $(SRCDIR)/RW_RPG_Base.c $(SRCDIR)/RW_RPG_Base.h $(SRCDIR)/RW_RPG_Base_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_RPG_Base_object.o
+
+$(OBJDIR)/RW_RPG_Base_object.o: $(SRCDIR)/RW_RPG_Base_object.c $(SRCDIR)/RW_RPG_Base.h $(SRCDIR)/RW_RPG_Base_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_RPG_Level.o
+
+$(OBJDIR)/RW_RPG_Level.o: $(SRCDIR)/RW_RPG_Level.c $(SRCDIR)/RW_RPG_Level.h $(SRCDIR)/RW_RPG_Level_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/RW_RPG_Level_object.o
+
+$(OBJDIR)/RW_RPG_Level_object.o: $(SRCDIR)/RW_RPG_Level_object.c $(SRCDIR)/RW_RPG_Level.h $(SRCDIR)/RW_RPG_Level_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SGraph.o
+
+$(OBJDIR)/SGraph.o: $(SRCDIR)/SGraph.c $(SRCDIR)/SGraph.h $(SRCDIR)/SGraph_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SGraph_object.o
+
+$(OBJDIR)/SGraph_object.o: $(SRCDIR)/SGraph_object.c $(SRCDIR)/SGraph.h $(SRCDIR)/SGraph_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLite.o
+
+$(OBJDIR)/SQLite.o: $(SRCDIR)/SQLite.c $(SRCDIR)/SQLite.h $(SRCDIR)/SQLite_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLiteCurs.o
+
+$(OBJDIR)/SQLiteCurs.o: $(SRCDIR)/SQLiteCurs.c $(SRCDIR)/SQLiteCurs.h $(SRCDIR)/SQLiteCurs_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLiteCurs_object.o
+
+$(OBJDIR)/SQLiteCurs_object.o: $(SRCDIR)/SQLiteCurs_object.c $(SRCDIR)/SQLiteCurs.h $(SRCDIR)/SQLiteCurs_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLiteStmt.o
+
+$(OBJDIR)/SQLiteStmt.o: $(SRCDIR)/SQLiteStmt.c $(SRCDIR)/SQLiteStmt.h $(SRCDIR)/SQLiteStmt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLiteStmt_object.o
+
+$(OBJDIR)/SQLiteStmt_object.o: $(SRCDIR)/SQLiteStmt_object.c $(SRCDIR)/SQLiteStmt.h $(SRCDIR)/SQLiteStmt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SQLite_object.o
+
+$(OBJDIR)/SQLite_object.o: $(SRCDIR)/SQLite_object.c $(SRCDIR)/SQLite.h $(SRCDIR)/SQLite_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Scanner.o
+
+$(OBJDIR)/Scanner.o: $(SRCDIR)/Scanner.c $(SRCDIR)/Scanner.h $(SRCDIR)/Scanner_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Scanner_json.o
+
+$(OBJDIR)/Scanner_json.o: $(SRCDIR)/Scanner_json.c $(SRCDIR)/Scanner.h $(SRCDIR)/Scanner_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Scanner_object.o
+
+$(OBJDIR)/Scanner_object.o: $(SRCDIR)/Scanner_object.c $(SRCDIR)/Scanner.h $(SRCDIR)/Scanner_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlCol.o
+
+$(OBJDIR)/SqlCol.o: $(SRCDIR)/SqlCol.c $(SRCDIR)/SqlCol.h $(SRCDIR)/SqlCol_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlCol_json.o
+
+$(OBJDIR)/SqlCol_json.o: $(SRCDIR)/SqlCol_json.c $(SRCDIR)/SqlCol.h $(SRCDIR)/SqlCol_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlCol_object.o
+
+$(OBJDIR)/SqlCol_object.o: $(SRCDIR)/SqlCol_object.c $(SRCDIR)/SqlCol.h $(SRCDIR)/SqlCol_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlRow.o
+
+$(OBJDIR)/SqlRow.o: $(SRCDIR)/SqlRow.c $(SRCDIR)/SqlRow.h $(SRCDIR)/SqlRow_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlRow_json.o
+
+$(OBJDIR)/SqlRow_json.o: $(SRCDIR)/SqlRow_json.c $(SRCDIR)/SqlRow.h $(SRCDIR)/SqlRow_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlRow_object.o
+
+$(OBJDIR)/SqlRow_object.o: $(SRCDIR)/SqlRow_object.c $(SRCDIR)/SqlRow.h $(SRCDIR)/SqlRow_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlTbl.o
+
+$(OBJDIR)/SqlTbl.o: $(SRCDIR)/SqlTbl.c $(SRCDIR)/SqlTbl.h $(SRCDIR)/SqlTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlTbl_json.o
+
+$(OBJDIR)/SqlTbl_json.o: $(SRCDIR)/SqlTbl_json.c $(SRCDIR)/SqlTbl.h $(SRCDIR)/SqlTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SqlTbl_object.o
+
+$(OBJDIR)/SqlTbl_object.o: $(SRCDIR)/SqlTbl_object.c $(SRCDIR)/SqlTbl.h $(SRCDIR)/SqlTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcDiff.o
+
+$(OBJDIR)/SrcDiff.o: $(SRCDIR)/SrcDiff.c $(SRCDIR)/SrcDiff.h $(SRCDIR)/SrcDiff_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcDiff_object.o
+
+$(OBJDIR)/SrcDiff_object.o: $(SRCDIR)/SrcDiff_object.c $(SRCDIR)/SrcDiff.h $(SRCDIR)/SrcDiff_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcError.o
+
+$(OBJDIR)/SrcError.o: $(SRCDIR)/SrcError.c $(SRCDIR)/AStr.h $(SRCDIR)/SrcError.h $(SRCDIR)/SrcError_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcError_json.o
+
+$(OBJDIR)/SrcError_json.o: $(SRCDIR)/SrcError_json.c $(SRCDIR)/SrcError.h $(SRCDIR)/SrcError_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcError_object.o
+
+$(OBJDIR)/SrcError_object.o: $(SRCDIR)/SrcError_object.c $(SRCDIR)/AStr.h $(SRCDIR)/SrcError.h $(SRCDIR)/SrcError_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcErrors.o
+
+$(OBJDIR)/SrcErrors.o: $(SRCDIR)/SrcErrors.c $(SRCDIR)/ObjArray.h $(SRCDIR)/SrcError.h $(SRCDIR)/SrcErrors.h $(SRCDIR)/SrcErrors_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcErrors_json.o
+
+$(OBJDIR)/SrcErrors_json.o: $(SRCDIR)/SrcErrors_json.c $(SRCDIR)/SrcErrors.h $(SRCDIR)/SrcErrors_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/SrcError.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcErrors_object.o
+
+$(OBJDIR)/SrcErrors_object.o: $(SRCDIR)/SrcErrors_object.c $(SRCDIR)/ObjArray.h $(SRCDIR)/SrcError.h $(SRCDIR)/SrcErrors.h $(SRCDIR)/SrcErrors_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcFile.o
+
+$(OBJDIR)/SrcFile.o: $(SRCDIR)/SrcFile.c $(SRCDIR)/Path.h $(SRCDIR)/SrcFile.h $(SRCDIR)/SrcFile_internal.h $(SRCDIR)/TextIn.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/ascii.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcFile_object.o
+
+$(OBJDIR)/SrcFile_object.o: $(SRCDIR)/SrcFile_object.c $(SRCDIR)/Path.h $(SRCDIR)/SrcFile.h $(SRCDIR)/SrcFile_internal.h $(SRCDIR)/TextIn.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/ascii.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcFiles.o
+
+$(OBJDIR)/SrcFiles.o: $(SRCDIR)/SrcFiles.c $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/SrcFile.h $(SRCDIR)/SrcFiles.h $(SRCDIR)/SrcFiles_internal.h $(SRCDIR)/Token.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcFiles_object.o
+
+$(OBJDIR)/SrcFiles_object.o: $(SRCDIR)/SrcFiles_object.c $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/SrcFile.h $(SRCDIR)/SrcFiles.h $(SRCDIR)/SrcFiles_internal.h $(SRCDIR)/Token.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcLoc.o
+
+$(OBJDIR)/SrcLoc.o: $(SRCDIR)/SrcLoc.c $(SRCDIR)/SrcLoc.h $(SRCDIR)/SrcLoc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcLoc_json.o
+
+$(OBJDIR)/SrcLoc_json.o: $(SRCDIR)/SrcLoc_json.c $(SRCDIR)/SrcLoc.h $(SRCDIR)/SrcLoc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SrcLoc_object.o
+
+$(OBJDIR)/SrcLoc_object.o: $(SRCDIR)/SrcLoc_object.c $(SRCDIR)/SrcLoc.h $(SRCDIR)/SrcLoc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Sym.o
+
+$(OBJDIR)/Sym.o: $(SRCDIR)/Sym.c $(SRCDIR)/Sym.h $(SRCDIR)/Sym_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SymList.o
+
+$(OBJDIR)/SymList.o: $(SRCDIR)/SymList.c $(SRCDIR)/SymList.h $(SRCDIR)/SymList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SymList_json.o
+
+$(OBJDIR)/SymList_json.o: $(SRCDIR)/SymList_json.c $(SRCDIR)/SymList.h $(SRCDIR)/SymList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/SymList_object.o
+
+$(OBJDIR)/SymList_object.o: $(SRCDIR)/SymList_object.c $(SRCDIR)/SymList.h $(SRCDIR)/SymList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Sym_json.o
+
+$(OBJDIR)/Sym_json.o: $(SRCDIR)/Sym_json.c $(SRCDIR)/Sym.h $(SRCDIR)/Sym_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Sym_object.o
+
+$(OBJDIR)/Sym_object.o: $(SRCDIR)/Sym_object.c $(SRCDIR)/Sym.h $(SRCDIR)/Sym_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Syms.o
+
+$(OBJDIR)/Syms.o: $(SRCDIR)/Syms.c $(SRCDIR)/ObjHash.h $(SRCDIR)/Sym.h $(SRCDIR)/Syms.h $(SRCDIR)/Syms_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Syms_json.o
+
+$(OBJDIR)/Syms_json.o: $(SRCDIR)/Syms_json.c $(SRCDIR)/Syms.h $(SRCDIR)/Syms_internal.h $(SRCDIR)/ObjHash.h $(SRCDIR)/Sym.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Syms_object.o
+
+$(OBJDIR)/Syms_object.o: $(SRCDIR)/Syms_object.c $(SRCDIR)/ObjHash.h $(SRCDIR)/Sym.h $(SRCDIR)/Syms.h $(SRCDIR)/Syms_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TRegex.o
+
+$(OBJDIR)/TRegex.o: $(SRCDIR)/TRegex.c $(SRCDIR)/TRegex.h $(SRCDIR)/TRegex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TRegex32.o
+
+$(OBJDIR)/TRegex32.o: $(SRCDIR)/TRegex32.c $(SRCDIR)/TRegex32.h $(SRCDIR)/TRegex32_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TRegex32_object.o
+
+$(OBJDIR)/TRegex32_object.o: $(SRCDIR)/TRegex32_object.c $(SRCDIR)/TRegex32.h $(SRCDIR)/TRegex32_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TRegex_object.o
+
+$(OBJDIR)/TRegex_object.o: $(SRCDIR)/TRegex_object.c $(SRCDIR)/TRegex.h $(SRCDIR)/TRegex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Test.o
+
+$(OBJDIR)/Test.o: $(SRCDIR)/Test.c $(SRCDIR)/Test.h $(SRCDIR)/Test_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Test_object.o
+
+$(OBJDIR)/Test_object.o: $(SRCDIR)/Test_object.c $(SRCDIR)/Test.h $(SRCDIR)/Test_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextIn.o
+
+$(OBJDIR)/TextIn.o: $(SRCDIR)/TextIn.c $(SRCDIR)/TextIn.h $(SRCDIR)/TextIn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextIn_object.o
+
+$(OBJDIR)/TextIn_object.o: $(SRCDIR)/TextIn_object.c $(SRCDIR)/TextIn.h $(SRCDIR)/TextIn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextIns.o
+
+$(OBJDIR)/TextIns.o: $(SRCDIR)/TextIns.c $(SRCDIR)/TextIns.h $(SRCDIR)/TextIns_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextIns_object.o
+
+$(OBJDIR)/TextIns_object.o: $(SRCDIR)/TextIns_object.c $(SRCDIR)/TextIns.h $(SRCDIR)/TextIns_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextOut.o
+
+$(OBJDIR)/TextOut.o: $(SRCDIR)/TextOut.c $(SRCDIR)/TextOut.h $(SRCDIR)/TextOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TextOut_object.o
+
+$(OBJDIR)/TextOut_object.o: $(SRCDIR)/TextOut_object.c $(SRCDIR)/TextOut.h $(SRCDIR)/TextOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Token.o
+
+$(OBJDIR)/Token.o: $(SRCDIR)/Token.c $(SRCDIR)/AStrC.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/Token.h $(SRCDIR)/Token_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TokenList.o
+
+$(OBJDIR)/TokenList.o: $(SRCDIR)/TokenList.c $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/TokenList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TokenList_json.o
+
+$(OBJDIR)/TokenList_json.o: $(SRCDIR)/TokenList_json.c $(SRCDIR)/TokenList.h $(SRCDIR)/TokenList_internal.h $(SRCDIR)/Token.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/TokenList_object.o
+
+$(OBJDIR)/TokenList_object.o: $(SRCDIR)/TokenList_object.c $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/TokenList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Token_json.o
+
+$(OBJDIR)/Token_json.o: $(SRCDIR)/Token_json.c $(SRCDIR)/Token.h $(SRCDIR)/Token_internal.h $(SRCDIR)/AStrC.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Token_object.o
+
+$(OBJDIR)/Token_object.o: $(SRCDIR)/Token_object.c $(SRCDIR)/AStrC.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/Token.h $(SRCDIR)/Token_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/True.o
+
+$(OBJDIR)/True.o: $(SRCDIR)/True.c $(SRCDIR)/True.h $(SRCDIR)/True_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/True_json.o
+
+$(OBJDIR)/True_json.o: $(SRCDIR)/True_json.c $(SRCDIR)/True.h $(SRCDIR)/True_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/True_object.o
+
+$(OBJDIR)/True_object.o: $(SRCDIR)/True_object.c $(SRCDIR)/True.h $(SRCDIR)/True_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Tuple16.o
+
+$(OBJDIR)/Tuple16.o: $(SRCDIR)/Tuple16.c $(SRCDIR)/Tuple16.h $(SRCDIR)/Tuple16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Tuple16_object.o
+
+$(OBJDIR)/Tuple16_object.o: $(SRCDIR)/Tuple16_object.c $(SRCDIR)/Tuple16.h $(SRCDIR)/Tuple16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Tuples16.o
+
+$(OBJDIR)/Tuples16.o: $(SRCDIR)/Tuples16.c $(SRCDIR)/Tuples16.h $(SRCDIR)/Tuples16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Tuples16_object.o
+
+$(OBJDIR)/Tuples16_object.o: $(SRCDIR)/Tuples16_object.c $(SRCDIR)/Tuples16.h $(SRCDIR)/Tuples16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Array.o
+
+$(OBJDIR)/U16Array.o: $(SRCDIR)/U16Array.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Array_json.o
+
+$(OBJDIR)/U16Array_json.o: $(SRCDIR)/U16Array_json.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Array_object.o
+
+$(OBJDIR)/U16Array_object.o: $(SRCDIR)/U16Array_object.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Matrix.o
+
+$(OBJDIR)/U16Matrix.o: $(SRCDIR)/U16Matrix.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Matrix.h $(SRCDIR)/U16Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Matrix_json.o
+
+$(OBJDIR)/U16Matrix_json.o: $(SRCDIR)/U16Matrix_json.c $(SRCDIR)/U16Matrix.h $(SRCDIR)/U16Matrix_internal.h $(SRCDIR)/U16Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U16Matrix_object.o
+
+$(OBJDIR)/U16Matrix_object.o: $(SRCDIR)/U16Matrix_object.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Matrix.h $(SRCDIR)/U16Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U32Index.o
+
+$(OBJDIR)/U32Index.o: $(SRCDIR)/U32Index.c $(SRCDIR)/U32Index.h $(SRCDIR)/U32Index_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/U32Index_object.o
+
+$(OBJDIR)/U32Index_object.o: $(SRCDIR)/U32Index_object.c $(SRCDIR)/U32Index.h $(SRCDIR)/U32Index_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Uri.o
+
+$(OBJDIR)/Uri.o: $(SRCDIR)/Uri.c $(SRCDIR)/Uri.h $(SRCDIR)/Uri_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Uri_json.o
+
+$(OBJDIR)/Uri_json.o: $(SRCDIR)/Uri_json.c $(SRCDIR)/Uri.h $(SRCDIR)/Uri_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Uri_object.o
+
+$(OBJDIR)/Uri_object.o: $(SRCDIR)/Uri_object.c $(SRCDIR)/Uri.h $(SRCDIR)/Uri_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Value.o
+
+$(OBJDIR)/Value.o: $(SRCDIR)/Value.c $(SRCDIR)/Value.h $(SRCDIR)/Value_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ValueArray.o
+
+$(OBJDIR)/ValueArray.o: $(SRCDIR)/ValueArray.c $(SRCDIR)/ValueArray.h $(SRCDIR)/ValueArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ValueArray_json.o
+
+$(OBJDIR)/ValueArray_json.o: $(SRCDIR)/ValueArray_json.c $(SRCDIR)/ValueArray.h $(SRCDIR)/ValueArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ValueArray_object.o
+
+$(OBJDIR)/ValueArray_object.o: $(SRCDIR)/ValueArray_object.c $(SRCDIR)/ValueArray.h $(SRCDIR)/ValueArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Value_json.o
+
+$(OBJDIR)/Value_json.o: $(SRCDIR)/Value_json.c $(SRCDIR)/Value.h $(SRCDIR)/Value_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Value_object.o
+
+$(OBJDIR)/Value_object.o: $(SRCDIR)/Value_object.c $(SRCDIR)/Value.h $(SRCDIR)/Value_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Visitor.o
+
+$(OBJDIR)/Visitor.o: $(SRCDIR)/Visitor.c $(SRCDIR)/Visitor.h $(SRCDIR)/Visitor_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/Visitor_object.o
+
+$(OBJDIR)/Visitor_object.o: $(SRCDIR)/Visitor_object.c $(SRCDIR)/Visitor.h $(SRCDIR)/Visitor_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Array.o
+
+$(OBJDIR)/W32Array.o: $(SRCDIR)/W32Array.c $(SRCDIR)/W32Array.h $(SRCDIR)/W32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Array_json.o
+
+$(OBJDIR)/W32Array_json.o: $(SRCDIR)/W32Array_json.c $(SRCDIR)/W32Array.h $(SRCDIR)/W32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Array_object.o
+
+$(OBJDIR)/W32Array_object.o: $(SRCDIR)/W32Array_object.c $(SRCDIR)/W32Array.h $(SRCDIR)/W32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Str.o
+
+$(OBJDIR)/W32Str.o: $(SRCDIR)/W32Str.c $(SRCDIR)/W32Str.h $(SRCDIR)/W32Str_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32StrC.o
+
+$(OBJDIR)/W32StrC.o: $(SRCDIR)/W32StrC.c $(SRCDIR)/W32StrC.h $(SRCDIR)/W32StrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32StrC_json.o
+
+$(OBJDIR)/W32StrC_json.o: $(SRCDIR)/W32StrC_json.c $(SRCDIR)/W32StrC.h $(SRCDIR)/W32StrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32StrC_object.o
+
+$(OBJDIR)/W32StrC_object.o: $(SRCDIR)/W32StrC_object.c $(SRCDIR)/W32StrC.h $(SRCDIR)/W32StrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Str_json.o
+
+$(OBJDIR)/W32Str_json.o: $(SRCDIR)/W32Str_json.c $(SRCDIR)/W32Str.h $(SRCDIR)/W32Str_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/W32Str_object.o
+
+$(OBJDIR)/W32Str_object.o: $(SRCDIR)/W32Str_object.c $(SRCDIR)/W32Str.h $(SRCDIR)/W32Str_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/array.o
+
+$(OBJDIR)/array.o: $(SRCDIR)/array.c $(SRCDIR)/array.h $(SRCDIR)/array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/array_object.o
+
+$(OBJDIR)/array_object.o: $(SRCDIR)/array_object.c $(SRCDIR)/array.h $(SRCDIR)/array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ascii.o
+
+$(OBJDIR)/ascii.o: $(SRCDIR)/ascii.c $(SRCDIR)/ascii.h $(SRCDIR)/ascii_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ascii_object.o
+
+$(OBJDIR)/ascii_object.o: $(SRCDIR)/ascii_object.c $(SRCDIR)/ascii.h $(SRCDIR)/ascii_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb.o
+
+$(OBJDIR)/cb.o: $(SRCDIR)/cb.c $(SRCDIR)/cb.h $(SRCDIR)/cb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb16.o
+
+$(OBJDIR)/cb16.o: $(SRCDIR)/cb16.c $(SRCDIR)/cb16.h $(SRCDIR)/cb16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb16_object.o
+
+$(OBJDIR)/cb16_object.o: $(SRCDIR)/cb16_object.c $(SRCDIR)/cb16.h $(SRCDIR)/cb16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb32.o
+
+$(OBJDIR)/cb32.o: $(SRCDIR)/cb32.c $(SRCDIR)/cb32.h $(SRCDIR)/cb32_internal.h $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb32_object.o
+
+$(OBJDIR)/cb32_object.o: $(SRCDIR)/cb32_object.c $(SRCDIR)/cb32.h $(SRCDIR)/cb32_internal.h $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cb_object.o
+
+$(OBJDIR)/cb_object.o: $(SRCDIR)/cb_object.c $(SRCDIR)/cb.h $(SRCDIR)/cb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/cmnMac64.o
+
+$(OBJDIR)/cmnMac64.o: $(SRCDIR)/cmnMac64.c $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/crc.o
+
+$(OBJDIR)/crc.o: $(SRCDIR)/crc.c $(SRCDIR)/crc.h $(SRCDIR)/crc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/crc_object.o
+
+$(OBJDIR)/crc_object.o: $(SRCDIR)/crc_object.c $(SRCDIR)/crc.h $(SRCDIR)/crc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/dec.o
+
+$(OBJDIR)/dec.o: $(SRCDIR)/dec.c $(SRCDIR)/dec.h $(SRCDIR)/dec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/dec_json.o
+
+$(OBJDIR)/dec_json.o: $(SRCDIR)/dec_json.c $(SRCDIR)/dec.h $(SRCDIR)/dec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/dec_object.o
+
+$(OBJDIR)/dec_object.o: $(SRCDIR)/dec_object.c $(SRCDIR)/dec.h $(SRCDIR)/dec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/eResult.o
+
+$(OBJDIR)/eResult.o: $(SRCDIR)/eResult.c $(SRCDIR)/eResult.h $(SRCDIR)/eResult_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/eResult_object.o
+
+$(OBJDIR)/eResult_object.o: $(SRCDIR)/eResult_object.c $(SRCDIR)/eResult.h $(SRCDIR)/eResult_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/fbsi.o
+
+$(OBJDIR)/fbsi.o: $(SRCDIR)/fbsi.c $(SRCDIR)/Path.h $(SRCDIR)/fbsi.h $(SRCDIR)/fbsi_internal.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/fbsi_object.o
+
+$(OBJDIR)/fbsi_object.o: $(SRCDIR)/fbsi_object.c $(SRCDIR)/Path.h $(SRCDIR)/fbsi.h $(SRCDIR)/fbsi_internal.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/fbso.o
+
+$(OBJDIR)/fbso.o: $(SRCDIR)/fbso.c $(SRCDIR)/Path.h $(SRCDIR)/fbso.h $(SRCDIR)/fbso_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/fbso_object.o
+
+$(OBJDIR)/fbso_object.o: $(SRCDIR)/fbso_object.c $(SRCDIR)/Path.h $(SRCDIR)/fbso.h $(SRCDIR)/fbso_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/greg.o
+
+$(OBJDIR)/greg.o: $(SRCDIR)/greg.c $(SRCDIR)/greg.h $(SRCDIR)/greg_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/greg_object.o
+
+$(OBJDIR)/greg_object.o: $(SRCDIR)/greg_object.c $(SRCDIR)/greg.h $(SRCDIR)/greg_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/hex.o
+
+$(OBJDIR)/hex.o: $(SRCDIR)/hex.c $(SRCDIR)/hex.h $(SRCDIR)/hex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/hex_json.o
+
+$(OBJDIR)/hex_json.o: $(SRCDIR)/hex_json.c $(SRCDIR)/hex.h $(SRCDIR)/hex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/hex_object.o
+
+$(OBJDIR)/hex_object.o: $(SRCDIR)/hex_object.c $(SRCDIR)/hex.h $(SRCDIR)/hex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/hjson.o
+
+$(OBJDIR)/hjson.o: $(SRCDIR)/hjson.c $(SRCDIR)/hjson.h $(SRCDIR)/hjson_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/hjson_object.o
+
+$(OBJDIR)/hjson_object.o: $(SRCDIR)/hjson_object.c $(SRCDIR)/hjson.h $(SRCDIR)/hjson_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/listdl.o
+
+$(OBJDIR)/listdl.o: $(SRCDIR)/listdl.c $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/lru.o
+
+$(OBJDIR)/lru.o: $(SRCDIR)/lru.c $(SRCDIR)/listdl.h $(SRCDIR)/lru.h $(SRCDIR)/lru_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/lru_object.o
+
+$(OBJDIR)/lru_object.o: $(SRCDIR)/lru_object.c $(SRCDIR)/listdl.h $(SRCDIR)/lru.h $(SRCDIR)/lru_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/md5.o
+
+$(OBJDIR)/md5.o: $(SRCDIR)/md5.c $(SRCDIR)/md5.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/memMac64.o
+
+$(OBJDIR)/memMac64.o: $(SRCDIR)/memMac64.c $(SRCDIR)/listdl.h $(SRCDIR)/memMac64.h $(SRCDIR)/memMac64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/memMac64_object.o
+
+$(OBJDIR)/memMac64_object.o: $(SRCDIR)/memMac64_object.c $(SRCDIR)/listdl.h $(SRCDIR)/memMac64.h $(SRCDIR)/memMac64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/msgBus.o
+
+$(OBJDIR)/msgBus.o: $(SRCDIR)/msgBus.c $(SRCDIR)/msgBus.h $(SRCDIR)/msgBus_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/msgBus_object.o
+
+$(OBJDIR)/msgBus_object.o: $(SRCDIR)/msgBus_object.c $(SRCDIR)/msgBus.h $(SRCDIR)/msgBus_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/obj.o
+
+$(OBJDIR)/obj.o: $(SRCDIR)/obj.c $(SRCDIR)/obj.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/objMatrix.o
+
+$(OBJDIR)/objMatrix.o: $(SRCDIR)/objMatrix.c $(SRCDIR)/objMatrix.h $(SRCDIR)/objMatrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/objMatrix_object.o
+
+$(OBJDIR)/objMatrix_object.o: $(SRCDIR)/objMatrix_object.c $(SRCDIR)/objMatrix.h $(SRCDIR)/objMatrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/prt.o
+
+$(OBJDIR)/prt.o: $(SRCDIR)/prt.c $(SRCDIR)/prt.h $(SRCDIR)/prt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/prt_object.o
+
+$(OBJDIR)/prt_object.o: $(SRCDIR)/prt_object.c $(SRCDIR)/prt.h $(SRCDIR)/prt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxCond.o
+
+$(OBJDIR)/psxCond.o: $(SRCDIR)/psxCond.c $(SRCDIR)/psxCond.h $(SRCDIR)/psxCond_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxCond_object.o
+
+$(OBJDIR)/psxCond_object.o: $(SRCDIR)/psxCond_object.c $(SRCDIR)/psxCond.h $(SRCDIR)/psxCond_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxExec.o
+
+$(OBJDIR)/psxExec.o: $(SRCDIR)/psxExec.c $(SRCDIR)/psxExec.h $(SRCDIR)/psxExec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxExec_object.o
+
+$(OBJDIR)/psxExec_object.o: $(SRCDIR)/psxExec_object.c $(SRCDIR)/psxExec.h $(SRCDIR)/psxExec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxLock.o
+
+$(OBJDIR)/psxLock.o: $(SRCDIR)/psxLock.c $(SRCDIR)/psxLock.h $(SRCDIR)/psxLock_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxLock_object.o
+
+$(OBJDIR)/psxLock_object.o: $(SRCDIR)/psxLock_object.c $(SRCDIR)/psxLock.h $(SRCDIR)/psxLock_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxMutex.o
+
+$(OBJDIR)/psxMutex.o: $(SRCDIR)/psxMutex.c $(SRCDIR)/psxMutex.h $(SRCDIR)/psxMutex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxMutex_object.o
+
+$(OBJDIR)/psxMutex_object.o: $(SRCDIR)/psxMutex_object.c $(SRCDIR)/psxMutex.h $(SRCDIR)/psxMutex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxSem.o
+
+$(OBJDIR)/psxSem.o: $(SRCDIR)/psxSem.c $(SRCDIR)/psxSem.h $(SRCDIR)/psxSem_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxSem_object.o
+
+$(OBJDIR)/psxSem_object.o: $(SRCDIR)/psxSem_object.c $(SRCDIR)/psxSem.h $(SRCDIR)/psxSem_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxThread.o
+
+$(OBJDIR)/psxThread.o: $(SRCDIR)/psxThread.c $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/psxThread.h $(SRCDIR)/psxThread_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/psxThread_object.o
+
+$(OBJDIR)/psxThread_object.o: $(SRCDIR)/psxThread_object.c $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/psxThread.h $(SRCDIR)/psxThread_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ptrArray.o
+
+$(OBJDIR)/ptrArray.o: $(SRCDIR)/ptrArray.c $(SRCDIR)/Enum.h $(SRCDIR)/ptrArray.h $(SRCDIR)/ptrArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/ptrArray_object.o
+
+$(OBJDIR)/ptrArray_object.o: $(SRCDIR)/ptrArray_object.c $(SRCDIR)/Enum.h $(SRCDIR)/ptrArray.h $(SRCDIR)/ptrArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/rbt_tree.o
+
+$(OBJDIR)/rbt_tree.o: $(SRCDIR)/rbt_tree.c $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/shellSortPtrs.o
+
+$(OBJDIR)/shellSortPtrs.o: $(SRCDIR)/shellSortPtrs.c $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/stackTraces.o
+
+$(OBJDIR)/stackTraces.o: $(SRCDIR)/stackTraces.c $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/str.o
+
+$(OBJDIR)/str.o: $(SRCDIR)/str.c $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szBT.o
+
+$(OBJDIR)/szBT.o: $(SRCDIR)/szBT.c $(SRCDIR)/szBT.h $(SRCDIR)/szBT_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szBT_object.o
+
+$(OBJDIR)/szBT_object.o: $(SRCDIR)/szBT_object.c $(SRCDIR)/szBT.h $(SRCDIR)/szBT_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szData.o
+
+$(OBJDIR)/szData.o: $(SRCDIR)/szData.c $(SRCDIR)/szData.h $(SRCDIR)/szData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szData_json.o
+
+$(OBJDIR)/szData_json.o: $(SRCDIR)/szData_json.c $(SRCDIR)/szData.h $(SRCDIR)/szData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szData_object.o
+
+$(OBJDIR)/szData_object.o: $(SRCDIR)/szData_object.c $(SRCDIR)/szData.h $(SRCDIR)/szData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szHash.o
+
+$(OBJDIR)/szHash.o: $(SRCDIR)/szHash.c $(SRCDIR)/Enum.h $(SRCDIR)/listdl.h $(SRCDIR)/szHash.h $(SRCDIR)/szHash_internal.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szHash_object.o
+
+$(OBJDIR)/szHash_object.o: $(SRCDIR)/szHash_object.c $(SRCDIR)/Enum.h $(SRCDIR)/listdl.h $(SRCDIR)/szHash.h $(SRCDIR)/szHash_internal.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szTbl.o
+
+$(OBJDIR)/szTbl.o: $(SRCDIR)/szTbl.c $(SRCDIR)/ptrArray.h $(SRCDIR)/szHash.h $(SRCDIR)/szTbl.h $(SRCDIR)/szTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szTbl_json.o
+
+$(OBJDIR)/szTbl_json.o: $(SRCDIR)/szTbl_json.c $(SRCDIR)/szTbl.h $(SRCDIR)/szTbl_internal.h $(SRCDIR)/ptrArray.h $(SRCDIR)/szHash.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/szTbl_object.o
+
+$(OBJDIR)/szTbl_object.o: $(SRCDIR)/szTbl_object.c $(SRCDIR)/ptrArray.h $(SRCDIR)/szHash.h $(SRCDIR)/szTbl.h $(SRCDIR)/szTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/timer.o
+
+$(OBJDIR)/timer.o: $(SRCDIR)/timer.c $(SRCDIR)/timer.h $(SRCDIR)/timer_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/timer_object.o
+
+$(OBJDIR)/timer_object.o: $(SRCDIR)/timer_object.c $(SRCDIR)/timer.h $(SRCDIR)/timer_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/trace.o
+
+$(OBJDIR)/trace.o: $(SRCDIR)/trace.c $(SRCDIR)/trace.h $(SRCDIR)/trace_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/trace_object.o
+
+$(OBJDIR)/trace_object.o: $(SRCDIR)/trace_object.c $(SRCDIR)/trace.h $(SRCDIR)/trace_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u12Array.o
+
+$(OBJDIR)/u12Array.o: $(SRCDIR)/u12Array.c $(SRCDIR)/array.h $(SRCDIR)/u12Array.h $(SRCDIR)/u12Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u12Array_object.o
+
+$(OBJDIR)/u12Array_object.o: $(SRCDIR)/u12Array_object.c $(SRCDIR)/array.h $(SRCDIR)/u12Array.h $(SRCDIR)/u12Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u32Array.o
+
+$(OBJDIR)/u32Array.o: $(SRCDIR)/u32Array.c $(SRCDIR)/array.h $(SRCDIR)/u32Array.h $(SRCDIR)/u32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u32Array_object.o
+
+$(OBJDIR)/u32Array_object.o: $(SRCDIR)/u32Array_object.c $(SRCDIR)/array.h $(SRCDIR)/u32Array.h $(SRCDIR)/u32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u32Matrix.o
+
+$(OBJDIR)/u32Matrix.o: $(SRCDIR)/u32Matrix.c $(SRCDIR)/u32Matrix.h $(SRCDIR)/u32Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u32Matrix_object.o
+
+$(OBJDIR)/u32Matrix_object.o: $(SRCDIR)/u32Matrix_object.c $(SRCDIR)/u32Matrix.h $(SRCDIR)/u32Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8Array.o
+
+$(OBJDIR)/u8Array.o: $(SRCDIR)/u8Array.c $(SRCDIR)/u8Array.h $(SRCDIR)/u8Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8Array_json.o
+
+$(OBJDIR)/u8Array_json.o: $(SRCDIR)/u8Array_json.c $(SRCDIR)/u8Array.h $(SRCDIR)/u8Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8Array_object.o
+
+$(OBJDIR)/u8Array_object.o: $(SRCDIR)/u8Array_object.c $(SRCDIR)/u8Array.h $(SRCDIR)/u8Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8VlArray.o
+
+$(OBJDIR)/u8VlArray.o: $(SRCDIR)/u8VlArray.c $(SRCDIR)/u8VlArray.h $(SRCDIR)/u8VlArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8VlArray_json.o
+
+$(OBJDIR)/u8VlArray_json.o: $(SRCDIR)/u8VlArray_json.c $(SRCDIR)/u8VlArray.h $(SRCDIR)/u8VlArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/u8VlArray_object.o
+
+$(OBJDIR)/u8VlArray_object.o: $(SRCDIR)/u8VlArray_object.c $(SRCDIR)/u8VlArray.h $(SRCDIR)/u8VlArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/utf8.o
+
+$(OBJDIR)/utf8.o: $(SRCDIR)/utf8.c $(SRCDIR)/utf8.h $(SRCDIR)/utf8_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/utf8_json.o
+
+$(OBJDIR)/utf8_json.o: $(SRCDIR)/utf8_json.c $(SRCDIR)/utf8.h $(SRCDIR)/utf8_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+OBJS += $(OBJDIR)/utf8_object.o
+
+$(OBJDIR)/utf8_object.o: $(SRCDIR)/utf8_object.c $(SRCDIR)/utf8.h $(SRCDIR)/utf8_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) -c -o $(OBJDIR)/$(@F) -I$(SRCDIR) $<
+
+
+
+
+
+#------------------------------------------------
+#      Compile and execute Tests
+#------------------------------------------------
+
+
+TESTS += AStrArray_test
+
+AStrArray_test: $(TEST_SRC)/AStrArray_test.c $(SRCDIR)/AStrArray.h $(SRCDIR)/AStrArray_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AStrCArray_test
+
+AStrCArray_test: $(TEST_SRC)/AStrCArray_test.c $(SRCDIR)/AStrCArray.h $(SRCDIR)/AStrCArray_internal.h $(SRCDIR)/AStrC.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AStrCReader_test
+
+AStrCReader_test: $(TEST_SRC)/AStrCReader_test.c $(SRCDIR)/AStrCReader.h $(SRCDIR)/AStrCReader_internal.h $(SRCDIR)/AStrC.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AStrC_test
+
+AStrC_test: $(TEST_SRC)/AStrC_test.c $(SRCDIR)/AStrC.h $(SRCDIR)/AStrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AStr_test
+
+AStr_test: $(TEST_SRC)/AStr_test.c $(SRCDIR)/AStr.h $(SRCDIR)/AStr_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Ansi_test
+
+Ansi_test: $(TEST_SRC)/Ansi_test.c $(SRCDIR)/Ansi.h $(SRCDIR)/Ansi_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Appl_test
+
+Appl_test: $(TEST_SRC)/Appl_test.c $(SRCDIR)/Appl.h $(SRCDIR)/Appl_internal.h $(SRCDIR)/CmdUtl.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $(TEST_SRC)/objTest.c $(TEST_SRC)/objTest_object.c $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AstScan_test
+
+AstScan_test: $(TEST_SRC)/AstScan_test.c $(SRCDIR)/AstScan.h $(SRCDIR)/AstScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Ast_test
+
+Ast_test: $(TEST_SRC)/Ast_test.c $(SRCDIR)/Ast.h $(SRCDIR)/Ast_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AudioCW_test
+
+AudioCW_test: $(TEST_SRC)/AudioCW_test.c $(SRCDIR)/AudioCW.h $(SRCDIR)/AudioCW_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/audioWAV.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += AudioWAV_test
+
+AudioWAV_test: $(TEST_SRC)/AudioWAV_test.c $(SRCDIR)/AudioWAV.h $(SRCDIR)/AudioWAV_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/fbso.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Base64_test
+
+Base64_test: $(TEST_SRC)/Base64_test.c $(SRCDIR)/Base64.h $(SRCDIR)/Base64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += BitMatrix_test
+
+BitMatrix_test: $(TEST_SRC)/BitMatrix_test.c $(SRCDIR)/BitMatrix.h $(SRCDIR)/BitMatrix_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/BitSet.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += BitSet_test
+
+BitSet_test: $(TEST_SRC)/BitSet_test.c $(SRCDIR)/BitSet.h $(SRCDIR)/BitSet_internal.h $(SRCDIR)/u32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += BlkdRcds16_test
+
+BlkdRcds16_test: $(TEST_SRC)/BlkdRcds16_test.c $(SRCDIR)/BlkdRcds16.h $(SRCDIR)/BlkdRcds16_internal.h $(SRCDIR)/Endian.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += BlockF16_test
+
+BlockF16_test: $(TEST_SRC)/BlockF16_test.c $(SRCDIR)/BlockF16.h $(SRCDIR)/BlockF16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += BlockV16_test
+
+BlockV16_test: $(TEST_SRC)/BlockV16_test.c $(SRCDIR)/BlockV16.h $(SRCDIR)/BlockV16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Blocks_test
+
+Blocks_test: $(TEST_SRC)/Blocks_test.c $(SRCDIR)/Blocks.h $(SRCDIR)/Blocks_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ChkSumMD5_test
+
+ChkSumMD5_test: $(TEST_SRC)/ChkSumMD5_test.c $(SRCDIR)/ChkSumMD5.h $(SRCDIR)/ChkSumMD5_internal.h $(SRCDIR)/md5.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += CmdUtl_test
+
+CmdUtl_test: $(TEST_SRC)/CmdUtl_test.c $(SRCDIR)/CmdUtl.h $(SRCDIR)/CmdUtl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Cmd_test
+
+Cmd_test: $(TEST_SRC)/Cmd_test.c $(SRCDIR)/Cmd.h $(SRCDIR)/Cmd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Cmds_test
+
+Cmds_test: $(TEST_SRC)/Cmds_test.c $(SRCDIR)/Cmds.h $(SRCDIR)/Cmds_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Compiler_test
+
+Compiler_test: $(TEST_SRC)/Compiler_test.c $(SRCDIR)/Compiler.h $(SRCDIR)/Compiler_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += CsvFile_test
+
+CsvFile_test: $(TEST_SRC)/CsvFile_test.c $(SRCDIR)/CsvFile.h $(SRCDIR)/CsvFile_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/srcFile.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += CsvRcd_test
+
+CsvRcd_test: $(TEST_SRC)/CsvRcd_test.c $(SRCDIR)/CsvRcd.h $(SRCDIR)/CsvRcd_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += DirEntry_test
+
+DirEntry_test: $(TEST_SRC)/DirEntry_test.c $(SRCDIR)/DirEntry.h $(SRCDIR)/DirEntry_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Dir_test
+
+Dir_test: $(TEST_SRC)/Dir_test.c $(SRCDIR)/Dir.h $(SRCDIR)/Dir_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/Path.h $(SRCDIR)/dirEntry.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Ebcdic_test
+
+Ebcdic_test: $(TEST_SRC)/Ebcdic_test.c $(SRCDIR)/Ebcdic.h $(SRCDIR)/Ebcdic_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Endian_test
+
+Endian_test: $(TEST_SRC)/Endian_test.c $(SRCDIR)/Endian.h $(SRCDIR)/Endian_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Enum_test
+
+Enum_test: $(TEST_SRC)/Enum_test.c $(SRCDIR)/Enum.h $(SRCDIR)/Enum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Expr2Ast_test
+
+Expr2Ast_test: $(TEST_SRC)/Expr2Ast_test.c $(SRCDIR)/Expr2Ast.h $(SRCDIR)/Expr2Ast_internal.h $(SRCDIR)/Ast.h $(SRCDIR)/ptrArray.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Expr_test
+
+Expr_test: $(TEST_SRC)/Expr_test.c $(SRCDIR)/Expr.h $(SRCDIR)/Expr_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += False_test
+
+False_test: $(TEST_SRC)/False_test.c $(SRCDIR)/False.h $(SRCDIR)/False_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += FileIO_test
+
+FileIO_test: $(TEST_SRC)/FileIO_test.c $(SRCDIR)/FileIO.h $(SRCDIR)/FileIO_internal.h $(SRCDIR)/Path.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += FileRef_test
+
+FileRef_test: $(TEST_SRC)/FileRef_test.c $(SRCDIR)/FileRef.h $(SRCDIR)/FileRef_internal.h $(SRCDIR)/AStrC.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += File_test
+
+File_test: $(TEST_SRC)/File_test.c $(SRCDIR)/File.h $(SRCDIR)/File_internal.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += HtmlOut_test
+
+HtmlOut_test: $(TEST_SRC)/HtmlOut_test.c $(SRCDIR)/HtmlOut.h $(SRCDIR)/HtmlOut_internal.h $(SRCDIR)/TextOut.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += I16Array_test
+
+I16Array_test: $(TEST_SRC)/I16Array_test.c $(SRCDIR)/I16Array.h $(SRCDIR)/I16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += I16Matrix_test
+
+I16Matrix_test: $(TEST_SRC)/I16Matrix_test.c $(SRCDIR)/I16Matrix.h $(SRCDIR)/I16Matrix_internal.h $(SRCDIR)/I16Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += I32Array_test
+
+I32Array_test: $(TEST_SRC)/I32Array_test.c $(SRCDIR)/I32Array.h $(SRCDIR)/I32Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += I32Matrix_test
+
+I32Matrix_test: $(TEST_SRC)/I32Matrix_test.c $(SRCDIR)/I32Matrix.h $(SRCDIR)/I32Matrix_internal.h $(SRCDIR)/I32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += IntLock_test
+
+IntLock_test: $(TEST_SRC)/IntLock_test.c $(SRCDIR)/IntLock.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += JsonIn_test
+
+JsonIn_test: $(TEST_SRC)/JsonIn_test.c $(SRCDIR)/JsonIn.h $(SRCDIR)/JsonIn_internal.h $(SRCDIR)/LexJ.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += JsonOut_test
+
+JsonOut_test: $(TEST_SRC)/JsonOut_test.c $(SRCDIR)/JsonOut.h $(SRCDIR)/JsonOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += JsonPP_test
+
+JsonPP_test: $(TEST_SRC)/JsonPP_test.c $(SRCDIR)/JsonPP.h $(SRCDIR)/JsonPP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LAScan_test
+
+LAScan_test: $(TEST_SRC)/LAScan_test.c $(SRCDIR)/LAScan.h $(SRCDIR)/LAScan_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Lex01_test
+
+Lex01_test: $(TEST_SRC)/Lex01_test.c $(SRCDIR)/Lex01.h $(SRCDIR)/Lex01_internal.h $(SRCDIR)/Lex.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LexC_test
+
+LexC_test: $(TEST_SRC)/LexC_test.c $(SRCDIR)/LexC.h $(SRCDIR)/LexC_internal.h $(SRCDIR)/Lex.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LexJ_test
+
+LexJ_test: $(TEST_SRC)/LexJ_test.c $(SRCDIR)/LexJ.h $(SRCDIR)/LexJ_internal.h $(SRCDIR)/Lex.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LexKW_test
+
+LexKW_test: $(TEST_SRC)/LexKW_test.c $(SRCDIR)/LexKW.h $(SRCDIR)/LexKW_internal.h $(SRCDIR)/Lex.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LexTri_test
+
+LexTri_test: $(TEST_SRC)/LexTri_test.c $(SRCDIR)/LexTri.h $(SRCDIR)/LexTri_internal.h $(SRCDIR)/Lex.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Lex_test
+
+Lex_test: $(TEST_SRC)/Lex_test.c $(SRCDIR)/Lex.h $(SRCDIR)/Lex_internal.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/laInterface.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LineIn_test
+
+LineIn_test: $(TEST_SRC)/LineIn_test.c $(SRCDIR)/LineIn.h $(SRCDIR)/LineIn_internal.h $(SRCDIR)/FileIO.h $(SRCDIR)/LineIndex.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += LineIndex_test
+
+LineIndex_test: $(TEST_SRC)/LineIndex_test.c $(SRCDIR)/LineIndex.h $(SRCDIR)/LineIndex_internal.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ListDL32_test
+
+ListDL32_test: $(TEST_SRC)/ListDL32_test.c $(SRCDIR)/ListDL32.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Log_test
+
+Log_test: $(TEST_SRC)/Log_test.c $(SRCDIR)/Log.h $(SRCDIR)/Log_internal.h $(SRCDIR)/Appl.h $(SRCDIR)/FileIO.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Misc_test
+
+Misc_test: $(TEST_SRC)/Misc_test.c $(SRCDIR)/Misc.h $(SRCDIR)/Misc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Money64_test
+
+Money64_test: $(TEST_SRC)/Money64_test.c $(SRCDIR)/Money64.h $(SRCDIR)/Money64_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += MsgData_test
+
+MsgData_test: $(TEST_SRC)/MsgData_test.c $(SRCDIR)/MsgData.h $(SRCDIR)/MsgData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Name_test
+
+Name_test: $(TEST_SRC)/Name_test.c $(SRCDIR)/Name.h $(SRCDIR)/Name_internal.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NetHTTPA_test
+
+NetHTTPA_test: $(TEST_SRC)/NetHTTPA_test.c $(SRCDIR)/NetHTTPA.h $(SRCDIR)/NetHTTPA_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NetHTTPR_test
+
+NetHTTPR_test: $(TEST_SRC)/NetHTTPR_test.c $(SRCDIR)/NetHTTPR.h $(SRCDIR)/NetHTTPR_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NetHTTP_test
+
+NetHTTP_test: $(TEST_SRC)/NetHTTP_test.c $(SRCDIR)/NetHTTP.h $(SRCDIR)/NetHTTP_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NetIO_test
+
+NetIO_test: $(TEST_SRC)/NetIO_test.c $(SRCDIR)/NetIO.h $(SRCDIR)/NetIO_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NetMIME_test
+
+NetMIME_test: $(TEST_SRC)/NetMIME_test.c $(SRCDIR)/NetMIME.h $(SRCDIR)/NetMIME_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Net_test
+
+Net_test: $(TEST_SRC)/Net_test.c $(SRCDIR)/Net.h $(SRCDIR)/Net_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeArray_test
+
+NodeArray_test: $(TEST_SRC)/NodeArray_test.c $(SRCDIR)/NodeArray.h $(SRCDIR)/NodeArray_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/node.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeBT_test
+
+NodeBT_test: $(TEST_SRC)/NodeBT_test.c $(SRCDIR)/NodeBT.h $(SRCDIR)/NodeBT_internal.h $(SRCDIR)/Node.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeEnum_test
+
+NodeEnum_test: $(TEST_SRC)/NodeEnum_test.c $(SRCDIR)/NodeEnum.h $(SRCDIR)/NodeEnum_internal.h $(SRCDIR)/Node.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeHash_test
+
+NodeHash_test: $(TEST_SRC)/NodeHash_test.c $(SRCDIR)/NodeHash.h $(SRCDIR)/NodeHash_internal.h $(SRCDIR)/Node.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeList_test
+
+NodeList_test: $(TEST_SRC)/NodeList_test.c $(SRCDIR)/NodeList.h $(SRCDIR)/NodeList_internal.h $(SRCDIR)/Node.h $(SRCDIR)/listdl.h $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeScan_test
+
+NodeScan_test: $(TEST_SRC)/NodeScan_test.c $(SRCDIR)/NodeScan.h $(SRCDIR)/NodeScan_internal.h $(SRCDIR)/Node.h $(SRCDIR)/NodeArray.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeTkn_test
+
+NodeTkn_test: $(TEST_SRC)/NodeTkn_test.c $(SRCDIR)/NodeTkn.h $(SRCDIR)/NodeTkn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += NodeTree_test
+
+NodeTree_test: $(TEST_SRC)/NodeTree_test.c $(SRCDIR)/NodeTree.h $(SRCDIR)/NodeTree_internal.h $(SRCDIR)/Node.h $(SRCDIR)/NodeHash.h $(SRCDIR)/ObjList.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Node_test
+
+Node_test: $(TEST_SRC)/Node_test.c $(SRCDIR)/Node.h $(SRCDIR)/Node_internal.h $(SRCDIR)/Name.h $(SRCDIR)/NodeBT.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Null_test
+
+Null_test: $(TEST_SRC)/Null_test.c $(SRCDIR)/Null.h $(SRCDIR)/Null_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Number_test
+
+Number_test: $(TEST_SRC)/Number_test.c $(SRCDIR)/Number.h $(SRCDIR)/Number_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjArray_test
+
+ObjArray_test: $(TEST_SRC)/ObjArray_test.c $(SRCDIR)/ObjArray.h $(SRCDIR)/ObjArray_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjBT_test
+
+ObjBT_test: $(TEST_SRC)/ObjBT_test.c $(SRCDIR)/ObjBT.h $(SRCDIR)/ObjBT_internal.h $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjCb_test
+
+ObjCb_test: $(TEST_SRC)/ObjCb_test.c $(SRCDIR)/ObjCb.h $(SRCDIR)/ObjCb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $(TEST_SRC)/objTest.c $(TEST_SRC)/objTest_object.c $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjEnum_test
+
+ObjEnum_test: $(TEST_SRC)/ObjEnum_test.c $(SRCDIR)/ObjEnum.h $(SRCDIR)/ObjEnum_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjHash_test
+
+ObjHash_test: $(TEST_SRC)/ObjHash_test.c $(SRCDIR)/ObjHash.h $(SRCDIR)/ObjHash_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjList_test
+
+ObjList_test: $(TEST_SRC)/ObjList_test.c $(SRCDIR)/ObjList.h $(SRCDIR)/ObjList_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjMethod_test
+
+ObjMethod_test: $(TEST_SRC)/ObjMethod_test.c $(SRCDIR)/ObjMethod.h $(SRCDIR)/ObjMethod_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ObjVLink_test
+
+ObjVLink_test: $(TEST_SRC)/ObjVLink_test.c $(SRCDIR)/ObjVLink.h $(SRCDIR)/ObjVLink_internal.h $(SRCDIR)/i32Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += OpPrec_test
+
+OpPrec_test: $(TEST_SRC)/OpPrec_test.c $(SRCDIR)/OpPrec.h $(SRCDIR)/OpPrec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Opcode_test
+
+Opcode_test: $(TEST_SRC)/Opcode_test.c $(SRCDIR)/Opcode.h $(SRCDIR)/Opcode_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Opcodes_test
+
+Opcodes_test: $(TEST_SRC)/Opcodes_test.c $(SRCDIR)/Opcodes.h $(SRCDIR)/Opcodes_internal.h $(SRCDIR)/Opcode.h $(SRCDIR)/szBT.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Parser_test
+
+Parser_test: $(TEST_SRC)/Parser_test.c $(SRCDIR)/Parser.h $(SRCDIR)/Parser_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += PathArray_test
+
+PathArray_test: $(TEST_SRC)/PathArray_test.c $(SRCDIR)/PathArray.h $(SRCDIR)/PathArray_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Path_test
+
+Path_test: $(TEST_SRC)/Path_test.c $(SRCDIR)/Path.h $(SRCDIR)/Path_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/RW_DateTime.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += PrepStrW32_test
+
+PrepStrW32_test: $(TEST_SRC)/PrepStrW32_test.c $(SRCDIR)/PrepStrW32.h $(SRCDIR)/PrepStrW32_internal.h $(SRCDIR)/Scanner.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += RRDS_test
+
+RRDS_test: $(TEST_SRC)/RRDS_test.c $(SRCDIR)/RRDS.h $(SRCDIR)/RRDS_internal.h $(SRCDIR)/FileIO.h $(SRCDIR)/Path.h $(SRCDIR)/lru.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += RW_BCD128_test
+
+RW_BCD128_test: $(TEST_SRC)/RW_BCD128_test.c $(SRCDIR)/RW_BCD128.h $(SRCDIR)/RW_BCD128_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += RW_DateTime_test
+
+RW_DateTime_test: $(TEST_SRC)/RW_DateTime_test.c $(SRCDIR)/RW_DateTime.h $(SRCDIR)/RW_DateTime_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += RW_RPG_Base_test
+
+RW_RPG_Base_test: $(TEST_SRC)/RW_RPG_Base_test.c $(SRCDIR)/RW_RPG_Base.h $(SRCDIR)/RW_RPG_Base_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += RW_RPG_Level_test
+
+RW_RPG_Level_test: $(TEST_SRC)/RW_RPG_Level_test.c $(SRCDIR)/RW_RPG_Level.h $(SRCDIR)/RW_RPG_Level_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SGraph_test
+
+SGraph_test: $(TEST_SRC)/SGraph_test.c $(SRCDIR)/SGraph.h $(SRCDIR)/SGraph_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SQLiteCurs_test
+
+SQLiteCurs_test: $(TEST_SRC)/SQLiteCurs_test.c $(SRCDIR)/SQLiteCurs.h $(SRCDIR)/SQLiteCurs_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SQLiteStmt_test
+
+SQLiteStmt_test: $(TEST_SRC)/SQLiteStmt_test.c $(SRCDIR)/SQLiteStmt.h $(SRCDIR)/SQLiteStmt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SQLite_test
+
+SQLite_test: $(TEST_SRC)/SQLite_test.c $(SRCDIR)/SQLite.h $(SRCDIR)/SQLite_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Scanner_test
+
+Scanner_test: $(TEST_SRC)/Scanner_test.c $(SRCDIR)/Scanner.h $(SRCDIR)/Scanner_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SqlCol_test
+
+SqlCol_test: $(TEST_SRC)/SqlCol_test.c $(SRCDIR)/SqlCol.h $(SRCDIR)/SqlCol_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SqlRow_test
+
+SqlRow_test: $(TEST_SRC)/SqlRow_test.c $(SRCDIR)/SqlRow.h $(SRCDIR)/SqlRow_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SqlTbl_test
+
+SqlTbl_test: $(TEST_SRC)/SqlTbl_test.c $(SRCDIR)/SqlTbl.h $(SRCDIR)/SqlTbl_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcDiff_test
+
+SrcDiff_test: $(TEST_SRC)/SrcDiff_test.c $(SRCDIR)/SrcDiff.h $(SRCDIR)/SrcDiff_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcError_test
+
+SrcError_test: $(TEST_SRC)/SrcError_test.c $(SRCDIR)/SrcError.h $(SRCDIR)/SrcError_internal.h $(SRCDIR)/AStr.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcErrors_test
+
+SrcErrors_test: $(TEST_SRC)/SrcErrors_test.c $(SRCDIR)/SrcErrors.h $(SRCDIR)/SrcErrors_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/SrcError.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcFile_test
+
+SrcFile_test: $(TEST_SRC)/SrcFile_test.c $(SRCDIR)/SrcFile.h $(SRCDIR)/SrcFile_internal.h $(SRCDIR)/Path.h $(SRCDIR)/TextIn.h $(SRCDIR)/Token.h $(SRCDIR)/TokenList.h $(SRCDIR)/ascii.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcFiles_test
+
+SrcFiles_test: $(TEST_SRC)/SrcFiles_test.c $(SRCDIR)/SrcFiles.h $(SRCDIR)/SrcFiles_internal.h $(SRCDIR)/ObjArray.h $(SRCDIR)/Path.h $(SRCDIR)/SrcFile.h $(SRCDIR)/Token.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SrcLoc_test
+
+SrcLoc_test: $(TEST_SRC)/SrcLoc_test.c $(SRCDIR)/SrcLoc.h $(SRCDIR)/SrcLoc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += SymList_test
+
+SymList_test: $(TEST_SRC)/SymList_test.c $(SRCDIR)/SymList.h $(SRCDIR)/SymList_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Sym_test
+
+Sym_test: $(TEST_SRC)/Sym_test.c $(SRCDIR)/Sym.h $(SRCDIR)/Sym_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Syms_test
+
+Syms_test: $(TEST_SRC)/Syms_test.c $(SRCDIR)/Syms.h $(SRCDIR)/Syms_internal.h $(SRCDIR)/ObjHash.h $(SRCDIR)/Sym.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TRegex32_test
+
+TRegex32_test: $(TEST_SRC)/TRegex32_test.c $(SRCDIR)/TRegex32.h $(SRCDIR)/TRegex32_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TRegex_test
+
+TRegex_test: $(TEST_SRC)/TRegex_test.c $(SRCDIR)/TRegex.h $(SRCDIR)/TRegex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Test_test
+
+Test_test: $(TEST_SRC)/Test_test.c $(SRCDIR)/Test.h $(SRCDIR)/Test_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TextIn_test
+
+TextIn_test: $(TEST_SRC)/TextIn_test.c $(SRCDIR)/TextIn.h $(SRCDIR)/TextIn_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TextIns_test
+
+TextIns_test: $(TEST_SRC)/TextIns_test.c $(SRCDIR)/TextIns.h $(SRCDIR)/TextIns_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TextOut_test
+
+TextOut_test: $(TEST_SRC)/TextOut_test.c $(SRCDIR)/TextOut.h $(SRCDIR)/TextOut_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += TokenList_test
+
+TokenList_test: $(TEST_SRC)/TokenList_test.c $(SRCDIR)/TokenList.h $(SRCDIR)/TokenList_internal.h $(SRCDIR)/Token.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Token_test
+
+Token_test: $(TEST_SRC)/Token_test.c $(SRCDIR)/Token.h $(SRCDIR)/Token_internal.h $(SRCDIR)/AStrC.h $(SRCDIR)/SrcLoc.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += True_test
+
+True_test: $(TEST_SRC)/True_test.c $(SRCDIR)/True.h $(SRCDIR)/True_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Tuple16_test
+
+Tuple16_test: $(TEST_SRC)/Tuple16_test.c $(SRCDIR)/Tuple16.h $(SRCDIR)/Tuple16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Tuples16_test
+
+Tuples16_test: $(TEST_SRC)/Tuples16_test.c $(SRCDIR)/Tuples16.h $(SRCDIR)/Tuples16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += U16Array_test
+
+U16Array_test: $(TEST_SRC)/U16Array_test.c $(SRCDIR)/U16Array.h $(SRCDIR)/U16Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += U16Matrix_test
+
+U16Matrix_test: $(TEST_SRC)/U16Matrix_test.c $(SRCDIR)/U16Matrix.h $(SRCDIR)/U16Matrix_internal.h $(SRCDIR)/U16Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += U32Index_test
+
+U32Index_test: $(TEST_SRC)/U32Index_test.c $(SRCDIR)/U32Index.h $(SRCDIR)/U32Index_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Uri_test
+
+Uri_test: $(TEST_SRC)/Uri_test.c $(SRCDIR)/Uri.h $(SRCDIR)/Uri_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ValueArray_test
+
+ValueArray_test: $(TEST_SRC)/ValueArray_test.c $(SRCDIR)/ValueArray.h $(SRCDIR)/ValueArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Value_test
+
+Value_test: $(TEST_SRC)/Value_test.c $(SRCDIR)/Value.h $(SRCDIR)/Value_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += Visitor_test
+
+Visitor_test: $(TEST_SRC)/Visitor_test.c $(SRCDIR)/Visitor.h $(SRCDIR)/Visitor_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += W32Array_test
+
+W32Array_test: $(TEST_SRC)/W32Array_test.c $(SRCDIR)/W32Array.h $(SRCDIR)/W32Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += W32StrC_test
+
+W32StrC_test: $(TEST_SRC)/W32StrC_test.c $(SRCDIR)/W32StrC.h $(SRCDIR)/W32StrC_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += W32Str_test
+
+W32Str_test: $(TEST_SRC)/W32Str_test.c $(SRCDIR)/W32Str.h $(SRCDIR)/W32Str_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += array_test
+
+array_test: $(TEST_SRC)/array_test.c $(SRCDIR)/array.h $(SRCDIR)/array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ascii_test
+
+ascii_test: $(TEST_SRC)/ascii_test.c $(SRCDIR)/ascii.h $(SRCDIR)/ascii_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += cb16_test
+
+cb16_test: $(TEST_SRC)/cb16_test.c $(SRCDIR)/cb16.h $(SRCDIR)/cb16_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += cb32_test
+
+cb32_test: $(TEST_SRC)/cb32_test.c $(SRCDIR)/cb32.h $(SRCDIR)/cb32_internal.h $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += cb_test
+
+cb_test: $(TEST_SRC)/cb_test.c $(SRCDIR)/cb.h $(SRCDIR)/cb_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $(TEST_SRC)/objTest.c $(TEST_SRC)/objTest_object.c $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += crc_test
+
+crc_test: $(TEST_SRC)/crc_test.c $(SRCDIR)/crc.h $(SRCDIR)/crc_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += dec_test
+
+dec_test: $(TEST_SRC)/dec_test.c $(SRCDIR)/dec.h $(SRCDIR)/dec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += eResult_test
+
+eResult_test: $(TEST_SRC)/eResult_test.c $(SRCDIR)/eResult.h $(SRCDIR)/eResult_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += fbsi_test
+
+fbsi_test: $(TEST_SRC)/fbsi_test.c $(SRCDIR)/fbsi.h $(SRCDIR)/fbsi_internal.h $(SRCDIR)/Path.h $(SRCDIR)/u8Array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += fbso_test
+
+fbso_test: $(TEST_SRC)/fbso_test.c $(SRCDIR)/fbso.h $(SRCDIR)/fbso_internal.h $(SRCDIR)/Path.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += greg_test
+
+greg_test: $(TEST_SRC)/greg_test.c $(SRCDIR)/greg.h $(SRCDIR)/greg_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += hex_test
+
+hex_test: $(TEST_SRC)/hex_test.c $(SRCDIR)/hex.h $(SRCDIR)/hex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += hjson_test
+
+hjson_test: $(TEST_SRC)/hjson_test.c $(SRCDIR)/hjson.h $(SRCDIR)/hjson_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += listdl_test
+
+listdl_test: $(TEST_SRC)/listdl_test.c $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += lru_test
+
+lru_test: $(TEST_SRC)/lru_test.c $(SRCDIR)/lru.h $(SRCDIR)/lru_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += memMac64_test
+
+memMac64_test: $(TEST_SRC)/memMac64_test.c $(SRCDIR)/memMac64.h $(SRCDIR)/memMac64_internal.h $(SRCDIR)/listdl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += msgBus_test
+
+msgBus_test: $(TEST_SRC)/msgBus_test.c $(SRCDIR)/msgBus.h $(SRCDIR)/msgBus_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $(TEST_SRC)/objTest.c $(TEST_SRC)/objTest_object.c $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += objMatrix_test
+
+objMatrix_test: $(TEST_SRC)/objMatrix_test.c $(SRCDIR)/objMatrix.h $(SRCDIR)/objMatrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += obj_test
+
+obj_test: $(TEST_SRC)/obj_test.c $(SRCDIR)/obj.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += prt_test
+
+prt_test: $(TEST_SRC)/prt_test.c $(SRCDIR)/prt.h $(SRCDIR)/prt_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxCond_test
+
+psxCond_test: $(TEST_SRC)/psxCond_test.c $(SRCDIR)/psxCond.h $(SRCDIR)/psxCond_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxExec_test
+
+psxExec_test: $(TEST_SRC)/psxExec_test.c $(SRCDIR)/psxExec.h $(SRCDIR)/psxExec_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxLock_test
+
+psxLock_test: $(TEST_SRC)/psxLock_test.c $(SRCDIR)/psxLock.h $(SRCDIR)/psxLock_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxMutex_test
+
+psxMutex_test: $(TEST_SRC)/psxMutex_test.c $(SRCDIR)/psxMutex.h $(SRCDIR)/psxMutex_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxSem_test
+
+psxSem_test: $(TEST_SRC)/psxSem_test.c $(SRCDIR)/psxSem.h $(SRCDIR)/psxSem_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += psxThread_test
+
+psxThread_test: $(TEST_SRC)/psxThread_test.c $(SRCDIR)/psxThread.h $(SRCDIR)/psxThread_internal.h $(SRCDIR)/psxMutex.h $(SRCDIR)/psxSem.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += ptrArray_test
+
+ptrArray_test: $(TEST_SRC)/ptrArray_test.c $(SRCDIR)/ptrArray.h $(SRCDIR)/ptrArray_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += rbt_tree_test
+
+rbt_tree_test: $(TEST_SRC)/rbt_tree_test.c $(SRCDIR)/rbt_tree.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += str_test
+
+str_test: $(TEST_SRC)/str_test.c $(SRCDIR)/str.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += szBT_test
+
+szBT_test: $(TEST_SRC)/szBT_test.c $(SRCDIR)/szBT.h $(SRCDIR)/szBT_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += szData_test
+
+szData_test: $(TEST_SRC)/szData_test.c $(SRCDIR)/szData.h $(SRCDIR)/szData_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += szHash_test
+
+szHash_test: $(TEST_SRC)/szHash_test.c $(SRCDIR)/szHash.h $(SRCDIR)/szHash_internal.h $(SRCDIR)/Enum.h $(SRCDIR)/listdl.h $(SRCDIR)/szTbl.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += szTbl_test
+
+szTbl_test: $(TEST_SRC)/szTbl_test.c $(SRCDIR)/szTbl.h $(SRCDIR)/szTbl_internal.h $(SRCDIR)/ptrArray.h $(SRCDIR)/szHash.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += timer_test
+
+timer_test: $(TEST_SRC)/timer_test.c $(SRCDIR)/timer.h $(SRCDIR)/timer_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += trace_test
+
+trace_test: $(TEST_SRC)/trace_test.c $(SRCDIR)/trace.h $(SRCDIR)/trace_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += u12Array_test
+
+u12Array_test: $(TEST_SRC)/u12Array_test.c $(SRCDIR)/u12Array.h $(SRCDIR)/u12Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += u32Array_test
+
+u32Array_test: $(TEST_SRC)/u32Array_test.c $(SRCDIR)/u32Array.h $(SRCDIR)/u32Array_internal.h $(SRCDIR)/array.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += u32Matrix_test
+
+u32Matrix_test: $(TEST_SRC)/u32Matrix_test.c $(SRCDIR)/u32Matrix.h $(SRCDIR)/u32Matrix_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += u8Array_test
+
+u8Array_test: $(TEST_SRC)/u8Array_test.c $(SRCDIR)/u8Array.h $(SRCDIR)/u8Array_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += u8VlArray_test
+
+u8VlArray_test: $(TEST_SRC)/u8VlArray_test.c $(SRCDIR)/u8VlArray.h $(SRCDIR)/u8VlArray_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+TESTS += utf8_test
+
+utf8_test: $(TEST_SRC)/utf8_test.c $(SRCDIR)/utf8.h $(SRCDIR)/utf8_internal.h $(SRCDIR)/cmn_defs.h 
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CFLAGS_TEST) -o $(TEST_BIN)/$(@F) $(OBJS) -I$(TEST_SRC) -I$(SRCDIR) $<
+	$(TEST_BIN)/$(@F) --no_int3
+
+
+
+
+
+#------------------------------------------------
+#              Phony Targets
+#------------------------------------------------
+
+
+
+$(LIB_PATH):  $(OBJS)
+	-cd $(LIBOBJ) ; [ -d $(LIB_FILENAME) ] && rm $(LIB_FILENAME)
+	ar rc $(LIB_PATH) $(OBJS)
+
+
+.PHONY: all
+all:  create_dirs $(LIB_PATH) check install
+
+
+.PHONY: build
+build:  create_dirs $(LIB_PATH)
+
+
+.PHONY: check
+check: $(TESTS)
+
+
+.PHONY: clean
+clean:
+	-rm -fr $(BUILD)/$(LIBNAM)
+
+
+.PHONY: create_dirs
+create_dirs:
+	-mkdir -p $(BUILD)
+	-mkdir -p $(INSTALL_BASE)
+	-mkdir -p $(LIB_BASE)
+	-mkdir -p $(TEST_OBJ)
+	-mkdir -p $(TEST_BIN)
+
+
+.PHONY: install
+install:
+	-cd $(INSTALL_BASE) ; [ -d $(LIBNAM) ] && rm -fr $(LIBNAM)
+	-cd $(INSTALL_BASE) ; [ ! -d $(LIBNAM)/include ] && mkdir -p $(LIBNAM)/include/$(SYS)
+	cp $(LIB_PATH) $(INSTALL_DIR)/$(LIBNAM).a
+	cp src/*.h $(INSTALL_DIR)/include/
+	if [ -d src/$(SYS) ]; then \
+		cp src/$(SYS)/*.h $(INSTALL_DIR)/include/$(SYS)/; \
+	fi
+
+
+.PHONY: test
+test: $(TESTS)
+
+

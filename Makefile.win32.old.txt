@@ -1,0 +1,1387 @@
+# Generated file do not edit!
+# ( 4/ 2/2018 14:37:24.000)
+
+
+LIBNAM=libCmn
+SYS=win32
+INSTALL_BASE = $(HOMEDRIVE)$(HOMEPATH)\Support\lib\$(SYS)
+
+LIBS = 
+CFLAGS = $(CFLAGS) /WX /Isrc /Isrc\$(SYS)
+CFLAGS = $(CFLAGS) /D__MSVC32__ /D__WIN32_ENV__
+
+INSTALLDIR = $(INSTALL_BASE)\$(LIBNAM)
+!IFDEF  NDEBUG
+CFLAGS = $(CFLAGS) /DNDEBUG
+LIB_FILENAME=$(LIBNAM)R.lib
+OBJDIR = $(TEMP)\$(SYS)\Release
+LRFNAM = $(LIBNAM)_$(SYS)_r.lbc
+!ELSE   #DEBUG
+CFLAGS = $(CFLAGS) /D_DEBUG
+LIB_FILENAME=$(LIBNAM)D.lib
+OBJDIR = $(TEMP)\$(SYS)\Debug
+LRFNAM = $(LIBNAM)_$(SYS)_d.lbc
+!ENDIF  #NDEBUG
+LIBPATH = $(OBJDIR)\$(LIB_FILENAME)
+
+
+.SUFFIXES:
+.SUFFIXES: .asm .c .cpp .obj
+
+
+
+
+
+OBJS =
+OBJS = $(OBJS) $(OBJDIR)\AStr.obj $(OBJDIR)\AStr_object.obj
+OBJS = $(OBJS) $(OBJDIR)\AStrArray.obj $(OBJDIR)\AStrArray_object.obj
+OBJS = $(OBJS) $(OBJDIR)\AStrC.obj $(OBJDIR)\AStrC_object.obj
+OBJS = $(OBJS) $(OBJDIR)\W32Str.obj $(OBJDIR)\W32Str_object.obj
+OBJS = $(OBJS) $(OBJDIR)\W32StrC.obj $(OBJDIR)\W32StrC_object.obj
+OBJS = $(OBJS) $(OBJDIR)\appl.obj $(OBJDIR)\appl_object.obj
+OBJS = $(OBJS) $(OBJDIR)\array.obj $(OBJDIR)\array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\ascii.obj $(OBJDIR)\ascii_object.obj
+OBJS = $(OBJS) $(OBJDIR)\audioCW.obj $(OBJDIR)\audioCW_object.obj
+OBJS = $(OBJS) $(OBJDIR)\audioWAV.obj $(OBJDIR)\audioWAV_object.obj
+OBJS = $(OBJS) $(OBJDIR)\bitMatrix.obj $(OBJDIR)\bitMatrix_object.obj
+OBJS = $(OBJS) $(OBJDIR)\bitSet.obj $(OBJDIR)\bitSet_object.obj
+OBJS = $(OBJS) $(OBJDIR)\blkdrcds16.obj $(OBJDIR)\blkdrcds16_object.obj
+OBJS = $(OBJS) $(OBJDIR)\block16.obj $(OBJDIR)\block16_object.obj
+OBJS = $(OBJS) $(OBJDIR)\block32.obj $(OBJDIR)\block32_object.obj
+OBJS = $(OBJS) $(OBJDIR)\blocks.obj $(OBJDIR)\blocks_object.obj
+OBJS = $(OBJS) $(OBJDIR)\bptree.obj $(OBJDIR)\bptree_object.obj
+OBJS = $(OBJS) $(OBJDIR)\btp.obj $(OBJDIR)\btp_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cb.obj $(OBJDIR)\cb_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cb16.obj $(OBJDIR)\cb16_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cb32.obj $(OBJDIR)\cb32_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cfa.obj $(OBJDIR)\cfa_object.obj
+OBJS = $(OBJS) $(OBJDIR)\clo.obj $(OBJDIR)\clo_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cloOpt.obj $(OBJDIR)\cloOpt_object.obj
+OBJS = $(OBJS) $(OBJDIR)\cmdutl.obj $(OBJDIR)\cmdutl_object.obj
+OBJS = $(OBJS) $(OBJDIR)\compiler.obj $(OBJDIR)\compiler_object.obj
+OBJS = $(OBJS) $(OBJDIR)\consumer.obj $(OBJDIR)\consumer_object.obj
+OBJS = $(OBJS) $(OBJDIR)\crc.obj $(OBJDIR)\crc_object.obj
+OBJS = $(OBJS) $(OBJDIR)\csv.obj $(OBJDIR)\csv_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dateTime.obj $(OBJDIR)\dateTime_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dbCsv.obj $(OBJDIR)\dbCsv_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dbField.obj $(OBJDIR)\dbField_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dbf.obj $(OBJDIR)\dbf_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dec.obj $(OBJDIR)\dec_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dir.obj $(OBJDIR)\dir_object.obj
+OBJS = $(OBJS) $(OBJDIR)\dirEntry.obj $(OBJDIR)\dirEntry_object.obj
+OBJS = $(OBJS) $(OBJDIR)\eResult.obj $(OBJDIR)\eResult_object.obj
+OBJS = $(OBJS) $(OBJDIR)\ebcdic.obj $(OBJDIR)\ebcdic_object.obj
+OBJS = $(OBJS) $(OBJDIR)\endian.obj $(OBJDIR)\endian_object.obj
+OBJS = $(OBJS) $(OBJDIR)\enum.obj $(OBJDIR)\enum_object.obj
+OBJS = $(OBJS) $(OBJDIR)\execArray.obj $(OBJDIR)\execArray_object.obj
+OBJS = $(OBJS) $(OBJDIR)\false.obj $(OBJDIR)\false_object.obj
+OBJS = $(OBJS) $(OBJDIR)\fbsi.obj $(OBJDIR)\fbsi_object.obj
+OBJS = $(OBJS) $(OBJDIR)\fbso.obj $(OBJDIR)\fbso_object.obj
+OBJS = $(OBJS) $(OBJDIR)\file.obj $(OBJDIR)\file_object.obj
+OBJS = $(OBJS) $(OBJDIR)\fileio.obj $(OBJDIR)\fileio_object.obj
+OBJS = $(OBJS) $(OBJDIR)\genObj.obj $(OBJDIR)\genObj_object.obj
+OBJS = $(OBJS) $(OBJDIR)\greg.obj $(OBJDIR)\greg_object.obj
+OBJS = $(OBJS) $(OBJDIR)\hash32.obj $(OBJDIR)\hash32_object.obj
+OBJS = $(OBJS) $(OBJDIR)\hex.obj $(OBJDIR)\hex_object.obj
+OBJS = $(OBJS) $(OBJDIR)\hjson.obj $(OBJDIR)\hjson_object.obj
+OBJS = $(OBJS) $(OBJDIR)\i32Array.obj $(OBJDIR)\i32Array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\jsonIn.obj $(OBJDIR)\jsonIn_object.obj
+OBJS = $(OBJS) $(OBJDIR)\jsonOut.obj $(OBJDIR)\jsonOut_object.obj
+OBJS = $(OBJS) $(OBJDIR)\lex.obj $(OBJDIR)\lex_object.obj
+OBJS = $(OBJS) $(OBJDIR)\lexj.obj $(OBJDIR)\lexj_object.obj
+OBJS = $(OBJS) $(OBJDIR)\lru.obj $(OBJDIR)\lru_object.obj
+OBJS = $(OBJS) $(OBJDIR)\macro.obj $(OBJDIR)\macro_object.obj
+OBJS = $(OBJS) $(OBJDIR)\md5ChkSum.obj $(OBJDIR)\md5ChkSum_object.obj
+OBJS = $(OBJS) $(OBJDIR)\misc.obj $(OBJDIR)\misc_object.obj
+OBJS = $(OBJS) $(OBJDIR)\msgBus.obj $(OBJDIR)\msgBus_object.obj
+OBJS = $(OBJS) $(OBJDIR)\msgData.obj $(OBJDIR)\msgData_object.obj
+OBJS = $(OBJS) $(OBJDIR)\name.obj $(OBJDIR)\name_object.obj
+OBJS = $(OBJS) $(OBJDIR)\node.obj $(OBJDIR)\node_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeArc.obj $(OBJDIR)\nodeArc_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeArray.obj $(OBJDIR)\nodeArray_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeGraph.obj $(OBJDIR)\nodeGraph_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeHash.obj $(OBJDIR)\nodeHash_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeList.obj $(OBJDIR)\nodeList_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeMatrix.obj $(OBJDIR)\nodeMatrix_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeScan.obj $(OBJDIR)\nodeScan_object.obj
+OBJS = $(OBJS) $(OBJDIR)\nodeTree.obj $(OBJDIR)\nodeTree_object.obj
+OBJS = $(OBJS) $(OBJDIR)\null.obj $(OBJDIR)\null_object.obj
+OBJS = $(OBJS) $(OBJDIR)\number.obj $(OBJDIR)\number_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objArray.obj $(OBJDIR)\objArray_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objCb.obj $(OBJDIR)\objCb_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objEnum.obj $(OBJDIR)\objEnum_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objHash.obj $(OBJDIR)\objHash_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objList.obj $(OBJDIR)\objList_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objMatrix.obj $(OBJDIR)\objMatrix_object.obj
+OBJS = $(OBJS) $(OBJDIR)\objMethod.obj $(OBJDIR)\objMethod_object.obj
+OBJS = $(OBJS) $(OBJDIR)\parser.obj $(OBJDIR)\parser_object.obj
+OBJS = $(OBJS) $(OBJDIR)\path.obj $(OBJDIR)\path_object.obj
+OBJS = $(OBJS) $(OBJDIR)\plist.obj $(OBJDIR)\plist_object.obj
+OBJS = $(OBJS) $(OBJDIR)\pplex.obj $(OBJDIR)\pplex_object.obj
+OBJS = $(OBJS) $(OBJDIR)\pplex1.obj $(OBJDIR)\pplex1_object.obj
+OBJS = $(OBJS) $(OBJDIR)\pplex2.obj $(OBJDIR)\pplex2_object.obj
+OBJS = $(OBJS) $(OBJDIR)\pplex3.obj $(OBJDIR)\pplex3_object.obj
+OBJS = $(OBJS) $(OBJDIR)\prt.obj $(OBJDIR)\prt_object.obj
+OBJS = $(OBJS) $(OBJDIR)\psxCond.obj $(OBJDIR)\psxCond_object.obj
+OBJS = $(OBJS) $(OBJDIR)\psxLock.obj $(OBJDIR)\psxLock_object.obj
+OBJS = $(OBJS) $(OBJDIR)\psxMutex.obj $(OBJDIR)\psxMutex_object.obj
+OBJS = $(OBJS) $(OBJDIR)\psxSem.obj $(OBJDIR)\psxSem_object.obj
+OBJS = $(OBJS) $(OBJDIR)\psxThread.obj $(OBJDIR)\psxThread_object.obj
+OBJS = $(OBJS) $(OBJDIR)\ptrArray.obj $(OBJDIR)\ptrArray_object.obj
+OBJS = $(OBJS) $(OBJDIR)\rrds32.obj $(OBJDIR)\rrds32_object.obj
+OBJS = $(OBJS) $(OBJDIR)\sidx.obj $(OBJDIR)\sidx_object.obj
+OBJS = $(OBJS) $(OBJDIR)\srcError.obj $(OBJDIR)\srcError_object.obj
+OBJS = $(OBJS) $(OBJDIR)\srcErrors.obj $(OBJDIR)\srcErrors_object.obj
+OBJS = $(OBJS) $(OBJDIR)\srcFile.obj $(OBJDIR)\srcFile_object.obj
+OBJS = $(OBJS) $(OBJDIR)\srcFiles.obj $(OBJDIR)\srcFiles_object.obj
+OBJS = $(OBJS) $(OBJDIR)\srcLoc.obj $(OBJDIR)\srcLoc_object.obj
+OBJS = $(OBJS) $(OBJDIR)\symAttr.obj $(OBJDIR)\symAttr_object.obj
+OBJS = $(OBJS) $(OBJDIR)\symEntry.obj $(OBJDIR)\symEntry_object.obj
+OBJS = $(OBJS) $(OBJDIR)\symTable.obj $(OBJDIR)\symTable_object.obj
+OBJS = $(OBJS) $(OBJDIR)\szData.obj $(OBJDIR)\szData_object.obj
+OBJS = $(OBJS) $(OBJDIR)\szHash.obj $(OBJDIR)\szHash_object.obj
+OBJS = $(OBJS) $(OBJDIR)\szTbl.obj $(OBJDIR)\szTbl_object.obj
+OBJS = $(OBJS) $(OBJDIR)\table.obj $(OBJDIR)\table_object.obj
+OBJS = $(OBJS) $(OBJDIR)\ternary.obj $(OBJDIR)\ternary_object.obj
+OBJS = $(OBJS) $(OBJDIR)\textIn.obj $(OBJDIR)\textIn_object.obj
+OBJS = $(OBJS) $(OBJDIR)\textOut.obj $(OBJDIR)\textOut_object.obj
+OBJS = $(OBJS) $(OBJDIR)\timer.obj $(OBJDIR)\timer_object.obj
+OBJS = $(OBJS) $(OBJDIR)\token.obj $(OBJDIR)\token_object.obj
+OBJS = $(OBJS) $(OBJDIR)\tokenList.obj $(OBJDIR)\tokenList_object.obj
+OBJS = $(OBJS) $(OBJDIR)\trace.obj $(OBJDIR)\trace_object.obj
+OBJS = $(OBJS) $(OBJDIR)\true.obj $(OBJDIR)\true_object.obj
+OBJS = $(OBJS) $(OBJDIR)\u12Array.obj $(OBJDIR)\u12Array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\u16Array.obj $(OBJDIR)\u16Array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\u16Matrix.obj $(OBJDIR)\u16Matrix_object.obj
+OBJS = $(OBJS) $(OBJDIR)\u32Array.obj $(OBJDIR)\u32Array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\u8Array.obj $(OBJDIR)\u8Array_object.obj
+OBJS = $(OBJS) $(OBJDIR)\uint128.obj $(OBJDIR)\uint128_object.obj
+OBJS = $(OBJS) $(OBJDIR)\utf8.obj $(OBJDIR)\utf8_object.obj
+OBJS = $(OBJS) $(OBJDIR)\value.obj $(OBJDIR)\value_object.obj
+OBJS = $(OBJS) $(OBJDIR)\visitor.obj $(OBJDIR)\visitor_object.obj
+OBJS = $(OBJS) $(OBJDIR)\wav.obj $(OBJDIR)\wav_object.obj
+OBJS = $(OBJS) $(OBJDIR)\xml.obj $(OBJDIR)\xml_object.obj
+OBJS = $(OBJS) $(OBJDIR)\AStr_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\dec_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\hex_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\listdl.obj
+OBJS = $(OBJS) $(OBJDIR)\md5_plumb.obj
+OBJS = $(OBJS) $(OBJDIR)\name_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\node_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\null_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\number_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\obj.obj
+OBJS = $(OBJS) $(OBJDIR)\objHash_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\scandec32.obj
+OBJS = $(OBJS) $(OBJDIR)\scanhex32.obj
+OBJS = $(OBJS) $(OBJDIR)\scanstring.obj
+OBJS = $(OBJS) $(OBJDIR)\scanwhite.obj
+OBJS = $(OBJS) $(OBJDIR)\shellSortPtrs.obj
+OBJS = $(OBJS) $(OBJDIR)\srcLoc_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\str.obj
+OBJS = $(OBJS) $(OBJDIR)\symEntry_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\szData_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\szTbl_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\token_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\utf8_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\value_JSON.obj
+OBJS = $(OBJS) $(OBJDIR)\W32Str_JSON.obj
+
+
+{src}.asm{$(OBJDIR)}.obj:
+	$(AS) $(AFLAGS) /c /Fo$(OBJDIR)\$(@F) $<
+
+
+{src}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) /c /Fo$(OBJDIR)\$(@F) $<
+
+
+
+
+{src\$(SYS)}.asm{$(OBJDIR)}.obj:
+	$(AS) $(AFLAGS) /c /Fo$(OBJDIR)\$(@F) $<
+
+
+{src\$(SYS)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) /c /Fo$(OBJDIR)\$(@F) $<
+
+
+
+OBJS = $(OBJS) $(OBJDIR)\cmn_win32.obj
+
+$(OBJDIR)\cmn_win32.obj:
+	$(CC) $(CFLAGS) /c /Fo$(OBJDIR)\$(@F) src\$(SYS)\cmn_win32.c
+
+
+OBJS = $(OBJS) $(OBJDIR)\memWin32.obj
+
+$(OBJDIR)\memWin32.obj:
+	$(CC) $(CFLAGS) /c /Fo$(OBJDIR)\$(@F) src\$(SYS)\memWin32.c
+
+
+OBJS = $(OBJS) $(OBJDIR)\memWin32_object.obj
+
+$(OBJDIR)\memWin32_object.obj:
+	$(CC) $(CFLAGS) /c /Fo$(OBJDIR)\$(@F) src\$(SYS)\memWin32_object.c
+
+
+
+
+
+
+
+$(LIBPATH):  $(OBJS)
+	cd $(OBJDIR)
+	if exist $(LIB_FILENAME) del $(LIB_FILENAME)
+	lib /OUT:$(LIB_FILENAME) @<<$(LRFNAM)
+$(OBJS: =  )
+<<NOKEEP
+
+
+
+
+
+
+PROGS =
+
+
+
+PROGS = $(PROGS) genGetterSetter
+
+genGetterSetter:
+	$(CC) $(CFLAGS) /Iprograms\genGetterSetter programs\genGetterSetter\genGetterSetter.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+PROGS = $(PROGS) genMake
+
+genMake:
+	$(CC) $(CFLAGS) /Iprograms\genMake programs\genMake\genMake.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+PROGS = $(PROGS) lexFileToJSON
+
+lexFileToJSON:
+	$(CC) $(CFLAGS) /Iprograms\lexFileToJSON programs\lexFileToJSON\lexFileToJSON.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+PROGS = $(PROGS) md5Util
+
+md5Util:
+	$(CC) $(CFLAGS) /Iprograms\md5Util programs\md5Util\md5Util.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+
+
+programs:  $(PROGS)
+
+
+
+
+
+
+TESTS =
+
+
+
+TESTS = $(TESTS) test_AStr
+
+test_AStr:
+	$(CC) $(CFLAGS) /Itests tests\test_AStr.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_AStrArray
+
+test_AStrArray:
+	$(CC) $(CFLAGS) /Itests tests\test_AStrArray.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_AStrC
+
+test_AStrC:
+	$(CC) $(CFLAGS) /Itests tests\test_AStrC.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_W32Str
+
+test_W32Str:
+	$(CC) $(CFLAGS) /Itests tests\test_W32Str.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_W32StrC
+
+test_W32StrC:
+	$(CC) $(CFLAGS) /Itests tests\test_W32StrC.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_appl
+
+test_appl:
+	$(CC) $(CFLAGS) /Itests tests\test_appl.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_array
+
+test_array:
+	$(CC) $(CFLAGS) /Itests tests\test_array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_ascii
+
+test_ascii:
+	$(CC) $(CFLAGS) /Itests tests\test_ascii.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_audioCW
+
+test_audioCW:
+	$(CC) $(CFLAGS) /Itests tests\test_audioCW.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_audioWAV
+
+test_audioWAV:
+	$(CC) $(CFLAGS) /Itests tests\test_audioWAV.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_bitMatrix
+
+test_bitMatrix:
+	$(CC) $(CFLAGS) /Itests tests\test_bitMatrix.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_bitSet
+
+test_bitSet:
+	$(CC) $(CFLAGS) /Itests tests\test_bitSet.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_blkdrcds16
+
+test_blkdrcds16:
+	$(CC) $(CFLAGS) /Itests tests\test_blkdrcds16.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_block16
+
+test_block16:
+	$(CC) $(CFLAGS) /Itests tests\test_block16.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_block32
+
+test_block32:
+	$(CC) $(CFLAGS) /Itests tests\test_block32.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_blocks
+
+test_blocks:
+	$(CC) $(CFLAGS) /Itests tests\test_blocks.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_bptree
+
+test_bptree:
+	$(CC) $(CFLAGS) /Itests tests\test_bptree.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_btp
+
+test_btp:
+	$(CC) $(CFLAGS) /Itests tests\test_btp.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_cb
+
+test_cb:
+	$(CC) $(CFLAGS) /Itests tests\test_cb.c tests\objTest.c tests\objTest_object.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_cb16
+
+test_cb16:
+	$(CC) $(CFLAGS) /Itests tests\test_cb16.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_cb32
+
+test_cb32:
+	$(CC) $(CFLAGS) /Itests tests\test_cb32.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_cfa
+
+test_cfa:
+	$(CC) $(CFLAGS) /Itests tests\test_cfa.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_clo
+
+test_clo:
+	$(CC) $(CFLAGS) /Itests tests\test_clo.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_cloOpt
+
+test_cloOpt:
+	$(CC) $(CFLAGS) /Itests tests\test_cloOpt.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_compiler
+
+test_compiler:
+	$(CC) $(CFLAGS) /Itests tests\test_compiler.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_consumer
+
+test_consumer:
+	$(CC) $(CFLAGS) /Itests tests\test_consumer.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_crc
+
+test_crc:
+	$(CC) $(CFLAGS) /Itests tests\test_crc.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_csv
+
+test_csv:
+	$(CC) $(CFLAGS) /Itests tests\test_csv.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dateTime
+
+test_dateTime:
+	$(CC) $(CFLAGS) /Itests tests\test_dateTime.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dbCsv
+
+test_dbCsv:
+	$(CC) $(CFLAGS) /Itests tests\test_dbCsv.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dbField
+
+test_dbField:
+	$(CC) $(CFLAGS) /Itests tests\test_dbField.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dbf
+
+test_dbf:
+	$(CC) $(CFLAGS) /Itests tests\test_dbf.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dec
+
+test_dec:
+	$(CC) $(CFLAGS) /Itests tests\test_dec.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dir
+
+test_dir:
+	$(CC) $(CFLAGS) /Itests tests\test_dir.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_dirEntry
+
+test_dirEntry:
+	$(CC) $(CFLAGS) /Itests tests\test_dirEntry.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_eResult
+
+test_eResult:
+	$(CC) $(CFLAGS) /Itests tests\test_eResult.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_ebcdic
+
+test_ebcdic:
+	$(CC) $(CFLAGS) /Itests tests\test_ebcdic.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_endian
+
+test_endian:
+	$(CC) $(CFLAGS) /Itests tests\test_endian.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_enum
+
+test_enum:
+	$(CC) $(CFLAGS) /Itests tests\test_enum.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_execArray
+
+test_execArray:
+	$(CC) $(CFLAGS) /Itests tests\test_execArray.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_false
+
+test_false:
+	$(CC) $(CFLAGS) /Itests tests\test_false.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_fbs
+
+test_fbs:
+	$(CC) $(CFLAGS) /Itests tests\test_fbs.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_fileio
+
+test_fileio:
+	$(CC) $(CFLAGS) /Itests tests\test_fileio.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_genObj
+
+test_genObj:
+	$(CC) $(CFLAGS) /Itests tests\test_genObj.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_greg
+
+test_greg:
+	$(CC) $(CFLAGS) /Itests tests\test_greg.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_hash32
+
+test_hash32:
+	$(CC) $(CFLAGS) /Itests tests\test_hash32.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_hex
+
+test_hex:
+	$(CC) $(CFLAGS) /Itests tests\test_hex.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_hjson
+
+test_hjson:
+	$(CC) $(CFLAGS) /Itests tests\test_hjson.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_i32Array
+
+test_i32Array:
+	$(CC) $(CFLAGS) /Itests tests\test_i32Array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_jsonIn
+
+test_jsonIn:
+	$(CC) $(CFLAGS) /Itests tests\test_jsonIn.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_jsonOut
+
+test_jsonOut:
+	$(CC) $(CFLAGS) /Itests tests\test_jsonOut.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_lex
+
+test_lex:
+	$(CC) $(CFLAGS) /Itests tests\test_lex.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_lexj
+
+test_lexj:
+	$(CC) $(CFLAGS) /Itests tests\test_lexj.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_listdl
+
+test_listdl:
+	$(CC) $(CFLAGS) /Itests tests\test_listdl.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_lru
+
+test_lru:
+	$(CC) $(CFLAGS) /Itests tests\test_lru.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_macro
+
+test_macro:
+	$(CC) $(CFLAGS) /Itests tests\test_macro.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_md5ChkSum
+
+test_md5ChkSum:
+	$(CC) $(CFLAGS) /Itests tests\test_md5ChkSum.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_memOSX
+
+test_memOSX:
+	$(CC) $(CFLAGS) /Itests tests\test_memOSX.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_misc
+
+test_misc:
+	$(CC) $(CFLAGS) /Itests tests\test_misc.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_msgBus
+
+test_msgBus:
+	$(CC) $(CFLAGS) /Itests tests\test_msgBus.c tests\objTest.c tests\objTest_object.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_msgData
+
+test_msgData:
+	$(CC) $(CFLAGS) /Itests tests\test_msgData.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_name
+
+test_name:
+	$(CC) $(CFLAGS) /Itests tests\test_name.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_node
+
+test_node:
+	$(CC) $(CFLAGS) /Itests tests\test_node.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeArc
+
+test_nodeArc:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeArc.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeArray
+
+test_nodeArray:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeArray.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeGraph
+
+test_nodeGraph:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeGraph.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeHash
+
+test_nodeHash:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeHash.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeList
+
+test_nodeList:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeList.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeMatrix
+
+test_nodeMatrix:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeMatrix.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeScan
+
+test_nodeScan:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeScan.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_nodeTree
+
+test_nodeTree:
+	$(CC) $(CFLAGS) /Itests tests\test_nodeTree.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_null
+
+test_null:
+	$(CC) $(CFLAGS) /Itests tests\test_null.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_number
+
+test_number:
+	$(CC) $(CFLAGS) /Itests tests\test_number.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_obj
+
+test_obj:
+	$(CC) $(CFLAGS) /Itests tests\test_obj.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objArray
+
+test_objArray:
+	$(CC) $(CFLAGS) /Itests tests\test_objArray.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objCb
+
+test_objCb:
+	$(CC) $(CFLAGS) /Itests tests\test_objCb.c tests\objTest.c tests\objTest_object.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objEnum
+
+test_objEnum:
+	$(CC) $(CFLAGS) /Itests tests\test_objEnum.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objHash
+
+test_objHash:
+	$(CC) $(CFLAGS) /Itests tests\test_objHash.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objList
+
+test_objList:
+	$(CC) $(CFLAGS) /Itests tests\test_objList.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objMatrix
+
+test_objMatrix:
+	$(CC) $(CFLAGS) /Itests tests\test_objMatrix.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objMethod
+
+test_objMethod:
+	$(CC) $(CFLAGS) /Itests tests\test_objMethod.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_objTest
+
+test_objTest:
+	$(CC) $(CFLAGS) /Itests tests\test_objTest.c tests\objTest.c tests\objTest_object.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_parser
+
+test_parser:
+	$(CC) $(CFLAGS) /Itests tests\test_parser.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_path
+
+test_path:
+	$(CC) $(CFLAGS) /Itests tests\test_path.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_plist
+
+test_plist:
+	$(CC) $(CFLAGS) /Itests tests\test_plist.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_pplex
+
+test_pplex:
+	$(CC) $(CFLAGS) /Itests tests\test_pplex.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_pplex1
+
+test_pplex1:
+	$(CC) $(CFLAGS) /Itests tests\test_pplex1.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_pplex2
+
+test_pplex2:
+	$(CC) $(CFLAGS) /Itests tests\test_pplex2.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_pplex3
+
+test_pplex3:
+	$(CC) $(CFLAGS) /Itests tests\test_pplex3.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_psxCond
+
+test_psxCond:
+	$(CC) $(CFLAGS) /Itests tests\test_psxCond.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_psxLock
+
+test_psxLock:
+	$(CC) $(CFLAGS) /Itests tests\test_psxLock.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_psxMutex
+
+test_psxMutex:
+	$(CC) $(CFLAGS) /Itests tests\test_psxMutex.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_psxSem
+
+test_psxSem:
+	$(CC) $(CFLAGS) /Itests tests\test_psxSem.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_psxThread
+
+test_psxThread:
+	$(CC) $(CFLAGS) /Itests tests\test_psxThread.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_ptrArray
+
+test_ptrArray:
+	$(CC) $(CFLAGS) /Itests tests\test_ptrArray.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_rrds32
+
+test_rrds32:
+	$(CC) $(CFLAGS) /Itests tests\test_rrds32.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_scanDate
+
+test_scanDate:
+	$(CC) $(CFLAGS) /Itests tests\test_scanDate.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_scanDec32
+
+test_scanDec32:
+	$(CC) $(CFLAGS) /Itests tests\test_scanDec32.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_scanString
+
+test_scanString:
+	$(CC) $(CFLAGS) /Itests tests\test_scanString.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_scanWhite
+
+test_scanWhite:
+	$(CC) $(CFLAGS) /Itests tests\test_scanWhite.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_sidx
+
+test_sidx:
+	$(CC) $(CFLAGS) /Itests tests\test_sidx.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_srcError
+
+test_srcError:
+	$(CC) $(CFLAGS) /Itests tests\test_srcError.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_srcErrors
+
+test_srcErrors:
+	$(CC) $(CFLAGS) /Itests tests\test_srcErrors.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_srcFile
+
+test_srcFile:
+	$(CC) $(CFLAGS) /Itests tests\test_srcFile.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_srcFiles
+
+test_srcFiles:
+	$(CC) $(CFLAGS) /Itests tests\test_srcFiles.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_srcLoc
+
+test_srcLoc:
+	$(CC) $(CFLAGS) /Itests tests\test_srcLoc.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_str
+
+test_str:
+	$(CC) $(CFLAGS) /Itests tests\test_str.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_symAttr
+
+test_symAttr:
+	$(CC) $(CFLAGS) /Itests tests\test_symAttr.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_symEntry
+
+test_symEntry:
+	$(CC) $(CFLAGS) /Itests tests\test_symEntry.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_symTable
+
+test_symTable:
+	$(CC) $(CFLAGS) /Itests tests\test_symTable.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_szData
+
+test_szData:
+	$(CC) $(CFLAGS) /Itests tests\test_szData.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_szHash
+
+test_szHash:
+	$(CC) $(CFLAGS) /Itests tests\test_szHash.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_szTbl
+
+test_szTbl:
+	$(CC) $(CFLAGS) /Itests tests\test_szTbl.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_table
+
+test_table:
+	$(CC) $(CFLAGS) /Itests tests\test_table.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_ternary
+
+test_ternary:
+	$(CC) $(CFLAGS) /Itests tests\test_ternary.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_textIn
+
+test_textIn:
+	$(CC) $(CFLAGS) /Itests tests\test_textIn.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_textOut
+
+test_textOut:
+	$(CC) $(CFLAGS) /Itests tests\test_textOut.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_timer
+
+test_timer:
+	$(CC) $(CFLAGS) /Itests tests\test_timer.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_token
+
+test_token:
+	$(CC) $(CFLAGS) /Itests tests\test_token.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_tokenList
+
+test_tokenList:
+	$(CC) $(CFLAGS) /Itests tests\test_tokenList.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_trace
+
+test_trace:
+	$(CC) $(CFLAGS) /Itests tests\test_trace.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_true
+
+test_true:
+	$(CC) $(CFLAGS) /Itests tests\test_true.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_u12Array
+
+test_u12Array:
+	$(CC) $(CFLAGS) /Itests tests\test_u12Array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_u16Array
+
+test_u16Array:
+	$(CC) $(CFLAGS) /Itests tests\test_u16Array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_u16Matrix
+
+test_u16Matrix:
+	$(CC) $(CFLAGS) /Itests tests\test_u16Matrix.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_u32Array
+
+test_u32Array:
+	$(CC) $(CFLAGS) /Itests tests\test_u32Array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_u8Array
+
+test_u8Array:
+	$(CC) $(CFLAGS) /Itests tests\test_u8Array.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_uint128
+
+test_uint128:
+	$(CC) $(CFLAGS) /Itests tests\test_uint128.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_utf8
+
+test_utf8:
+	$(CC) $(CFLAGS) /Itests tests\test_utf8.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_value
+
+test_value:
+	$(CC) $(CFLAGS) /Itests tests\test_value.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_visitor
+
+test_visitor:
+	$(CC) $(CFLAGS) /Itests tests\test_visitor.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_wav
+
+test_wav:
+	$(CC) $(CFLAGS) /Itests tests\test_wav.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+TESTS = $(TESTS) test_xml
+
+test_xml:
+	$(CC) $(CFLAGS) /Itests tests\test_xml.c /link /out:$(OBJDIR)\$(@F).exe $(LIBPATH) $(LIBS) 
+	del *.obj
+	$(OBJDIR)\$(@F).exe
+
+
+
+
+test:  $(TESTS)
+
+
+
+
+
+
+
+clean:
+	if exist $(OBJDIR) rmdir /S /Q $(OBJDIR)
+
+
+create_dirs:
+	if not exist $(OBJDIR) mkdir $(OBJDIR)
+
+
+all:  clean create_dirs $(LIBPATH)
+
+
+
+install:
+	pushd $(INSTALL_BASE) & if exist $(LIBNAM) rmdir /S /Q $(LIBNAM) & popd
+	pushd $(INSTALL_BASE) & mkdir $(LIBNAM)\include & popd
+	copy $(LIBPATH) $(INSTALLDIR)\$(LIBNAM).lib
+	copy src\*.h $(INSTALLDIR)\include
+	if exist src\$(SYS) copy src\$(SYS)\*.h $(INSTALLDIR)\include
+
+

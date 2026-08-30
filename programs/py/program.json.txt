@@ -1,0 +1,28 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+
+{
+    "program":{
+        "name":"genMake",
+        "deps":["Cmn"],
+        "hdrs":["genMake.h"],
+        "main":"mainProgram.c"
+    },
+    "objects":[
+        {name:"Dict"},
+        {name:"ExpandNodes"},
+        {name:"GenBase"},
+        {name:"GenMac"},
+        {name:"GenWin"},
+        {name:"Main"},
+        {name:"NodeBase"},
+        {name:"NodeHdr"},
+        {name:"NodeLib"},
+        {name:"NodeObj",    "deps":["NodeBase.h","NodeRtn.h","NodeTest.h"]},
+        {name:"NodePgm"},
+        {name:"NodeRtn",    "deps":["NodeBase.h","NodeTest.h"]},
+        {name:"NodeRtnA",   "deps":["NodeBase.h"]},
+        {name:"NodeTest",   "deps":["NodeBase.h"]},
+        {name:"NodeTstA",   "deps":["NodeBase.h"]},
+        {name:"SrcParse"}
+    ]
+}

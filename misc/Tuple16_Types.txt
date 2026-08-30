@@ -1,0 +1,22 @@
+# genEnum --prefix=Tuple16 --name=Type --file misc/Tuple16_Types.txt
+UNKNOWN
+* *** 16-bit Tuple Types ***
+BASE
+DOUBLE
+FALSE
+INT8
+INT16
+INT32
+INT64
+NULL
+OBJECT,"Object Reference"
+OPCODE,"Opcode Reference"
+PTR,"Pointer Reference"
+SYMBOL,"Symbol Reference"
+TOKEN
+TRUE
+UTF8,"UTF-8 String"
+UTF32,"UTF-32 String (ie WCHAR_T)"
+* *** End of Defined Types ***
+HIGHEST
+

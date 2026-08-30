@@ -1,0 +1,415 @@
+
+
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+#include "hjson.h"
+#include "Node.h"           // ← You may need to include more headers
+#include "NodeHash.h"
+#include "NodeArray.h"
+#include "AStr.h"
+#include "True.h"
+#include "False.h"
+#include "Null.h"
+
+// Forward declaration
+static PyObject* Node_ToPython(NODE_DATA* pNode);
+
+// ------------------------------------------------------------------
+// Convert AStr → Python str
+// ------------------------------------------------------------------
+static PyObject* AStr_ToPython(AStr_DATA* pAStr) {
+    if (!pAStr) Py_RETURN_NONE;
+    const char* utf8 = AStr_getData(pAStr);
+    Py_ssize_t len = AStr_getLength(pAStr);
+    return PyUnicode_FromStringAndSize(utf8, len);
+}
+
+// ------------------------------------------------------------------
+// NODEHASH_DATA → Python dict
+// ------------------------------------------------------------------
+static PyObject* NodeHash_ToPython(NODEHASH_DATA* pHash) {
+    if (!pHash) Py_RETURN_NONE;
+
+    PyObject* pyDict = PyDict_New();
+    if (!pyDict) return NULL;
+
+    // You need the iteration API for NODEHASH — common pattern in your libs:
+    NODEARRAY_DATA* pKeys = NodeHash_Keys(pHash);  // or similar method
+    if (pKeys) {
+        uint32_t i, cnt = NodeArray_getSize(pKeys);
+        for (i = 0; i < cnt; i++) {
+            NODE_DATA* pKeyNode = NodeArray_Get(pKeys, i);
+            if (!pKeyNode) continue;
+
+            const char* key = AStr_CStringA(Node_getData(pKeyNode), NULL);
+            NODE_DATA* pValueNode = NodeHash_Find(pHash, key);  // or use pair iterator
+
+            PyObject* pyKey = PyUnicode_FromString(key);
+            PyObject* pyVal = Node_ToPython(pValueNode);
+
+            if (pyKey && pyVal) {
+                PyDict_SetItem(pyDict, pyKey, pyVal);
+            }
+            Py_XDECREF(pyKey);
+            Py_XDECREF(pyVal);
+        }
+        obj_Release(pKeys);
+    }
+
+    return pyDict;
+}
+
+// ------------------------------------------------------------------
+// NODEARRAY_DATA → Python list
+// ------------------------------------------------------------------
+static PyObject* NodeArray_ToPython(NODEARRAY_DATA* pArray) {
+    if (!pArray) Py_RETURN_NONE;
+
+    uint32_t size = NodeArray_getSize(pArray);
+    PyObject* pyList = PyList_New(size);
+    if (!pyList) return NULL;
+
+    for (uint32_t i = 0; i < size; i++) {
+        NODE_DATA* pNode = NodeArray_Get(pArray, i);
+        PyObject* pyItem = Node_ToPython(pNode);
+        PyList_SET_ITEM(pyList, i, pyItem);   // steals reference
+    }
+    return pyList;
+}
+
+// ------------------------------------------------------------------
+// Main recursive converter
+// ------------------------------------------------------------------
+static PyObject* Node_ToPython(NODE_DATA* pNode) {
+    if (!pNode) Py_RETURN_NONE;
+
+    const char* name = AStr_CStringA(Node_getData(pNode), NULL);  // or Node_getName()
+
+    // Special nodes from parser
+    if (strcmp(name, "hash") == 0) {
+        return NodeHash_ToPython((NODEHASH_DATA*)Node_getData(pNode));
+    }
+    if (strcmp(name, "array") == 0) {
+        return NodeArray_ToPython((NODEARRAY_DATA*)Node_getData(pNode));
+    }
+    if (strcmp(name, "string") == 0 || strcmp(name, "name") == 0) {
+        return AStr_ToPython((AStr_DATA*)Node_getData(pNode));
+    }
+    if (strcmp(name, "integer") == 0) {
+        AStr_DATA* pStr = (AStr_DATA*)Node_getData(pNode);
+        return PyLong_FromString(AStr_getData(pStr), NULL, 10);
+    }
+    if (strcmp(name, "float") == 0) {
+        AStr_DATA* pStr = (AStr_DATA*)Node_getData(pNode);
+        return PyFloat_FromDouble(atof(AStr_getData(pStr)));
+    }
+    if (strcmp(name, "true") == 0)  Py_RETURN_TRUE;
+    if (strcmp(name, "false") == 0) Py_RETURN_FALSE;
+    if (strcmp(name, "null") == 0)  Py_RETURN_NONE;
+
+    // Fallback: just the string value
+    return AStr_ToPython((AStr_DATA*)Node_getData(pNode));
+}
+
+// ------------------------------------------------------------------
+// Python-exposed function
+// ------------------------------------------------------------------
+static PyObject* py_hjson_parse(PyObject* self, PyObject* args) {
+    const char* filepath;
+
+    if (!PyArg_ParseTuple(args, "s", &filepath))
+        return NULL;
+
+    HJSON_DATA* pHjson = hjson_NewFromPath(NULL, filepath, 4);  // tabSize=4
+    if (!pHjson) {
+        PyErr_SetString(PyExc_RuntimeError, "Failed to create HJSON parser");
+        return NULL;
+    }
+
+    NODE_DATA* pRoot = hjson_ParseFileHash(pHjson);
+    if (!pRoot) {
+        // Try value instead?
+        pRoot = hjson_ParseFileValue(pHjson);
+    }
+
+    obj_Release(pHjson);
+
+    if (!pRoot) {
+        PyErr_SetString(PyExc_RuntimeError, "HJSON parse failed (check SrcErrors)");
+        return NULL;
+    }
+
+    PyObject* pyResult = Node_ToPython(pRoot);
+    obj_Release(pRoot);
+
+    return pyResult;
+}
+
+// Module methods
+static
+PyMethodDef methods[] = {
+    {"parse", py_hjson_parse, METH_VARARGS, "Parse HJSON file → Python dict/list"},
+    {NULL, NULL, 0, NULL}
+};
+
+static 
+struct PyModuleDef module = {
+    PyModuleDef_HEAD_INIT,
+    "myhjson",
+    "Custom HJSON parser bridge",
+    -1,
+    methods
+};
+
+PyMODINIT_FUNC PyInit_myhjson(void) {
+    return PyModule_Create(&module);
+}
+
+
+
+
+
+
+
+>>>>>>>>>>>> hjson_internal.h changes:
+
+// In hjson_internal.h  (add near the top after includes)
+
+typedef void*   (*HJSON_CreateHash_Fn)  (void);                    // returns PyDict
+typedef void*   (*HJSON_CreateArray_Fn) (void);                    // returns PyList
+typedef void*   (*HJSON_CreateString_Fn)(const char* utf8, size_t len);
+typedef void*   (*HJSON_CreateNumber_Fn)(const char* numStr, bool isFloat);
+typedef void*   (*HJSON_CreateBool_Fn)  (bool value);
+typedef void*   (*HJSON_CreateNull_Fn)  (void);
+
+typedef struct hjson_python_hooks_s {
+    HJSON_CreateHash_Fn     pNewHash;
+    HJSON_CreateArray_Fn    pNewArray;
+    HJSON_CreateString_Fn   pNewString;
+    HJSON_CreateNumber_Fn   pNewNumber;
+    HJSON_CreateBool_Fn     pNewBool;
+    HJSON_CreateNull_Fn     pNewNull;
+
+    // Optional: add pair / append functions if you want to keep using your nodes
+    void (*pHashSetItem)(void* pyDict, const char* key, void* pyValue);
+    void (*pArrayAppend) (void* pyList, void* pyValue);
+} HJSON_PYTHON_HOOKS;
+
+
+
+
+// Inside struct hjson_data_s
+    HJSON_PYTHON_HOOKS  pythonHooks;    // zeroed = use normal NODE objects
+    bool                fUsePythonObjects;
+
+
+
+
+
+
+>>>>>>>>>>>> hjson.c changes:
+
+
+instead of:
+
+pHash = NodeHash_NewWithSize(...);
+...
+pNode = JsonIn_NodeFromHash(pHash);
+
+
+use:
+
+if (this->fUsePythonObjects && this->pythonHooks.pNewHash) {
+    void* pyDict = this->pythonHooks.pNewHash();
+    // then use pHashSetItem later
+} else {
+    // your original NODEHASH code
+}
+
+Same pattern for arrays, strings, numbers, true/false/null.
+
+
+
+
+The python hook object would be something like:
+
+
+// myhjson_hooks.c  (or add to your module)
+
+static void* Python_NewHash(void) {
+    return PyDict_New();
+}
+
+static void* Python_NewArray(void) {
+    return PyList_New(0);
+}
+
+static void* Python_NewString(const char* utf8, size_t len) {
+    return PyUnicode_FromStringAndSize(utf8, len);
+}
+
+static void Python_HashSetItem(void* pyDict, const char* key, void* pyValue) {
+    PyObject* pyKey = PyUnicode_FromString(key);
+    PyDict_SetItem(pyDict, pyKey, pyValue);
+    Py_DECREF(pyKey);
+    Py_DECREF(pyValue);   // Python owns it now
+}
+
+static void Python_ArrayAppend(void* pyList, void* pyValue) {
+    PyList_Append(pyList, pyValue);
+    Py_DECREF(pyValue);
+}
+
+// etc.
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
+Since you can override the creation hooks directly in your `NodeHash`, `NodeArray`, etc., we can keep your existing parser almost untouched and just provide a clean Python bridge that sets up the right function pointers.
+
+---
+
+### Final Clean Python Interface
+
+Here’s exactly what you need on the Python/C side:
+
+**`myhjsonmodule.c`**
+
+```c
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+#include "hjson.h"
+
+// ================================================================
+//  Python creation hooks (these will be called from your C hooks)
+// ================================================================
+
+static PyObject* py_create_hash(void* ctx) {
+    return PyDict_New();
+}
+
+static PyObject* py_create_array(void* ctx) {
+    return PyList_New(0);
+}
+
+static PyObject* py_create_string(void* ctx, const char* utf8, size_t len) {
+    return PyUnicode_FromStringAndSize(utf8, len);
+}
+
+static PyObject* py_create_number(void* ctx, const char* numstr, bool isFloat) {
+    if (isFloat)
+        return PyFloat_FromDouble(atof(numstr));
+    return PyLong_FromString(numstr, NULL, 10);
+}
+
+static PyObject* py_create_bool(void* ctx, bool value) {
+    return Py_NewRef(value ? Py_True : Py_False);
+}
+
+static PyObject* py_create_null(void* ctx) {
+    Py_RETURN_NONE;
+}
+
+// ================================================================
+//  Registration function you will call from your overridden hooks
+// ================================================================
+
+static PyObject* py_hjson_set_hooks(PyObject* self, PyObject* args)
+{
+    HJSON_DATA* hjson;
+    if (!PyArg_ParseTuple(args, "K", (unsigned long long*)&hjson))
+        return NULL;
+
+    // You will call this from C after creating the HJSON object
+    // and before parsing.
+
+    // Example of what you will do in C:
+    // hjson->pythonHooks.pNewHash   = (void*(*)(void*))py_create_hash;
+    // hjson->pythonHooks.pNewArray  = (void*(*)(void*))py_create_array;
+    // etc.
+
+    Py_RETURN_NONE;
+}
+
+// ================================================================
+//  Main parse function
+// ================================================================
+
+static PyObject* py_hjson_parse(PyObject* self, PyObject* args)
+{
+    const char* filepath;
+    if (!PyArg_ParseTuple(args, "s", &filepath))
+        return NULL;
+
+    HJSON_DATA* hjson = hjson_NewFromPath(NULL, filepath, 4);   // tabSize = 4
+    if (!hjson) {
+        PyErr_SetString(PyExc_RuntimeError, "Failed to create HJSON parser");
+        return NULL;
+    }
+
+    // === This is where you will set your hooks from C side ===
+    // For now we just expose the object so you can set them
+    PyObject* result = PyCapsule_New(hjson, "hjson.HJSON_DATA", NULL);
+    if (!result) {
+        obj_Release(hjson);
+        return NULL;
+    }
+
+    // You can also add a convenience wrapper later
+
+    return result;   // User will call set_hooks then parse
+}
+
+// Module definition
+static PyMethodDef methods[] = {
+    {"parse",          py_hjson_parse,      METH_VARARGS, "Start parsing - returns HJSON capsule"},
+    {"set_hooks",      py_hjson_set_hooks,  METH_VARARGS, "Set Python creation hooks"},
+    {NULL, NULL, 0, NULL}
+};
+
+static struct PyModuleDef module = {
+    PyModuleDef_HEAD_INIT,
+    "myhjson",
+    "Custom relaxed HJSON parser bridge",
+    -1,
+    methods
+};
+
+PyMODINIT_FUNC PyInit_myhjson(void) {
+    return PyModule_Create(&module);
+}
+```
+
+---
+
+### How you’ll use it from Python (example)
+
+```python
+import myhjson
+
+# Your C code will do the heavy lifting
+capsule = myhjson.parse("/path/to/index.json.txt")
+
+# Then in your C hook setup (called from Python or directly):
+# myhjson.set_hooks(capsule)   # if you expose it
+
+data = ... # your parser returns the top-level Python dict/list
+print(data['title'])
+```
+
+---
+
+Would you like me to also give you:
+
+1. The exact `HJSON_PYTHON_HOOKS` struct definition I recommend adding?
+2. A small example of how to call the Python creation functions from inside your `NodeHash_New()` / `NodeArray_New()` overrides?
+
+Just say what piece you want next and I’ll give it to you ready to drop in. This should feel very comfortable with your object model.
+
+
+

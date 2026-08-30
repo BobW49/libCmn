@@ -1,0 +1,13 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+* finish building base "index.html".
+
+* generate index of parent pages by scanning "top" directories for "item" entries.
+
+* build keyword database with keyword, "index path" and date. Sort and use latest
+    date to select entry to list.  Also, need to filter database for latest date
+    only to replace old version. "index path" should only contain "top" and "dir"
+    directories.  Learn how to generate relative paths from that.
+
+
+

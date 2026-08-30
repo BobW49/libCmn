@@ -1,0 +1,12 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+
+*   GenItem
+    *   This object needs to make passes over the model filling in data from multple
+        sources such as enums, properties, class, etc.
+    *   Define a VTBL for accessing the associated item's data for inclusion and
+        call the various routines as needed.
+    *   Last, scan the updated model removing any data insert markers not used.
+
+
+

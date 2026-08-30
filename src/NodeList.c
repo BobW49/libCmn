@@ -1,0 +1,1825 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+
+//****************************************************************
+//              A List of Nodes (NodeList) Object Support
+//****************************************************************
+
+
+/*
+ * File:   NodeList.c
+ *  Generated 06/19/2026 19:34:29
+ *
+ */
+
+ 
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+//*****************************************************************
+//* * * * * * * * * * * *  Data Definitions   * * * * * * * * * * *
+//*****************************************************************
+
+/* Header File Inclusion */
+#include        <NodeList_internal.h>
+#include        <JsonIn.h>
+#include        <trace.h>
+#include        <utf8.h>
+
+
+
+
+
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+    
+
+    
+    //****************************************************************
+    // * * * * * * * * * * *    Internal Data    * * * * * * * * * * *
+    //****************************************************************
+
+    // Place constant internal data here. Generally, it should be
+    // 'static' so that it does not interfere with other objects.
+
+
+
+
+
+    /****************************************************************
+    * * * * * * * * * * *  External Subroutines   * * * * * * * * * *
+    ****************************************************************/
+
+
+
+    /****************************************************************
+    * * * * * * * * * * *  Internal Subroutines   * * * * * * * * * *
+    ****************************************************************/
+
+    static
+    ERESULT         NodeList_EnumExit(
+        NODELIST_DATA   *this,
+        NODE_DATA       *pNode,
+        NODEENUM_DATA   *pEnum
+    )
+    {
+        ERESULT         eRc;
+
+        eRc = NodeEnum_Append(pEnum, pNode, 0);
+
+        return eRc;
+    }
+
+
+
+    static
+    ERESULT         NodeList_NodesExit(
+                                       NODELIST_DATA   *this,
+                                       NODE_DATA       *pNode,
+                                       NODEARRAY_DATA  *pArray
+                                       )
+    {
+        ERESULT         eRc;
+
+        eRc = NodeArray_AppendNode(pArray, pNode, NULL);
+
+        return eRc;
+    }
+
+
+
+
+    //===============================================================
+    //                      *** Class Methods ***
+    //===============================================================
+
+    NODELIST_DATA * NodeList_Alloc (
+        void
+    )
+    {
+        NODELIST_DATA   *this;
+        uint32_t        cbSize = sizeof(NODELIST_DATA);
+        
+        // Do initialization.
+        
+         this = obj_Alloc( cbSize );
+        
+        // Return to caller.
+        return this;
+    }
+
+
+
+    NODELIST_DATA * NodeList_New (
+        void
+    )
+    {
+        NODELIST_DATA   *this;
+        
+        this = NodeList_Alloc( );
+        if (this) {
+            this = NodeList_Init(this);
+        } 
+        return this;
+    }
+
+
+
+    
+
+    //===============================================================
+    //                      P r o p e r t i e s
+    //===============================================================
+
+    //---------------------------------------------------------------
+    //                          F l a g
+    //---------------------------------------------------------------
+    
+#ifdef  NEED_ALL_GENERATED_CODE
+    // @property Flag
+    //  assumes a 1-byte flag in this object.
+
+    bool            NodeList_getFlag (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        return this->flag ? true : false;
+    }
+
+
+    bool            NodeList_setFlag (
+        NODELIST_DATA   *this,
+        bool            fValue
+    )
+    {
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return false;
+        }
+#endif
+
+        //this->priority = fValue ? 1 : 0;
+
+        return true;
+    }
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //                          L i s t
+    //---------------------------------------------------------------
+    
+    OBJLIST_DATA *  NodeList_getList (
+        NODELIST_DATA   *this
+    )
+    {
+        
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+        
+        return this->pList;
+    }
+    
+    
+    bool            NodeList_setList (
+        NODELIST_DATA   *this,
+        OBJLIST_DATA    *pValue
+    )
+    {
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return false;
+        }
+#endif
+
+        obj_Retain(pValue);
+        if (this->pList) {
+            obj_Release(this->pList);
+        }
+        this->pList = pValue;
+        
+        return true;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                      M e s s a g e s
+    //---------------------------------------------------------------
+
+#ifdef   NODELIST_MSGS
+    bool            NodeList_setMsgs (
+        NODELIST_DATA   *this,
+        void            (*pMsgInfo)(OBJ_ID, const char *, ...),
+        void            (*pMsgWarn)(OBJ_ID, uint16_t, const char *, ...),
+        OBJ_ID          pObj
+    )
+    {
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return false;
+        }
+#endif
+
+        this->pMsgInfo = pMsgInfo;
+        this->pMsgWarn = pMsgWarn;
+        this->pMsgObj = pObj;
+
+        return true;
+    }
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //                       O r d e r e d
+    //---------------------------------------------------------------
+
+    bool            NodeList_getOrdered (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+        }
+#endif
+
+        return ObjList_getOrdered((OBJLIST_DATA *)this);
+    }
+
+
+    bool            NodeList_setOrdered (
+        NODELIST_DATA   *this,
+        bool            fValue
+    )
+    {
+        bool            fRc = false;
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+        }
+#endif
+
+        fRc = ObjList_setOrdered((OBJLIST_DATA *)this, fValue);
+
+        return fRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                         O t h e r
+    //---------------------------------------------------------------
+
+    OBJ_ID          NodeList_getOther (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+
+        return ObjList_getOther((OBJLIST_DATA *)this);
+    }
+
+
+    bool            NodeList_setOther (
+        NODELIST_DATA   *this,
+        OBJ_ID          pValue
+    )
+    {
+        bool            fRc;
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return false;
+        }
+#endif
+
+        fRc = ObjList_setOther((OBJLIST_DATA *)this, pValue);
+
+        return true;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          P r i o r i t y
+    //---------------------------------------------------------------
+    
+#ifdef  NEED_ALL_GENERATED_CODE
+    uint16_t        NodeList_getPriority (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        //return this->priority;
+        return 0;
+    }
+
+
+    bool            NodeList_setPriority (
+        NODELIST_DATA   *this,
+        uint16_t        value
+    )
+    {
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return false;
+        }
+#endif
+
+        //this->priority = value;
+
+        return true;
+    }
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //                              S i z e
+    //---------------------------------------------------------------
+    
+    uint32_t        NodeList_getSize (
+        NODELIST_DATA   *this
+    )
+    {
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        return ObjList_getSize((OBJLIST_DATA *)this);
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          S u p e r
+    //---------------------------------------------------------------
+    
+#ifdef  NODELIST_SUPER_DEFINED
+    NODE_DATA *     NodeList_getSuper (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        
+        return (NODE_DATA *)this;
+    }
+#else
+    OBJ_DATA *      NodeList_getSuper (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        
+        return (OBJ_DATA *)this;
+    }
+#endif
+
+    
+    OBJ_IUNKNOWN *  NodeList_getSuperVtbl (
+        NODELIST_DATA   *this
+    )
+    {
+
+        // Validate the input parameters.
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return 0;
+        }
+#endif
+
+        
+        return this->pSuperVtbl;
+    }
+    
+  
+
+    //===============================================================
+    //                          M e t h o d s
+    //===============================================================
+
+
+    //---------------------------------------------------------------
+    //                          A d d
+    //---------------------------------------------------------------
+
+    ERESULT         NodeList_Add2Head (
+        NODELIST_DATA   *this,
+        NODE_DATA       *pNode
+    )
+    {
+        ERESULT         eRc;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if ((OBJ_NIL == pNode) || !obj_IsKindOf(pNode, OBJ_IDENT_NODE)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_PARAMETER;
+        }
+#endif
+
+        eRc = ObjList_Add2Head(this->pList, pNode);
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+    ERESULT         NodeList_Add2HeadA (
+        NODELIST_DATA   *this,
+        int32_t         cls,
+        const
+        char            *pName,
+        OBJ_ID          pData
+    )
+    {
+        ERESULT         eRc = ERESULT_OUT_OF_MEMORY;
+        NODE_DATA       *pNode = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        pNode = Node_NewWithUTF8AndClass(cls, pName, pData);
+        if (pNode) {
+            eRc = ObjList_Add2Head(this->pList, pNode);
+            if (ERESULT_FAILED(eRc))
+                ;
+            else {
+                obj_Release(pNode);
+                pNode = OBJ_NIL;
+            }
+        }
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+    ERESULT         NodeList_Add2Tail (
+        NODELIST_DATA   *this,
+        NODE_DATA       *pNode
+    )
+    {
+        ERESULT         eRc;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if ((OBJ_NIL == pNode) || !obj_IsKindOf(pNode, OBJ_IDENT_NODE)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_PARAMETER;
+        }
+#endif
+
+        eRc = ObjList_Add2Tail(this->pList, pNode);
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+    ERESULT         NodeList_Add2TailA (
+        NODELIST_DATA   *this,
+        int32_t         cls,
+        const
+        char            *pName,
+        OBJ_ID          pData
+    )
+    {
+        ERESULT         eRc = ERESULT_OUT_OF_MEMORY;
+        NODE_DATA       *pNode = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        pNode = Node_NewWithUTF8AndClass(cls, pName, pData);
+        if (pNode) {
+            eRc = ObjList_Add2Tail(this->pList, pNode);
+            if (ERESULT_FAILED(eRc))
+                ;
+            else {
+                obj_Release(pNode);
+                pNode = OBJ_NIL;
+            }
+        }
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                       A s s i g n
+    //---------------------------------------------------------------
+    
+    /*!
+     Assign the contents of this object to the other object (ie
+     this -> other).  Any objects in other will be released before 
+     a copy of the object is performed.
+     Example:
+     @code 
+        ERESULT eRc = NodeList_Assign(this,pOther);
+     @endcode 
+     @param     this    object pointer
+     @param     pOther  a pointer to another NODELIST object
+     @return    If successful, ERESULT_SUCCESS otherwise an 
+                ERESULT_* error 
+     */
+    ERESULT         NodeList_Assign (
+        NODELIST_DATA   *this,
+        NODELIST_DATA   *pOther
+    )
+    {
+        ERESULT     eRc;
+        
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if (!NodeList_Validate(pOther)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        // Assign any Super(s).
+        if (this->pSuperVtbl && (this->pSuperVtbl->pWhoAmI() != OBJ_IDENT_OBJ)) {
+            if (this->pSuperVtbl->pAssign) {
+                eRc = this->pSuperVtbl->pAssign(this, pOther);
+                if (ERESULT_FAILED(eRc)) {
+                    return eRc;
+                }
+            }
+        }
+
+        // Release objects and areas in other object.
+#ifdef  XYZZY
+        if (pOther->pStr) {
+            obj_Release(pOther->pStr);
+            pOther->pStr = OBJ_NIL;
+        }
+#endif
+
+        // Create a copy of objects and areas in this object placing
+        // them in other.
+#ifdef  XYZZY
+        if (this->pStr) {
+            if (obj_getVtbl(this->pStr)->pCopy) {
+                pOther->pStr = obj_getVtbl(this->pStr)->pCopy(this->pStr);
+            }
+            else {
+                obj_Retain(this->pStr);
+                pOther->pStr = this->pStr;
+            }
+        }
+#endif
+
+        // Copy other data from this object to other.
+        //pOther->x     = this->x; 
+
+        // Return to caller.
+        eRc = ERESULT_SUCCESS;
+    //eom:
+        //FIXME: Implement the assignment.        
+        eRc = ERESULT_NOT_IMPLEMENTED;
+        return eRc;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                      C o m p a r e
+    //---------------------------------------------------------------
+    
+    /*!
+     Compare the two provided objects.
+     @return    0  if this == other
+                <0 if this < other
+                >0 if this > other
+     */
+    int             NodeList_Compare (
+        NODELIST_DATA   *this,
+        NODELIST_DATA   *pOther
+    )
+    {
+        int             iRc = -1;
+#ifdef  xyzzy        
+        const
+        char            *pStr1;
+        const
+        char            *pStr2;
+#endif
+        
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef  NODELIST_SINGLETON
+        if (OBJ_NIL == this) {
+            this = NodeList_Shared();
+        }
+#endif
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_OBJECT;
+            return -2;
+        }
+        if (!NodeList_Validate(pOther)) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_PARAMETER;
+            return -2;
+        }
+#endif
+
+        //TODO: iRc = utf8_StrCmp(AStr_getData(this->pStr), AStr_getData(pOther->pStr));
+     
+        return iRc;
+    }
+    
+   
+ 
+    //---------------------------------------------------------------
+    //                          C o p y
+    //---------------------------------------------------------------
+    
+    /*!
+     Copy the current object creating a new object.
+     Example:
+     @code 
+        NodeList      *pCopy = NodeList_Copy(this);
+     @endcode 
+     @param     this    object pointer
+     @return    If successful, a NODELIST object which must be 
+                released, otherwise OBJ_NIL.
+     @warning   Remember to release the returned object.
+     */
+    NODELIST_DATA * NodeList_Copy (
+        NODELIST_DATA   *this
+    )
+    {
+        NODELIST_DATA   *pOther = OBJ_NIL;
+        ERESULT         eRc;
+        
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+        
+#ifdef NODELIST_IS_IMMUTABLE
+        obj_Retain(this);
+        pOther = this;
+#else
+        pOther = NodeList_New( );
+        if (pOther) {
+            eRc = NodeList_Assign(this, pOther);
+            if (ERESULT_HAS_FAILED(eRc)) {
+                obj_Release(pOther);
+                pOther = OBJ_NIL;
+            }
+        }
+#endif
+        
+        // Return to caller.
+        return pOther;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                        D e a l l o c
+    //---------------------------------------------------------------
+
+    void            NodeList_Dealloc (
+        OBJ_ID          objId
+    )
+    {
+        NODELIST_DATA   *this = objId;
+        //ERESULT         eRc;
+
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+        if (NULL == this) {
+            return;
+        }        
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return;
+        }
+#endif
+
+#ifdef XYZZY
+        if (obj_IsEnabled(this)) {
+            ((NODELIST_VTBL *)obj_getVtbl(this))->devVtbl.pStop((OBJ_DATA *)this,NULL);
+        }
+#endif
+
+        NodeList_setList(this, OBJ_NIL);
+
+        obj_setVtbl(this, this->pSuperVtbl);
+        // pSuperVtbl is saved immediately after the super
+        // object which we inherit from is initialized.
+        this->pSuperVtbl->pDealloc(this);
+        this = OBJ_NIL;
+
+        // Return to caller.
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                         D e e p  C o p y
+    //---------------------------------------------------------------
+    
+    /*!
+     Copy the current object creating a new object.
+     Example:
+     @code 
+        NodeList      *pDeepCopy = NodeList_Copy(this);
+     @endcode 
+     @param     this    object pointer
+     @return    If successful, a NODELIST object which must be 
+                released, otherwise OBJ_NIL.
+     @warning   Remember to release the returned object.
+     */
+    NODELIST_DATA * NodeList_DeepCopy (
+        NODELIST_DATA   *this
+    )
+    {
+        NODELIST_DATA   *pOther = OBJ_NIL;
+        ERESULT         eRc;
+        
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+        
+        pOther = NodeList_New( );
+        if (pOther) {
+            eRc = NodeList_Assign(this, pOther);
+            if (ERESULT_HAS_FAILED(eRc)) {
+                obj_Release(pOther);
+                pOther = OBJ_NIL;
+            }
+        }
+        
+        // Return to caller.
+        return pOther;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                          D e l e t e
+    //---------------------------------------------------------------
+
+    ERESULT         NodeList_DeleteA (
+        NODELIST_DATA   *this,
+        int32_t         cls,
+        const
+        char            *pName
+    )
+    {
+        ERESULT         eRc = ERESULT_NOT_IMPLEMENTED;
+        //OBJLIST_RECORD  *pEntry = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if( OBJ_NIL == pName ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_PARAMETER;
+        }
+#endif
+
+#ifdef XYZZY
+        pEntry = NodeList_FindNodeA(this, cls, pName);
+        if (NULL == pEntry) {
+            return ERESULT_DATA_NOT_FOUND;
+        }
+
+        obj_Release(pEntry->pNode);
+        pEntry->pNode = OBJ_NIL;
+        listdl_Delete(&this->list, pEntry);
+        listdl_Add2Tail(&this->freeList, pEntry);
+#endif
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+    ERESULT         NodeList_DeleteHead (
+        NODELIST_DATA   *this
+    )
+    {
+        ERESULT         eRc;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        eRc = ObjList_DeleteHead(this->pList);
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+    ERESULT         NodeList_DeleteTail (
+        NODELIST_DATA    *this
+    )
+    {
+        ERESULT         eRc;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        eRc = ObjList_DeleteTail(this->pList);
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                      D i s a b l e
+    //---------------------------------------------------------------
+
+    /*!
+     Disable operation of this object.
+     @param     this    object pointer
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         NodeList_Disable (
+        NODELIST_DATA   *this
+    )
+    {
+        ERESULT         eRc = ERESULT_SUCCESS;
+
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef  NODELIST_SINGLETON
+        if (OBJ_NIL == this) {
+            this = NodeList_Shared();
+        }
+#endif
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        // Put code here...
+
+        TRC_OBJ(this,"\tEnabled?: %s:\n", obj_Enable(this) ? "true" : "false");
+        obj_Disable(this);
+        
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          E n a b l e
+    //---------------------------------------------------------------
+
+    /*!
+     Enable operation of this object.
+     @param     this    object pointer
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         NodeList_Enable (
+        NODELIST_DATA   *this
+    )
+    {
+        ERESULT         eRc = ERESULT_SUCCESS;
+
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef  NODELIST_SINGLETON
+        if (OBJ_NIL == this) {
+            this = NodeList_Shared();
+        }
+#endif
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+        
+        TRC_OBJ(this,"\tEnabled?: %s:\n", obj_Enable(this) ? "true" : "false");
+#ifdef   NODELIST_MSGS
+        if (this->pMsgInfo) {
+            this->pMsgInfo(this->pMsgObj, "Enabling object!\n");
+        }
+#endif
+        obj_Enable(this);
+
+        // Put code here...
+        
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                        E n u m
+    //---------------------------------------------------------------
+
+    NODEENUM_DATA * NodeList_Enum(
+        NODELIST_DATA   *this
+    )
+    {
+        ERESULT         eRc;
+        NODEENUM_DATA   *pEnum = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+        
+        pEnum = NodeEnum_New();
+        if (pEnum) {
+            eRc = ObjList_ForEach(this->pList, (void *)NodeList_EnumExit, this, pEnum);
+            if (ERESULT_FAILED(eRc)) {
+                obj_Release(pEnum);
+                pEnum = OBJ_NIL;
+            }
+        }
+
+        // Return to caller.
+        return pEnum;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          F i n d
+    //---------------------------------------------------------------
+
+    NODE_DATA *     NodeList_FindA(
+        NODELIST_DATA   *this,
+        int32_t         cls,
+        const
+        char            *pName
+    )
+    {
+        NODE_DATA       *pNode = OBJ_NIL;
+        OBJLIST_RECORD  *pRecord;
+        LISTDL_DATA *   pList;
+        int             iRc;
+
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_OBJECT;
+            return OBJ_NIL;
+        }
+        if( OBJ_NIL == pName ) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_PARAMETER;
+            return OBJ_NIL;
+        }
+#endif
+
+        pList = ObjList_getList(this->pList);
+        if (NULL == pList)
+            return OBJ_NIL;
+        if (listdl_Count(pList) < 1) {
+            return OBJ_NIL;
+        }
+
+        pRecord = listdl_Head(pList);
+        while ( pRecord ) {
+            iRc = Node_CompareA(pRecord->pObject, cls, pName);
+            if (0 == iRc) {
+                pNode = pRecord->pObject;
+                break;
+            }
+            pRecord = listdl_Next(pList, pRecord);
+        }
+
+        // Return to caller.
+        return pNode;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                        F o r  E a c h
+    //---------------------------------------------------------------
+
+    ERESULT         NodeList_ForEach(
+        NODELIST_DATA   *this,
+        P_ERESULT_EXIT3 pScan,
+        OBJ_ID          pObj,            // Used as first parameter of scan method
+        void            *pArg3
+    )
+    {
+        ERESULT         eRc = ERESULT_SUCCESS;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if( NULL == pScan ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_PARAMETER;
+        }
+#endif
+
+        eRc = ObjList_ForEach(this->pList, pScan, pObj, pArg3);
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          H a s h
+    //---------------------------------------------------------------
+    
+    uint32_t        NodeList_Hash(
+        NODELIST_DATA   *this
+    )
+    {
+        uint32_t        hash = 0;
+        char            *pStr = NULL;
+        
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+        }
+#endif
+       
+        /* 
+        pStr = array_Ptr(this->pData, 1);
+        if (pStr) {
+            hash = str_HashAcmA(pStr, NULL);
+        }
+        */
+        
+        return hash;
+    }
+    
+    
+
+    //---------------------------------------------------------------
+    //                          H e a d
+    //---------------------------------------------------------------
+
+    NODE_DATA *     NodeList_Head (
+        NODELIST_DATA   *this
+    )
+    {
+        NODE_DATA       *pNode = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+
+        pNode = ObjList_Head(this->pList);
+
+        // Return to caller.
+        return pNode;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          I n d e x
+    //---------------------------------------------------------------
+
+    NODE_DATA *     NodeList_Index(
+        NODELIST_DATA   *this,
+        uint32_t        index
+    )
+    {
+        NODE_DATA       *pNode = OBJ_NIL;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+
+        pNode = ObjList_Index(this->pList, index);
+
+        // Return to caller.
+        return pNode;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                          I n i t
+    //---------------------------------------------------------------
+
+    NODELIST_DATA * NodeList_Init (
+        NODELIST_DATA   *this
+    )
+    {
+        uint32_t        cbSize = sizeof(NODELIST_DATA);
+        //ERESULT         eRc;
+        
+        if (OBJ_NIL == this) {
+            return OBJ_NIL;
+        }
+        
+        /* cbSize can be zero if Alloc() was not called and we are
+         * are passed the address of a zero'd area.
+         */
+        //cbSize = obj_getSize(this);       // cbSize must be set in Alloc().
+        if (cbSize == 0) {
+            DEBUG_BREAK();
+            obj_Release(this);
+            return OBJ_NIL;
+        }
+
+#ifdef  NODELIST_SUPER_DEFINED
+        this = (OBJ_ID)Node_Init((NODE_DATA *)this);        // Needed for Inheritance
+#else
+        this = (OBJ_ID)obj_Init(this, cbSize, OBJ_IDENT_NODELIST);
+#endif
+        if (OBJ_NIL == this) {
+            DEBUG_BREAK();
+            obj_Release(this);
+            return OBJ_NIL;
+        }
+        obj_setSize(this, cbSize);
+        this->pSuperVtbl = obj_getVtbl(this);
+        obj_setVtbl(this, (OBJ_IUNKNOWN *)&NodeList_Vtbl);
+#ifdef  NODELIST_JSON_SUPPORT
+        JsonIn_RegisterClass(NodeList_Class());
+#endif
+        
+        /*
+        this->pArray = ObjArray_New( );
+        if (OBJ_NIL == this->pArray) {
+            DEBUG_BREAK();
+            obj_Release(this);
+            return OBJ_NIL;
+        }
+        */
+
+        this->pList = ObjList_New( );
+        if (OBJ_NIL == this->pList) {
+            DEBUG_BREAK();
+            obj_Release(this);
+            return OBJ_NIL;
+        }
+
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            obj_Release(this);
+            return OBJ_NIL;
+        }
+#if defined(__APPLE__) && defined(XYZZY)
+//#if defined(__APPLE__)
+        fprintf(
+                stderr, 
+                "NodeList::sizeof(NODELIST_DATA) = %lu\n", 
+                sizeof(NODELIST_DATA)
+        );
+#endif
+        BREAK_NOT_BOUNDARY4(sizeof(NODELIST_DATA));
+#endif
+
+        return this;
+    }
+
+     
+
+    //---------------------------------------------------------------
+    //                      I s  E n a b l e d
+    //---------------------------------------------------------------
+    
+    bool            NodeList_IsEnabled (
+        NODELIST_DATA   *this
+    )
+    {
+        //ERESULT         eRc;
+        bool            fRc = false;
+        
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef  NODELIST_SINGLETON
+        if (OBJ_NIL == this) {
+            this = NodeList_Shared();
+        }
+#endif
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_OBJECT;
+            return fRc;
+        }
+#endif
+        
+        if (obj_IsEnabled(this)) {
+            fRc = true;
+        }
+        
+        // Return to caller.
+        return fRc;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                         N o d e s
+    //---------------------------------------------------------------
+
+    NODEARRAY_DATA * NodeList_Nodes (
+        NODELIST_DATA    *this
+    )
+    {
+        NODEARRAY_DATA  *pKeys;
+        ERESULT         eRc = ERESULT_SUCCESS;
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !NodeList_Validate(this) ) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_OBJECT;
+            return OBJ_NIL;
+        }
+#endif
+
+        pKeys = NodeArray_New();
+        if (pKeys) {
+            eRc =   ObjList_ForEach(
+                                    this->pList,
+                                    (void *)NodeList_NodesExit,
+                                    this,
+                                    pKeys
+                    );
+            if (ERESULT_FAILED(eRc)) {
+                obj_Release(pKeys);
+                pKeys = OBJ_NIL;
+            }
+            else {
+                NodeArray_SortAscending(pKeys);
+            }
+        }
+
+        // Return to caller.
+        return pKeys;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                     Q u e r y  I n f o
+    //---------------------------------------------------------------
+    
+    /*!
+     Return information about this object. This method can translate
+     methods to strings and vice versa, return the address of the
+     object information structure.
+     Example:
+     @code
+        // Return a method pointer for a string or NULL if not found. 
+        void        *pMethod = NodeList_QueryInfo(this, OBJ_QUERYINFO_TYPE_METHOD, "xyz");
+     @endcode 
+     @param     objId   object pointer
+     @param     type    one of OBJ_QUERYINFO_TYPE members (see obj.h)
+     @param     pData   for OBJ_QUERYINFO_TYPE_INFO, this field is not used,
+                        for OBJ_QUERYINFO_TYPE_DATA, an object's data is returned
+                        if it fits in a "void *".
+                        for OBJ_QUERYINFO_TYPE_METHOD, this field points to a 
+                        character string which represents the method name without
+                        the object name, "NodeList", prefix,
+                        for OBJ_QUERYINFO_TYPE_PTR, this field contains the
+                        address of the method to be found.
+     @return    If unsuccessful, NULL. Otherwise, for:
+                OBJ_QUERYINFO_TYPE_INFO: info pointer,
+                OBJ_QUERYINFO_TYPE_METHOD: method pointer,
+                OBJ_QUERYINFO_TYPE_PTR: constant UTF-8 method name pointer
+     */
+    void *          NodeList_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    )
+    {
+        NODELIST_DATA   *this = objId;
+        const
+        char            *pStrA = pData;
+        
+        if (OBJ_NIL == this) {
+            return NULL;
+        }
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return NULL;
+        }
+#endif
+        
+        switch (type) {
+                
+            case OBJ_QUERYINFO_TYPE_OBJECT_SIZE:
+                return (void *)sizeof(NODELIST_DATA);
+                break;
+            
+            case OBJ_QUERYINFO_TYPE_CLASS_OBJECT:
+                return (void *)NodeList_Class();
+                break;
+
+            case OBJ_QUERYINFO_TYPE_DATA:
+                switch (*pStrA) {
+     
+                    case 'L':
+                        if (str_Compare("List", (char *)pStrA) == 0) {
+                            return (void *)this->pList;
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+
+                              
+            case OBJ_QUERYINFO_TYPE_DATA_PTR:
+                switch (*pStrA) {
+     
+                    case 'S':
+                        if (str_Compare("SuperClass", (char *)pStrA) == 0) {
+                            return (void *)(obj_getInfo(this)->pClassSuperObject);
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+
+            case OBJ_QUERYINFO_TYPE_INFO:
+                return (void *)obj_getInfo(this);
+                break;
+                
+            case OBJ_QUERYINFO_TYPE_METHOD:
+                switch (*pStrA) {
+                        
+                    case 'D':
+                        if (str_Compare("Disable", (char *)pStrA) == 0) {
+                            return NodeList_Disable;
+                        }
+                        break;
+
+                    case 'E':
+                        if (str_Compare("Enable", (char *)pStrA) == 0) {
+                            return NodeList_Enable;
+                        }
+                        break;
+
+                    case 'P':
+#ifdef  NODELIST_JSON_SUPPORT
+                        if (str_Compare("ParseJsonFields", (char *)pStrA) == 0) {
+                            return NodeList_ParseJsonFields;
+                        }
+                        if (str_Compare("ParseJsonObject", (char *)pStrA) == 0) {
+                            return NodeList_ParseJsonObject;
+                        }
+#endif
+                        break;
+
+                    case 'T':
+                        if (str_Compare("ToDebugString", (char *)pStrA) == 0) {
+                            return NodeList_ToDebugString;
+                        }
+#ifdef  NODELIST_JSON_SUPPORT
+                        if (str_Compare("ToJsonFields", (char *)pStrA) == 0) {
+                            return NodeList_ToJsonFields;
+                        }
+                        if (str_Compare("ToJson", (char *)pStrA) == 0) {
+                            return NodeList_ToJson;
+                        }
+#endif
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+                
+            case OBJ_QUERYINFO_TYPE_PTR:
+                if (pData == NodeList_ToDebugString)
+                    return "ToDebugString";
+#ifdef  NODELIST_JSON_SUPPORT
+                if (pData == NodeList_ToJson)
+                    return "ToJson";
+#endif
+                break;
+                
+            default:
+                break;
+        }
+        
+        return this->pSuperVtbl->pQueryInfo(objId, type, pData);
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                         S o r t
+    //---------------------------------------------------------------
+
+    ERESULT         NodeList_SortAscending (
+        NODELIST_DATA   *this
+    )
+    {
+        ERESULT         eRc = ERESULT_GENERAL_FAILURE;
+        bool            fRc;
+        LISTDL_DATA *   pList;
+
+        // Do initialization.
+        if (NULL == this) {
+            return ERESULT_INVALID_OBJECT;
+        }
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+
+        pList = ObjList_getList(this->pList);
+        if (NULL == pList)
+            return ERESULT_GENERAL_FAILURE;
+        if (listdl_Count(pList) < 2) {
+            return ERESULT_SUCCESS;
+        }
+
+        fRc = listdl_Sort(pList, (void *)Node_Compare);
+        if (fRc) {
+            eRc = ERESULT_SUCCESS;
+        }
+
+        // Return to caller.
+        return eRc;
+    }
+
+
+
+    //---------------------------------------------------------------
+    //                       T o  S t r i n g
+    //---------------------------------------------------------------
+    
+    /*!
+     Create a string that describes this object and the objects within it.
+     Example:
+     @code 
+        ASTR_DATA      *pDesc = NodeList_ToDebugString(this,4);
+     @endcode 
+     @param     this    object pointer
+     @param     indent  number of characters to indent every line of output, can be 0
+     @return    If successful, an AStr object which must be released containing the
+                description, otherwise OBJ_NIL.
+     @warning  Remember to release the returned AStr object.
+     */
+    ASTR_DATA *     NodeList_ToDebugString (
+        NODELIST_DATA   *this,
+        int             indent
+    )
+    {
+        ERESULT         eRc;
+        ASTR_DATA       *pStr;
+        ASTR_DATA       *pWrkStr;
+        const
+        OBJ_INFO        *pInfo;
+        uint32_t        i;
+        //uint32_t        j;
+        
+        // Do initialization.
+        TRC_OBJ(this, "%s:\n", __func__);
+#ifdef NDEBUG
+#else
+        if (!NodeList_Validate(this)) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+#endif
+              
+        pInfo = obj_getInfo(this);
+        pStr = AStr_New();
+        if (OBJ_NIL == pStr) {
+            DEBUG_BREAK();
+            return OBJ_NIL;
+        }
+        
+        if (indent) {
+            AStr_AppendCharRepeatA(pStr, indent, ' ');
+        }
+        eRc = AStr_AppendPrint(
+                    pStr,
+                    "{%p(%s) size=%d retain=%d\n",
+                    this,
+                    pInfo->pClassName,
+                    NodeList_getSize(this),
+                    obj_getRetainCount(this)
+            );
+        USE_VAR(eRc);
+
+#ifdef  XYZZY        
+        if (this->pData) {
+            if (((OBJ_DATA *)(this->pData))->pVtbl->pToDebugString) {
+                pWrkStr =   ((OBJ_DATA *)(this->pData))->pVtbl->pToDebugString(
+                                                    this->pData,
+                                                    indent+3
+                            );
+                if (pWrkStr) {
+                    AStr_Append(pStr, pWrkStr);
+                    obj_Release(pWrkStr);
+                }
+            }
+        }
+#endif
+        
+        if (this->pList) {
+            for (i=0; i<NodeList_getSize(this); i++) {
+                NODE_DATA       *pData = ObjList_Get(this->pList, i+1);      
+                if (pData) {
+                    if (((OBJ_DATA *)(pData))->pVtbl->pToDebugString) {
+                        pWrkStr =   ((OBJ_DATA *)(pData))->pVtbl->pToDebugString(
+                                                            pData,
+                                                            indent+3
+                                    );
+                        if (pWrkStr) {
+                            AStr_Append(pStr, pWrkStr);
+                            obj_Release(pWrkStr);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        if (indent) {
+            AStr_AppendCharRepeatA(pStr, indent, ' ');
+        }
+        eRc =   AStr_AppendPrint(
+                    pStr,
+                    " %p(%s)}\n", 
+                    this, 
+                    pInfo->pClassName
+                );
+        USE_VAR(eRc);
+        
+        return pStr;
+    }
+    
+    
+    
+    //---------------------------------------------------------------
+    //                      V a l i d a t e
+    //---------------------------------------------------------------
+
+#ifdef NDEBUG
+#else
+    bool            NodeList_Validate (
+        NODELIST_DATA   *this
+    )
+    {
+ 
+        // WARNING: We have established that we have a valid pointer
+        //          in 'this' yet.
+       if (this) {
+            if (obj_IsKindOf(this, OBJ_IDENT_NODELIST))
+                ;
+            else {
+                // 'this' is not our kind of data. We really don't
+                // know what that it is at this point. 
+                return false;
+            }
+            if (obj_IsKindOf(this, OBJ_IDENT_NODE))
+                ;
+            else {
+                // 'this' is not our kind of data. We really don't
+                // know what that it is at this point. 
+                return false;
+            }
+        }
+        else {
+            // 'this' is NULL.
+            return false;
+        }
+        // Now, we have validated that we have a valid pointer in
+        // 'this'.
+
+
+        if (!(obj_getSize(this) >= sizeof(NODELIST_DATA))) {
+            return false;
+        }
+
+        if (OBJ_NIL == this->pList) {
+            return false;
+        }
+        if (!ObjList_Validate(this->pList))
+            return false;
+
+        // Return to caller.
+        return true;
+
+    }
+#endif
+
+
+    
+    
+#ifdef  __cplusplus
+}
+#endif
+
+

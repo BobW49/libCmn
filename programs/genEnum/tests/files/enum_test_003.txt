@@ -1,0 +1,4 @@
+# This should not affect anything!
+a_prefix_item
+{libCmn/misc/sym_classes.txt}
+a_suffix_item

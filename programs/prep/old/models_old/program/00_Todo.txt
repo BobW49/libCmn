@@ -1,0 +1,18 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+*   Main
+    *   Add command line switches needed which conform to "CmdUtl" object.   
+    *   Adjust as needed:
+            Main_ParseArgsDefault
+            Main_ProcessArg
+            Main_UsageDesc,
+            Main_UsageProgLine,
+            Main_UsageOptions
+
+*   edprj.sh
+    *   Adjust for Xcode project.
+
+*   program.json.txt
+    *   Adjust to reflect all objects added    
+
+

@@ -1,0 +1,275 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+/* 
+ * File:   W32StrC_internal.h
+ *	Generated 01/23/2020 22:22:04
+ *
+ * Notes:
+ *  --	N/A
+ *
+ */
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+#include        <W32StrC.h>
+#include        <JsonIn.h>
+#include        <utf8.h>
+
+
+#ifndef W32STRC_INTERNAL_H
+#define	W32STRC_INTERNAL_H
+
+
+
+#define     PROPERTY_STR_OWNED 1
+
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+
+
+
+    //---------------------------------------------------------------
+    //                  Object Data Description
+    //---------------------------------------------------------------
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+struct W32StrC_data_s	{
+    /* Warning - OBJ_DATA must be first in this object!
+     */
+    OBJ_DATA        super;
+    OBJ_IUNKNOWN    *pSuperVtbl;    // Needed for Inheritance
+    #define W32STRC_FLAG_MALLOC OBJ_FLAG_USER1
+
+    // Common Data
+    uint32_t        len;        // Number of chars excluding trailing NUL
+    const
+    W32CHR_T        *pArray;
+
+};
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+    extern
+    struct W32StrC_class_data_s  W32StrC_ClassObj;
+
+    extern
+    const
+    W32STRC_VTBL         W32StrC_Vtbl;
+
+
+
+    //---------------------------------------------------------------
+    //              Class Object Method Forward Definitions
+    //---------------------------------------------------------------
+
+#ifdef  W32STRC_SINGLETON
+    W32STRC_DATA *  W32StrC_getSingleton (
+        void
+    );
+
+    bool            W32StrC_setSingleton (
+     W32STRC_DATA       *pValue
+);
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //              Internal Method Forward Definitions
+    //---------------------------------------------------------------
+
+    OBJ_IUNKNOWN *  W32StrC_getSuperVtbl (
+        W32STRC_DATA     *this
+    );
+
+
+    /* 
+     * Normally, we would not want to allow this in a constant string.
+     * However, we needed to be able to back door it, since it was
+     * needed for a few applications. Note that we are only allowing
+     * a character replacement. We are never changing the size of
+     * the string. This needs to be used very carefully, since it
+     * might affect a scan if a Scanner is attached to this object. 
+     */
+    W32CHR_T        W32StrC_AlterCharW32 (
+        W32STRC_DATA    *this,
+        uint32_t        offset,             // Relative to 1
+        W32CHR_T        chr
+    );
+
+
+    ERESULT         W32StrC_Assign (
+        W32STRC_DATA    *this,
+        W32STRC_DATA    *pOther
+    );
+
+
+    W32STRC_DATA *  W32StrC_Copy (
+        W32STRC_DATA    *this
+    );
+
+
+    /*!
+     Free the current string and create a copy of the supplied
+     UTF-8 String terminated with a NUL character in UTF-32
+     format as the new string.
+     @param     this    object pointer
+     @param     pStrA   a pointer to a UTF-8 String
+     @return    If successful, true; otherwise false.
+     */
+    bool            W32StrC_SetupA(
+        W32STRC_DATA    *this,
+        const
+        char            *pStrA
+    );
+
+
+    /*!
+     Free the current string and create a copy of the supplied
+     UTF-32 String in UTF-32 format as the new string. If a
+     length is supplied, then only that character count is
+     copied.  Otherwise, it is assumed that the string is
+     terminated with a NUL character (ie '\0').
+     @param     this    object pointer
+     @param     len     string length in characters (0 == look for Terminating NUL)
+     @param     pStrW32 a pointer to a UTF-32 String
+     @return    If successful, true; otherwise false.
+     */
+    bool            W32StrC_SetupW32(
+        W32STRC_DATA    *this,
+        uint32_t        len,
+        const
+        W32CHR_T        *pStrW32
+    );
+
+
+    /*!
+     Free the current string and set up to use the supplied
+     UTF-32 constant String in UTF-32 format as the new string.
+     If a length is supplied, then only that character count is
+     copied.  Otherwise, it is assumed that the string is
+     terminated with a NUL character (ie '\0').
+     @param     this    object pointer
+     @param     len     string length in characters (0 == look for Terminating NUL)
+     @param     pStrW32 a pointer to a UTF-32 String
+     @return    If successful, true; otherwise false.
+     @warning   The supplied constant string must not be altereed
+                while this object uses it.
+     */
+    bool            W32StrC_SetupW32Con(
+        W32STRC_DATA    *this,
+        uint32_t        len,
+        const
+        W32CHR_T        *pStrW32
+    );
+
+
+    void            W32StrC_Dealloc (
+        OBJ_ID          objId
+    );
+
+
+    bool            W32StrC_FreeLine(
+        W32STRC_DATA    *this
+    );
+
+
+#ifdef  W32STRC_JSON_SUPPORT
+    /*!
+     Parse the new object from an established parser.
+     @param pParser an established jsonIn Parser Object
+     @return    a new object if successful, otherwise, OBJ_NIL
+     @warning   Returned object must be released.
+     */
+    W32STRC_DATA *   W32StrC_ParseJsonObject (
+        JSONIN_DATA     *pParser
+    );
+
+
+    /*!
+     Parse the object from an established parser.
+     @param pParser     an established jsonIn Parser Object
+     @param pObject     an Object to be filled in with the
+                        parsed fields.
+     @return    If successful, ERESULT_SUCCESS. Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         W32StrC_ParseJsonFields(
+        JSONIN_DATA     *pParser,
+        W32STRC_DATA    *pObject
+    );
+#endif
+
+
+    void *          W32StrC_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    );
+
+
+#ifdef  W32STRC_JSON_SUPPORT
+    ASTR_DATA *     W32StrC_ToJson (
+        W32STRC_DATA    *this
+    );
+
+
+    ERESULT         W32StrC_ToJsonFields (
+        W32STRC_DATA    *this,
+        ASTR_DATA       *pStr
+    );
+#endif
+
+
+
+
+#ifdef NDEBUG
+#else
+    bool            W32StrC_Validate (
+        W32STRC_DATA    *this
+    );
+#endif
+
+
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* W32STRC_INTERNAL_H */
+

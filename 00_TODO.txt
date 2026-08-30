@@ -1,0 +1,589 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+The following are things that are being thought about. Whether they get done or not
+will depend upon time and resources.
+
+--  Node containers and objects used in Node contaniners must derive from Node.
+    --  NodeHash
+    --  NodeTree
+    --  NodeScan
+    --  Open
+    --  Close
+    --  AStr    ???
+    --  Number  ???
+    --  Token   ???
+--  HJSON2 create from HJSON but instead of generating Nodes with string names,
+    just generate ObjArray, ObjHash, AStr or Value. Scanning would be by testing
+    the object type.
+--  obj - create a table and reference it from the object info table off the ptbl.
+    --  Each entry in the table represents inheritance object structure:
+            object Identifier
+            _DATA size for object
+            _DATA offset within super() _DATA for accessing subobject (the offset
+            should be rounded up according to the primary memory access amount.)
+    --  The internal table would change in that we would retain the ptbl for the 
+        subobject. We would need something like a QueryObject (ie QueryInterface)
+        function to give us the subobject or maybe it is the super object. lol
+        It should be permissable to have a _DATA size of zero for any object (??)
+        especially for base since it does not do much. 
+    --  This fixes some of the inheritance problems, but it will affect a lot of
+        objects especially AStr, W32Str and all the Node stuff, etc
+        
+
+--  Value
+    --  Finish STR support.
+    --  Finish JSON support for STR.
+    --  Finish JSON support for Node.
+    --  Finish JSON support for Sym.
+    --  Finish JSON support for AStr.
+
+
+--  SGraph
+    --  Add Identity
+    --  Add Reflexive 
+    --  Add Transitive Reflexive Closure
+    --  Maybe change Succ/Pred to return NodeEnum instead of u32array.
+    --  IsTree()
+
+
+--  Remove tinytest.h from (grep "tinytest" ./tests/*.c):
+        AStrCArray_test.c:#include    <tinytest.h>
+        AStrCReader_test.c:#include    <tinytest.h>
+        AStrC_test.c:#include    <tinytest.h>
+        AStr_test.c:#include    <tinytest.h>
+        AudioCW_test.c:#include    <tinytest.h>
+        AudioWAV_test.c:#include    <tinytest.h>
+        BPT32Leaf_test.c:#include    <tinytest.h>
+        Base64_test.c:#include    <tinytest.h>
+        BitMatrix_test.c:#include    <tinytest.h>
+        BitSet_test.c:#include    <tinytest.h>
+        Compiler_test.c:#include    <tinytest.h>
+        CsvFile_test.c:#include    <tinytest.h>
+        CsvRcd_test.c:#include    <tinytest.h>
+        DateTime_test.c:#include    <tinytest.h>
+        DirEntry_test.c:#include    <tinytest.h>
+        Dir_test.c:#include    <tinytest.h>
+        Ebcdic_test.c:#include    <tinytest.h>
+        Expr_test.c:#include    <tinytest.h>
+        False_test.c:#include    <tinytest.h>
+        FileRef_test.c:#include    <tinytest.h>
+        File_test.c:#include    <tinytest.h>
+        HtmlOut_test.c:#include    <tinytest.h>
+        I16Array_test.c:#include    <tinytest.h>
+        I16Matrix_test.c:#include    <tinytest.h>
+        I32Array_test.c:#include    <tinytest.h>
+        I32Matrix_test.c:#include    <tinytest.h>
+        IntLock_test.c:#include    <tinytest.h>
+        JsonIn_test.c:#include    <tinytest.h>
+        JsonOut_test.c:#include    <tinytest.h>
+        JsonPP_test.c:#include    <tinytest.h>
+        Lex00_test.c:#include    <tinytest.h>
+        Lex01_test.c:#include    <tinytest.h>
+        LexJ_test.c:#include    <tinytest.h>
+        LexKW_test.c:#include    <tinytest.h>
+        Lex_test.c:#include    <tinytest.h>
+        Money64_test.c:#include    <tinytest.h>
+        Name_test.c:#include    <tinytest.h>
+        Net_test.c:#include    <tinytest.h>
+        NodeArray_test.c:#include    <tinytest.h>
+        NodeBT_test.c:#include    <tinytest.h>
+        NodeEnum_test.c:#include    <tinytest.h>
+        NodeHash_test.c:#include    <tinytest.h>
+        NodeList_test.c:#include    <tinytest.h>
+        Node_test.c:#include    <tinytest.h>
+        Null_test.c:#include    <tinytest.h>
+        Number_test.c:#include    <tinytest.h>
+        ObjArray_test.c:#include    <tinytest.h>
+        ObjBT_test.c:#include    <tinytest.h>
+        ObjCb_test.c:#include    <tinytest.h>
+        ObjEnum_test.c:#include    <tinytest.h>
+        ObjList_test.c:#include    <tinytest.h>
+        ObjMethod_test.c:#include    <tinytest.h>
+        ObjVLink_test.c:#include    <tinytest.h>
+        Opcode_test.c:#include    <tinytest.h>
+        Opcodes_test_old.c:#include    <tinytest.h>
+        RpgBase_test.c:#include    <tinytest.h>
+        RpgLvl_test.c:#include    <tinytest.h>
+        SQLiteCurs_test.c:#include    <tinytest.h>
+        SQLiteStmt_test.c:#include    <tinytest.h>
+        SQLite_test.c:#include    <tinytest.h>
+        Sect_test.c:#include    <tinytest.h>
+        Sects_test.c:#include    <tinytest.h>
+        SqlColData_test.c:#include    <tinytest.h>
+        SqlCol_test.c:#include    <tinytest.h>
+        SqlRowData_test.c:#include    <tinytest.h>
+        SqlRow_test.c:#include    <tinytest.h>
+        SqlTbl_test.c:#include    <tinytest.h>
+        SrcDiff_test.c:#include    <tinytest.h>
+        SrcFile_test.c:#include    <tinytest.h>
+        SrcFiles_test.c:#include    <tinytest.h>
+        SymList_test.c:#include    <tinytest.h>
+        Sym_test.c:#include    <tinytest.h>
+        TextIn_test.c:#include    <tinytest.h>
+        TextIns_test.c:#include    <tinytest.h>
+        TextOut_test.c:#include    <tinytest.h>
+        True_test.c:#include    <tinytest.h>
+        U16Array_test.c:#include    <tinytest.h>
+        U16Matrix_test.c:#include    <tinytest.h>
+        U32Index_testOld.c:#include    <tinytest.h>
+        U8VlArray_test.c:#include    <tinytest.h>
+        ValueArray_test.c:#include    <tinytest.h>
+        Visitor_test.c:#include    <tinytest.h>
+        W32Array_test.c:#include    <tinytest.h>
+        W32StrC_test.c:#include    <tinytest.h>
+        W32Str_test.c:#include    <tinytest.h>
+        array_test.c:#include    <tinytest.h>
+        cb16_test.c:#include    <tinytest.h>
+        cb32_test.c:#include    <tinytest.h>
+        cb_test.c:#include    <tinytest.h>
+        crc_test.c:#include    <tinytest.h>
+        dec_test.c:#include    <tinytest.h>
+        eresult_test.c:#include    <tinytest.h>
+        execArray_test.c:#include    <tinytest.h>
+        fbsi_test.c:#include    <tinytest.h>
+        fbso_test.c:#include    <tinytest.h>
+        greg_test.c:#include    <tinytest.h>
+        hex_test.c:#include    <tinytest.h>
+        hjson_test.c:#include    <tinytest.h>
+        listdl_test.c:#include    <tinytest.h>
+        lru_test.c:#include    <tinytest.h>
+        msgBus_test.c:#include    <tinytest.h>
+        objMatrix_test.c:#include    <tinytest.h>
+        objTest_test.c:#include    <tinytest.h>
+        obj_test.c:#include    <tinytest.h>
+        prt_test.c:#include    <tinytest.h>
+        psxCond_test.c:#include    <tinytest.h>
+        psxExec_test.c:#include    <tinytest.h>
+        psxLock_test.c:#include    <tinytest.h>
+        psxMutex_test.c:#include    <tinytest.h>
+        psxSem_test.c:#include    <tinytest.h>
+        psxThread_test.c:#include    <tinytest.h>
+        pwr2Array_test.c:#include    <tinytest.h>
+        rbt_tree_test.c:#include    <tinytest.h>
+        str_test.c:#include    <tinytest.h>
+        szBT_test.c:#include    <tinytest.h>
+        szData_test.c:#include    <tinytest.h>
+        szHash_test.c:#include    <tinytest.h>
+        szTbl_test.c:#include    <tinytest.h>
+        timer_test.c:#include    <tinytest.h>
+        trace_test.c:#include    <tinytest.h>
+        u12Array_test.c:#include    <tinytest.h>
+        u32Array_test.c:#include    <tinytest.h>
+        u32Matrix_test.c:#include    <tinytest.h>
+        u8Array_test.c:#include    <tinytest.h>
+        utf8_test.c:#include    <tinytest.h>
+
+--  TextIn
+    --  80-byte records should return W32CHR_Ts and we should handle
+        continuation. colBegin,colEnd,colCont.
+
+--  Opcodes
+    --  Need byte/mask index to access pointer to Opcode *. If no collisions,
+        probably use Dragon Book compress index.  Otherwise, we need an 
+        update-able ternary tree ??? Need to be able to add/subtract from
+        index since it is dynamic. Ternary tree would be safest. Maybe U32Matrix.
+
+--  CmdUtl
+    --  For BOOL options, disregard '=' and anything after, but allow the long option
+        name to be prefixed with "not_" to turn it off.
+
+--  BlkdRcds16
+    --  Test undef of BLKDRCDS16_BIG_ENDIAN (ie native endian)
+    --  Consider adding back in record offset or make it a compile/runtime option.
+
+--  Convert CB to allow size changes if needed optionally.
+
+--  Find tests that have waits in them and rewrite new tests that the wait can be bypassed in.
+    --  msgBus_test.c
+    --  consumer_test.c
+    --  ObjCb_test.c
+    --  cb_test.c
+
+--  Finish and debug LexTri. When done, delete/remove Lex01.
+
+--  grep -rn --include="*.c" "ERESULT_SUCCESS_GREATER_THAN" .
+--  grep -rn --include="*.c" "ERESULT_SUCCESS_LESS_THAN" .
+
+--  Finish Net* to create a web server.
+    * Net
+        *   ???
+    * NetHTTP
+        *   ???
+    * NetHTTPA
+        *   ???
+    * NetHTTPR
+        *   ???
+    * NetIO
+        *   ???
+    * NetMime
+        *   ???
+
+-- Sect
+    *   AppendAnn where nn is 16, 24, 32
+        *   Appends data given (value) (nn == length)
+        *   add it to relocatable dictionary
+    *   GetUnn where nn is 8, 16, 24, 32
+    *   PutUnn where nn is 8, 16, 24, 32
+    *   AddExtern
+    *   AddPublic
+    *   FindExtern
+    *   FindPublic
+    *   DeleteExtern
+    *   DeletePublic
+    *   Enumerate:
+        *   externs
+        *   publics
+        *   relocatable table
+
+-- Finish mkAll.
+
+-- Finish "Consumer" object w/testing.
+
+-- Finish "Producer" object w/testing.
+
+-- Finish SQLite interface.
+
+-- Convert python RPG object to C
+
+-- Packed Decimal support
+    -- See 8085 simulation or ALU8/ALU32
+    -- Write using uint64 for number adjusting on overflow/underflow (???)
+    -- dec64 and dec128 objects
+    -- Review packed decimal support in IBM 360 for dec64 and dec128 objects.
+        * add
+        * subtract
+        * zero and add
+        * compare
+        * multiply
+        * divide
+        * shift and round
+        * edit
+        * edit w/mark
+        * pack
+        * unpack
+        * move with offset
+
+-- int128 Support
+
+-- int256 Support
+
+-- Write a Money package that is compatible with SQLite or add it
+    to SQLite or Docker-M$_SQL
+
+-- Write interface for scanning (lookahead, advance, comparison,  etc)
+
+-- Write generic scanner that that uses  above interface.
+
+-- eresult:
+    *   Look into having it support errno and using errno for its current value.
+        * MacOS
+        * Linux
+        * Win32/Win64
+
+-- Finish MsgData_ParseJsonObject() and add to JsonIn_ParseObject().
+-- Finish MsgData_ToJson().
+
+-- Finish SrcErrors_ParseJsonObject() and add to JsonIn_ParseObject().
+
+-- Fix value_ToJson and value_ParseJsonObject to support float/double.
+
+-- genMake 
+    --  See its todo.
+
+-- Add "man 3 backtrace" to any routines segmenting.
+         #include <execinfo.h>
+         #include <stdio.h>
+         ...
+         void* callstack[128];
+         int i, frames = backtrace(callstack, 128);
+         char** strs = backtrace_symbols(callstack, frames);
+         for (i = 0; i < frames; ++i) {
+             printf("%s\n", strs[i]);
+         }
+         free(strs);
+         ...
+
+
+
+-- NodeHash
+    -- Add JSON support
+    -- Add duplicate support.
+    -- Add scoping
+    -- Add cHash expansion/contraction
+
+
+-- Path
+    -- clean up of path for instance: ./abc/../ == ./
+    -- ToWin() which converts '/' to '\' and any other adjustment
+        needed to convert bash like file path to windows file
+        path.
+
+
+-- Finish JSON processing for: (See szData as an example.)
+    -- Node
+    -- NodeArray
+    -- NodeHash
+    -- objHash
+    -- szData
+    -- NodeList
+    -- NodeTree
+    -- szTbl
+    -- Add ToDebugString()
+    -- Add subtree extraction (ie creating a new tree from any tree node)
+
+
+--  Change srcLoc to use a file name index rather than a pointer so that it can
+    be written to/read from a file.
+    -- change srcFile so that the file name index is supplied at object creation
+        and passed to all tokens generated from the file.
+
+-- NodeTree
+    -- Add ToDebugString(). See Books->DataStructures->Trees->TreePrint
+    -- Add subtree extraction (ie creating a new tree from any tree node)
+    -- Implement NodeDelete().
+    -- Implement NodeMove().
+    -- NodeDelete() and NodeMove() require knowledge of parent.
+
+
+--  srcFile
+    -- a sidx table to track the lines from the file.
+    -- provide the ability to set current location in the file as needed using
+        the sidx table.
+
+--  WIN32/WIN64
+    -- (IMPORTANT) we must remove ALL L'' and L"" constants from all objects since
+        we are assuming them to use int32_t, but Windows uses int16_t for those
+        constants. Windows is based on UTF-16.
+--  cb
+    -- Look into interrupt iGet/iPut which is run in the kernel with no interrupts.
+
+--  audioCW
+    --     "int32_t *cwCharElements[128]", line 93, needs change for win32 (utf16 vs utf32)
+        -- see MultiByteToWideChar() or WideCharToMultiByte() for ideas
+
+--  CmdUtl
+    -- cmdutl_ParseKeyWord() needs change for win32 (utf16 vs utf32)
+        -- see MultiByteToWideChar() or WideCharToMultiByte() for ideas
+    -- Add inter-argument options as distinct from base program options
+        (2 sets of 2 option tables, 1 set defined in appl and one set 
+            provided by caller)
+
+--  Appl
+    -- Add inter-argument options as distinct from base program options
+        (See CmdUtl)
+
+--  json
+    -- json_ParseKeyWord() needs change for win32 (utf16 vs utf32)
+        -- see MultiByteToWideChar() or WideCharToMultiByte() for ideas
+
+--  device
+    --  Needs more thought
+
+--  wav
+    --  Breakout the RIFF stuff into its own object
+    --  Finish the input side of it.
+
+--  FAT16
+    --  finish when needed
+
+--  PList
+    --  See doc/plist.h
+
+--  Posix
+    --  psxThread
+        --  Add Thread Local Storage, szKey with void *pData. Maybe 1k for it. String size
+            must be rounded to word size on Mips/ARM.
+        --  Address signal processing which right now does not exist on the PIC32.
+    --  psxCond
+        --  Finish and add testing of main functionality
+    --  psxMutex
+        --  Finish and add testing of main functionality
+    --  psxSem
+        --  Finish and add testing of main functionality
+
+--  Node et al
+    --  Finish nodeEntry
+    --  Finish integrating nodeEntry into NodeTree, NodeGraph, NodeHash
+    --  NodeArc should inherit from NodeEntry (???).
+    --  Using left,parent,right or Children effectively makes the node only applicable
+        to one container at a time. Maybe we need to go back and set up the containers
+        to use their own internal structures removing left,parent,right and Children from
+        the Node itself.
+    --  why do we need nodeArray and nodeList?
+    --  nodeList does not use built-in pointers.
+    --  nodeTree relies on children not left,parent,right.
+    --  nodeTree is effectively a list of lists.
+    --  nodeArray does not use built in pointers
+    --  nodeHash needs Assign() to be complete.
+    --  Maybe node should just have 3 or 4 contiguous void *'s that can be used by
+        the appropriate container. However, that effectively makes it so that a node
+        can only be in one container at a time.
+
+
+
+-- Finish Consumer deriving from Consumer in libPic32
+
+
+
+-- get JSON to use srcFile internally
+-- get cmdUtl to use srcFile internally
+-- get Csv (???) to use srcFile internally
+-- Change dbCsv,dbf to return a nodeTree compatible with JSON.
+
+
+The following are things that need to be followed up on:
+
+
+-- Start using HeaderDoc, see  https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html
+
+-- Change mem to support objects separately. So, that it understands
+    them when it dumps them or checks for memory problems
+
+
+
+
+
+
+
+--  Graph Search
+    Input:
+        A graph with nodes N = {n1,n2,...nk} and selected node, n.
+    Output:
+        All nodes reachable from n.
+    Steps:
+        setofnodes      reached;
+        setofnodes      frontier;
+        node            f;
+
+        reached = frontier = {n};
+        f = n;
+        while( (f != NULL) && (frontier != NULL)) {
+            remove f from frontier;
+            for( each arc r with tail f ) {
+                if (head of r is not reached) {
+                    add head of r to reached;
+                }
+            }
+            select f from frontier;
+        }
+    Taken from "Compiler Design and Construction" by Arthur B Pyster
+
+
+
+-- AStrC
+    -- Finish
+    -- Adjust AStr to fit AStrC/AStr using NSString
+
+
+-- objHash
+    -- Finish
+
+
+-- dbCsv
+    -- Rewrite parser (each function returns object)
+    -- Finish
+
+
+-- Trie
+    --  Finish!
+        See needsWork/xxx.txt
+
+
+-- ptrArray
+    -- Convert to using pwr2Array
+
+
+-- TrieMP
+    -- Finish
+    -- Add ability to generate static trie with search routine
+
+
+-- bitset(??), bitMatrix(??),
+    arrayPtr(and rename to ptrArray)(??),
+    -- using u16Array as a guide, upgrade to use pwr2Array
+
+
+- scanOpt/cmdutl/clo (Command Line Option Scanning)
+    - types of parameters (Use JSON like grammar)
+        - '{'...'}' == dictionary
+        - '['...']' == array
+        - parameters basic types - int32_t, float, string - all stored as value object
+        - named parameters of format, xxx=yyy, are stored as 'xxx' key
+        - non-named parameters are stored by their relative position number on the line
+        - a NodeHash (possibly szHash) is returned
+    - cmnutl is to be the final object. However, the example parsing of
+        command line options from Compiler/Languages/RIR/main.c shows
+        that it is not all that complicated to do by hand.
+    - Fix cmdutl_ParseCmdStr().
+    - Merge old CLO into cmdutl (???)
+        - Delete CLO and old CLO
+    - Merge scanOpt into cmdutl (???)
+        - Delete scanOpt
+    - Add stuff from old CLO in rmwSubs that makes sense
+    - Compiler/Languages/RIR has a Main.c that scans parms by main options
+        and options that affect the next input file (it uses the newer CLO
+        object from Windows Programming)
+    - cmdutl has scanning in it also. Combine somehow.
+    - it would be nice to have definitions of the switches and parameters so
+        that we could do a better job of parsing. The other idea is to NOT
+        allow various options to be combined after one '-', but make them
+        be listed separately (not Unix like).
+    - we should recognize '--' alone as terminating the scan (??)
+    - compile the scanner from the normal documentation (add some form of
+        markup language)
+
+
+
+-- u8Array
+    -- Add methods to get, add, and delete groups of uint8_t
+    -- Possibly change astr to use u8Array underneath.
+
+
+
+-- fbso
+    -- add UTF-8 support
+
+
+
+- DBFile
+    - Finish as only the field descriptor, make other objects for the other elements
+      of the dbase file system
+    - Merge in old "clf" logic for create, destroy (close with delete), open, close.
+    - Convert file I/O to use "fbsi" and "fbso" or fbr if fixed (???)
+    - Add logic for multiple lines terminated by ASCII_CR
+    - ASCII_CPM_EOF should be optional at EOF
+    - Text Fields should be allowed to contain upto 64k-1 chars including ASCII_LFs
+        but no <cr><lf> because that denotes end of record
+    - How to do blobs, should be len and data
+
+
+
+- LCD
+    - Finish initial implementation
+    - Add announcement msg with version for ecu, tcu, canfun
+    - Create LCD Simulator for OSX
+
+
+- GREG
+    - Finish initial implementation
+    - leap year (class method)
+    - day of week
+    - ordinal day number
+    - days in year (class method)
+
+
+
+- fbr
+    - use fixed hash above and add hash table to it.
+    - Finish debugging LRU/Hash mechanism
+
+
+
+- stm
+    - finish and debug
+    - use hash from above???
+
+
+
+
+           

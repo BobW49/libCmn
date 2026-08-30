@@ -1,0 +1,53 @@
+# vi:nu:et:sts=4 ts=4 sw=4
+
+*   Change tests to Test Obj
+    *   Dict_test.c
+    *   ExpandNodes_test.c
+    *   GenBase_test.c
+    *   GenMac_test.c
+    *   GenWin_test.c
+    *   NodeBase_test.c
+    *   NodeHdr_test.c
+    *   NodeLib_test.c
+    *   NodePgm_test.c
+    *   NodeRtn_test.c
+    *   NodeRtnA_test.c
+    *   NodeTest_test.c
+    *   NodeTstA_test.c
+    *   SrcParse_test.c
+
+*   Change cli arg ostype to ostype, osarch, osver
+    *   ostype: macos, win, linux
+    *   osarch: x86, x86_32, x86_64
+    *   osver:  (MacOS) 12.4, 13.1  (Win) ???
+    *   Change MacOS to specify version "-target"
+    *   Change "Support/lib" to include version   
+
+X Finish NodeTest::Parse (used in NodeObj)
+X Finish NodeTest_test
+X Finish NodeRtn::Parse (which can include a 'test' Rtn as well)
+X Finish NodeRtn_test
+X Finish NodeObj::Parse
+    X Implement NodeBase::Parse
+	X Update name, etc  in Test node after parse.
+* Finish NodeHdr::Parse (which can include a 'test' Rtn as well)
+* Finish NodeHdr_test
+X Finish NodePgm::Parse
+X Finish NodePgm_test
+X Finish NodeLib::Parse 
+X Finish NodeLib_test
+
+* ExpandNodes will create Rtns array for RtnA objects and Tests array for 
+    TstA objects that will be used to generate programs:
+    * Write Hdr/Rtn/Test expansions for NodeObj 
+    * Write HdrRtn/Test expansions for NodeRtn
+
+* Write code generation from arrays and Pgm or Lib Nodes from prior step.
+    * win32 
+    * win64
+
+* HJSon now puts a SrcLoc object in each node for error messages. Expand
+    the error messages to include it.
+
+* Fix source prefix for $(SRCDIR)/ and $(TEST_SRC)/.
+ 

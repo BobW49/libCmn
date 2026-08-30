@@ -1,0 +1,560 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+
+//****************************************************************
+//                  Test Object Framework (Test) Header
+//****************************************************************
+/*
+ * Program
+ *          Test Object Framework (Test)
+ * Purpose
+ *          This object provides a standardized way of handling
+ *          a separate Test to run things without complications
+ *          of interfering with the main Test. A Test may be 
+ *          called a Test on other O/S's.
+ *
+ * Remarks
+ *  1.      None
+ *
+ * History
+ *  08/29/2021  Generated
+ *  04/02/2022  Test_Setup() is called before any test supplied Setup() and
+ *              any supplied TearDown() is called before Test_TearDown. Also,
+ *              added XCTAssertTrue and XCTAssertFalse for compatibility.
+ */
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+
+#include        <cmn_defs.h>
+#include        <AStr.h>
+#include        <logInterface.h>
+
+
+#ifndef         TEST_H
+#define         TEST_H
+
+
+//#define   TEST_IS_IMMUTABLE     1
+//#define   TEST_JSON_SUPPORT     1
+//#define   TEST_SINGLETON        1
+
+
+#define TestExec(name, test, setup, teardown)\
+    pTestNameA = name;\
+    eRc = Test_Exec(pTest, pTestNameA, test, setup, teardown);\
+    if (ERESULT_FAILED(eRc)) {\
+        fprintf(stderr, "Test: %s failed!\n\n\n", name);\
+        exit(200);\
+    }
+#define TestForFail(error)\
+    Test_ForFail(this, eRc, error, __FILE__, __LINE__)
+#define TestForFalse(test, error)\
+    Test_ForFalse(this, test, error, __FILE__, __LINE__)
+#define TestForNotNull(test, error)\
+    Test_ForNotNull(this, test, error, __FILE__, __LINE__)
+#define TestForNull(test, error)\
+    Test_ForNull(this, test, error, __FILE__, __LINE__)
+#define TestForSuccess(error)\
+    Test_ForSucess(this, eRc, error, __FILE__, __LINE__)
+#define TestForTrue(test, error)\
+    Test_ForTrue(this, test, error, __FILE__, __LINE__)
+#define TestForNotZero(test, error)\
+    Test_ForNotZero(this, test, error, __FILE__, __LINE__)
+#define TestForZero(test, error)\
+    Test_ForZero(this, test, error, __FILE__, __LINE__)
+#define XCTAssertFalse(test)\
+    Test_ForFalse(this, test, "", __FILE__, __LINE__)
+#define XCTAssertTrue(test)\
+    Test_ForTrue(this, test, "", __FILE__, __LINE__)
+
+
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+    
+
+    //****************************************************************
+    //* * * * * * * * * * * *  Data Definitions  * * * * * * * * * * *
+    //****************************************************************
+
+
+    typedef struct Test_data_s  TEST_DATA;            // Inherits from OBJ
+    typedef struct Test_class_data_s TEST_CLASS_DATA;   // Inherits from OBJ
+
+    // NOTE: This must conform to the logInterface!
+    typedef struct Test_vtbl_s  {
+        OBJ_IUNKNOWN    iVtbl;              // Inherited Vtbl.
+        // Put other methods below this as pointers and add their
+        // method names to the vtbl definition in Test_object.c.
+        // Properties:
+        // Methods:
+        void        (*pLogDebug)(OBJ_ID, const char *, ...);
+        void        (*pLogFatal)(OBJ_ID, const char *, ...);
+        void        (*pLogInfo)(OBJ_ID, const char *, ...);
+        void        (*pLogWarn)(OBJ_ID, const char *, ...);
+        ERESULT     (*pClose)(OBJ_ID);
+    } TEST_VTBL;
+
+    typedef struct Test_class_vtbl_s    {
+        OBJ_IUNKNOWN    iVtbl;              // Inherited Vtbl.
+        // Put other methods below this as pointers and add their
+        // method names to the vtbl definition in Test_object.c.
+        // Properties:
+        // Methods:
+        //bool        (*pIsEnabled)(TEST_DATA *);
+    } TEST_CLASS_VTBL;
+
+
+
+
+    /****************************************************************
+    * * * * * * * * * * *  Routine Definitions  * * * * * * * * * * *
+    ****************************************************************/
+
+
+    //---------------------------------------------------------------
+    //                      *** Class Methods ***
+    //---------------------------------------------------------------
+
+#ifdef  TEST_SINGLETON
+    TEST_DATA *     Test_Shared (
+        void
+    );
+
+    void            Test_SharedReset (
+        void
+    );
+#endif
+
+
+   /*!
+     Allocate a new Object and partially initialize. Also, this sets an
+     indicator that the object was alloc'd which is tested when the object is
+     released.
+     @return    pointer to Test object if successful, otherwise OBJ_NIL.
+     */
+    TEST_DATA *     Test_Alloc (
+        void
+    );
+    
+    
+    OBJ_ID          Test_Class (
+        void
+    );
+    
+    
+    /*!
+     Dump the given data area to stderr.
+     @param     size    number of bytes to dump
+     @param     pData   pointer to data to be dumped
+     @param     pTitle  Optional Title pointer
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         Test_Dump (
+        uint32_t        size,
+        void            *pData,
+        const
+        char            *pTitle
+    );
+
+
+    TEST_DATA *     Test_New (
+        void
+    );
+    
+    
+#ifdef  TEST_JSON_SUPPORT
+    TEST_DATA *     Test_NewFromJsonString (
+        ASTR_DATA       *pString
+    );
+
+    TEST_DATA *     Test_NewFromJsonStringA (
+        const
+        char            *pStringA
+    );
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //                      *** Properties ***
+    //---------------------------------------------------------------
+
+    bool            Test_getAllowInt3 (
+        TEST_DATA       *this
+    );
+
+    bool            Test_setAllowInt3 (
+        TEST_DATA       *this,
+        bool            fValue
+    );
+
+
+    /*! @property   QueryInfoExit
+        If set with an address, a QueryInfo() request for this
+        objecct will transfer first to the exit. If the exit
+        returns NULL, then the QueryInfo() in this object will
+        execute. Otherwise, it is assumed that a non-NULL return
+        from the exit, implies that processing is done and
+        the value should be returned to the caller.
+     */
+    bool            Test_setQueryInfoExit (
+        TEST_DATA       *this,
+        P_OBJ_QUERYINFO value
+    );
+
+
+    uint16_t        Test_getQuiet (
+        TEST_DATA     *this
+    );
+
+    bool            Test_setQuiet (
+        TEST_DATA       *this,
+        uint16_t        value
+    );
+
+
+    /*! @property U16
+        is an array of 8 uint32_t which can be used for any
+        purpose that the user wants.
+     */
+    uint16_t        Test_getU16 (
+        TEST_DATA       *this,
+        uint16_t        index
+    );
+
+    bool            Test_setU16 (
+        TEST_DATA       *this,
+        uint16_t        index,
+        uint16_t        value
+    );
+
+
+    /*! @property U32
+        is an array of 8 uint32_t which can be used for any
+        purpose that the user wants.
+     */
+    uint32_t        Test_getU32 (
+        TEST_DATA       *this,
+        uint16_t        index
+    );
+
+    bool            Test_setU32 (
+        TEST_DATA       *this,
+        uint16_t        index,
+        uint32_t        value
+    );
+
+
+    /*! @property U64
+        is an array of 8 uint64_t which can be used for any
+        purpose that the user wants.
+     */
+    uint64_t        Test_getU64 (
+        TEST_DATA       *this,
+        uint16_t        index
+    );
+
+    bool            Test_setU64 (
+        TEST_DATA       *this,
+        uint16_t        index,
+        uint64_t        value
+    );
+
+
+    uint16_t        Test_getVerbose (
+        TEST_DATA     *this
+    );
+
+    bool            Test_setVerbose (
+        TEST_DATA       *this,
+        uint16_t        value
+    );
+
+
+
+    //---------------------------------------------------------------
+    //                      *** Methods ***
+    //---------------------------------------------------------------
+
+    /*!
+     Compare/Check two strings against each other. If the comparison
+     fails, issue an error on stderr with some data at which the
+     failure occurred.
+     @param     this    object pointer
+     @param     pCheck  Check or base string pointer
+     @param     pOther  Generated or other string pointer
+     @param     skip1stLines    Skip the first NN lines of both
+                        strings.
+     @return    -2 == problem with input data
+                -1 == pCheck <  pOther
+                 0 == pCheck == pOther
+                 1 == pCheck >  pOther
+     */
+    int             Test_CheckStrings (
+        TEST_DATA       *this,
+        ASTR_DATA       *pCheck,          // Check or base string
+        ASTR_DATA       *pOther,          // Generated or other string
+        int             skip1stLines
+    );
+
+
+    ERESULT         Test_Exec (
+        TEST_DATA       *this,
+        const
+        char            *pNameA,
+        ERESULT         (*pExec)(TEST_DATA *, const char *),
+        ERESULT         (*pSetup)(TEST_DATA *),
+        ERESULT         (*pTearDown)(TEST_DATA *)
+    );
+
+
+    ERESULT         Test_ForFail (
+        TEST_DATA       *this,
+        ERESULT         eRc2,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForFalse (
+        TEST_DATA       *this,
+        bool            fValue,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForNotNull (
+        TEST_DATA       *this,
+        void            *pValue,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForNull (
+        TEST_DATA       *this,
+        void            *pValue,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForSucess (
+        TEST_DATA       *this,
+        ERESULT         eRc2,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForTrue (
+        TEST_DATA       *this,
+        bool            fValue,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForNotZero (
+        TEST_DATA       *this,
+        int             value,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    ERESULT         Test_ForZero (
+        TEST_DATA       *this,
+        int             value,
+        const
+        char            *pErrorA,
+        const
+        char            *pFilePathA,
+        size_t          iLine
+    );
+
+
+    TEST_DATA *     Test_Init (
+        TEST_DATA       *this
+    );
+
+
+    ERESULT         Test_IsEnabled (
+        TEST_DATA       *this
+    );
+    
+
+    ERESULT         Test_MsgClose (
+        TEST_DATA       *this
+    );
+
+
+    void            Test_MsgDebug(
+        TEST_DATA       *this,
+        const
+        char            *fmt,
+        ...
+    );
+
+
+    void            Test_MsgFatal(
+        TEST_DATA       *this,
+        const
+        char            *fmt,
+        ...
+    );
+
+
+    void            Test_MsgInfo(
+        TEST_DATA       *this,
+        const
+        char            *fmt,
+        ...
+    );
+
+
+    void            Test_MsgWarn(
+        TEST_DATA       *this,
+        uint16_t        iVerbose,
+        const
+        char            *fmt,
+        ...
+    );
+
+
+    /*!
+     Setup for an execution.
+     @param     this    object pointer
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         Test_Setup (
+        TEST_DATA       *this
+    );
+
+
+    /*!
+     Tera down from an execution.
+     @param     this    object pointer
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         Test_TearDown (
+        TEST_DATA       *this
+    );
+
+
+#ifdef  TEST_JSON_SUPPORT
+    /*!
+     Create a string that describes this object and the objects within it in
+     HJSON formt. (See hjson object for details.)
+     Example:
+     @code
+     ASTR_DATA      *pDesc = Test_ToJson(this);
+     @endcode
+     @param     this    object pointer
+     @return    If successful, an AStr object which must be released containing the
+                JSON text, otherwise OBJ_NIL.
+     @warning   Remember to release the returned AStr object.
+     */
+    ASTR_DATA *     Test_ToJson (
+        TEST_DATA   *this
+    );
+#endif
+
+
+    /*!
+     Create a string that describes this object and the objects within it.
+     Example:
+     @code 
+        ASTR_DATA      *pDesc = Test_ToDebugString(this,4);
+     @endcode 
+     @param     this    object pointer
+     @param     indent  number of characters to indent every line of output, can be 0
+     @return    If successful, an AStr object which must be released containing the
+                description, otherwise OBJ_NIL.
+     @warning   Remember to release the returned AStr object.
+     */
+    ASTR_DATA *     Test_ToDebugString (
+        TEST_DATA     *this,
+        int             indent
+    );
+    
+    
+    /*!
+     Wait in the current thread for msWait milli-seconds. The wait is
+     controlled by Test_getAllowInt3(). If it is true, the wait occurs;
+     otherwise, it is skipped.
+     @param     this    object pointer
+     @param     msWait  number of milli-seconds to wait (> 0)
+     @return    if successful, ERESULT_SUCCESS.  Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT         Test_Wait (
+        TEST_DATA       *this,
+        uint32_t        msWait
+    );
+
+
+
+    
+#ifdef  __cplusplus
+}
+#endif
+
+#endif  /* TEST_H */
+

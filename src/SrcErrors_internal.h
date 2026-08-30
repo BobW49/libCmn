@@ -1,0 +1,202 @@
+// vi:nu:et:sts=4 ts=4 sw=4
+/* 
+ * File:   SrcErrors_internal.h
+ *	Generated 12/28/2019 09:57:24
+ *
+ * Notes:
+ *  --	N/A
+ *
+ */
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+#include        <SrcErrors.h>
+#include        <JsonIn.h>
+#include        <ObjArray_internal.h>
+
+
+#ifndef SRCERRORS_INTERNAL_H
+#define	SRCERRORS_INTERNAL_H
+
+
+
+#define     PROPERTY_ERRORS_OWNED 1
+
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+
+
+
+    //---------------------------------------------------------------
+    //                  Object Data Description
+    //---------------------------------------------------------------
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+struct SrcErrors_data_s	{
+    /* Warning - OBJ_DATA must be first in this object!
+     */
+    OBJARRAY_DATA   super;
+    OBJ_IUNKNOWN    *pSuperVtbl;    // Needed for Inheritance
+
+    // Common Data
+    bool            fFatal;         // One or more fatal errors occurred
+    bool            fExitOnFatal;
+    uint16_t        rsvd16;
+    OBJARRAY_DATA   *pPaths;        // Path Table
+    
+    OBJMETHOD_DATA  *pFatalExit;
+
+};
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+    extern
+    struct SrcErrors_class_data_s  SrcErrors_ClassObj;
+
+    extern
+    const
+    SRCERRORS_VTBL         SrcErrors_Vtbl;
+
+
+
+    //---------------------------------------------------------------
+    //              Class Object Method Forward Definitions
+    //---------------------------------------------------------------
+
+#ifdef  SRCERRORS_SINGLETON
+    SRCERRORS_DATA * SrcErrors_getSingleton (
+        void
+    );
+
+    bool            SrcErrors_setSingleton (
+     SRCERRORS_DATA       *pValue
+);
+#endif
+
+
+
+    //---------------------------------------------------------------
+    //              Internal Method Forward Definitions
+    //---------------------------------------------------------------
+
+    bool            SrcErrors_setFatal (
+        SRCERRORS_DATA  *this,
+        bool            value
+    );
+
+
+    OBJ_IUNKNOWN *  SrcErrors_getSuperVtbl (
+        SRCERRORS_DATA     *this
+    );
+
+
+    ERESULT         SrcErrors_Assign (
+        SRCERRORS_DATA        *this,
+        SRCERRORS_DATA     *pOther
+    );
+
+
+    SRCERRORS_DATA *     SrcErrors_Copy (
+        SRCERRORS_DATA       *this
+    );
+
+
+    void            SrcErrors_Dealloc (
+        OBJ_ID          objId
+    );
+
+
+#ifdef  SRCERRORS_JSON_SUPPORT
+    SRCERRORS_DATA * SrcErrors_ParseJsonObject (
+        JSONIN_DATA     *pParser
+    );
+
+
+    /*!
+     Parse the object from an established parser.
+     @param pParser     an established jsonIn Parser Object
+     @param pObject     an Object to be filled in with the
+                        parsed fields.
+     @return    If successful, ERESULT_SUCCESS. Otherwise, an ERESULT_*
+                error code.
+     */
+    ERESULT     SrcErrors_ParseJsonFields (
+        JSONIN_DATA     *pParser,
+        SRCERRORS_DATA  *pObject
+    );
+#endif
+
+
+    void *          SrcErrors_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    );
+
+
+#ifdef  SRCERRORS_JSON_SUPPORT
+    ASTR_DATA *     SrcErrors_ToJson (
+        SRCERRORS_DATA      *this
+    );
+
+
+    ERESULT         SrcErrors_ToJsonFields (
+        SRCERRORS_DATA  *this,
+        ASTR_DATA       *pStr
+    );
+#endif
+
+
+
+
+#ifdef NDEBUG
+#else
+    bool			SrcErrors_Validate (
+        SRCERRORS_DATA       *this
+    );
+#endif
+
+
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* SRCERRORS_INTERNAL_H */
+

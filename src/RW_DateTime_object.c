@@ -1,0 +1,525 @@
+// vi: nu:noai:ts=4:sw=4
+
+//****************************************************************
+//   	Specific Date and Time (RW_DateTime) Object Support
+//****************************************************************
+
+//  Class Object Metods and Tables for 'RW_DateTime'
+//  Generated 05/31/2026 10:01:12
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+     
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+#define         RW_DATETIME_OBJECT_C       1
+#include        <RW_DateTime_internal.h>
+#ifdef  RW_DATETIME_SINGLETON
+#include        <psxLock.h>
+#endif
+
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+        
+        
+
+    //===========================================================
+    //                  Class Object Definition
+    //===========================================================
+
+    struct RW_DateTime_class_data_s    {
+        // Warning - OBJ_DATA must be first in this object!
+        OBJ_DATA        super;
+        
+        // Common Data
+    #ifdef  RW_DATETIME_SINGLETON
+        volatile
+        RW_DATETIME_DATA 
+                        *pSingleton;
+    #endif
+        //uint32_t       misc;
+        //OBJ_ID         pObjCatalog;
+    };
+
+
+
+
+    //-----------------------------------------------------------
+    //                  Class Methods
+    //-----------------------------------------------------------
+
+
+
+    static
+    void *          RW_DateTimeClass_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    );
+
+
+    static
+    const
+    OBJ_INFO            RW_DateTime_Info;            // Forward Reference
+
+
+
+
+    static
+    bool            RW_DateTimeClass_IsKindOf (
+        uint16_t        classID
+    )
+    {
+        OBJ_DATA        *pObj;
+        
+        if (OBJ_IDENT_RW_DATETIME_CLASS == classID) {
+           return true;
+        }
+        if (OBJ_IDENT_OBJ_CLASS == classID) {
+           return true;
+        }
+        
+        pObj = obj_getInfo(RW_DateTime_Class())->pClassSuperObject;
+        if (pObj == obj_BaseClass())
+            ;
+        else {
+            return obj_getVtbl(pObj)->pIsKindOf(classID);
+        }
+        
+        return false;
+    }
+
+
+    static
+    uint16_t        RW_DateTimeClass_WhoAmI (
+        void
+    )
+    {
+        return OBJ_IDENT_RW_DATETIME_CLASS;
+    }
+
+
+
+
+    //===========================================================
+    //                 Class Object Vtbl Definition
+    //===========================================================
+
+    static
+    const
+    RW_DATETIME_CLASS_VTBL 
+                        class_Vtbl = {
+        {
+            &RW_DateTime_Info,
+            RW_DateTimeClass_IsKindOf,
+            obj_RetainNull,
+            obj_ReleaseNull,
+            NULL,
+            RW_DateTime_Class,
+            RW_DateTimeClass_WhoAmI,
+            (P_OBJ_QUERYINFO)RW_DateTimeClass_QueryInfo,
+            NULL                        // RW_DateTimeClass_ToDebugString
+        },
+        (void *)RW_DateTime_New
+    };
+
+
+
+    //-----------------------------------------------------------
+    //                      Class Object
+    //-----------------------------------------------------------
+
+    RW_DATETIME_CLASS_DATA 
+                        RW_DateTime_ClassObj = {
+        {
+            (const OBJ_IUNKNOWN *)&class_Vtbl,      // pVtbl
+            sizeof(RW_DATETIME_CLASS_DATA),         // cbSize
+            0,                                      // cbFlags
+            1,                                      // cbRetainCount
+            {0}                                     // cbMisc
+        },
+        //0
+    };
+
+
+
+    //---------------------------------------------------------------
+    //          S i n g l e t o n  M e t h o d s
+    //---------------------------------------------------------------
+
+    #ifdef  RW_DATETIME_SINGLETON
+    extern
+    const
+    RW_DATETIME_VTBL    RW_DateTime_VtblShared;
+
+
+    RW_DATETIME_DATA * 
+                    RW_DateTime_getSingleton (
+        void
+    )
+    {
+        return (OBJ_ID)(RW_DateTime_ClassObj.pSingleton);
+    }
+
+
+    bool            RW_DateTime_setSingleton (
+        RW_DATETIME_DATA 
+                        *pValue
+    )
+    {
+        PSXLOCK_DATA    *pLock = OBJ_NIL;
+        bool            fRc;
+        
+        pLock = psxLock_New( );
+        if (OBJ_NIL == pLock) {
+            DEBUG_BREAK();
+            return false;
+        }
+        fRc = psxLock_Lock(pLock);
+        if (!fRc) {
+            DEBUG_BREAK();
+            obj_Release(pLock);
+            pLock = OBJ_NIL;
+            return false;
+        }
+        
+        obj_Retain(pValue);
+        if (RW_DateTime_ClassObj.pSingleton) {
+            obj_Release((OBJ_ID)(RW_DateTime_ClassObj.pSingleton));
+        }
+        RW_DateTime_ClassObj.pSingleton = pValue;
+        
+        fRc = psxLock_Unlock(pLock);
+        obj_Release(pLock);
+        pLock = OBJ_NIL;
+        return true;
+    }
+
+
+
+    RW_DATETIME_DATA * 
+                    RW_DateTime_Shared (
+        void
+    )
+    {
+        RW_DATETIME_DATA 
+                        *this = (OBJ_ID)(RW_DateTime_ClassObj.pSingleton);
+        
+        if (NULL == this) {
+            this = RW_DateTime_New( );
+            obj_setVtbl(this, (void *)&RW_DateTime_VtblShared);
+            RW_DateTime_setSingleton(this);
+            obj_Release(this);          // Shared controls object retention now.
+            // RW_DateTime_ClassObj.pSingleton = OBJ_NIL;
+        }
+        
+        return this;
+    }
+
+
+
+    void            RW_DateTime_SharedReset (
+        void
+    )
+    {
+        RW_DATETIME_DATA 
+                        *this = (OBJ_ID)(RW_DateTime_ClassObj.pSingleton);
+        
+        if (this) {
+            obj_setVtbl(this, (void *)&RW_DateTime_Vtbl);
+            obj_Release(this);
+            RW_DateTime_ClassObj.pSingleton = OBJ_NIL;
+        }
+        
+    }
+
+
+
+    #endif
+
+
+
+    //---------------------------------------------------------------
+    //                     Q u e r y  I n f o
+    //---------------------------------------------------------------
+
+    static
+    void *          RW_DateTimeClass_QueryInfo (
+        OBJ_ID          objId,
+        uint32_t        type,
+        void            *pData
+    )
+    {
+        RW_DATETIME_CLASS_DATA 
+                        *this = objId;
+        const
+        char            *pStrA = pData;
+        
+        if (OBJ_NIL == this) {
+            return NULL;
+        }
+        
+        switch (type) {
+          
+            case OBJ_QUERYINFO_TYPE_OBJECT_SIZE:
+                return (void *)sizeof(RW_DATETIME_DATA);
+                break;
+                
+            case OBJ_QUERYINFO_TYPE_CLASS_OBJECT:
+                return this;
+                break;
+                
+            // Query for an address to specific data within the object.  
+            case OBJ_QUERYINFO_TYPE_DATA_PTR:
+                switch (*pStrA) {
+     
+                    case 'C':
+                        if (str_Compare("ClassInfo", (char *)pStrA) == 0) {
+                            return (void *)&RW_DateTime_Info;
+                        }
+                        break;
+                        
+                    case 'S':
+                        if (str_Compare("SuperClass", (char *)pStrA) == 0) {
+                            return (void *)&RW_DateTime_Info.pClassSuperObject;
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+                
+            case OBJ_QUERYINFO_TYPE_INFO:
+                return (void *)obj_getInfo(this);
+                break;
+                
+            case OBJ_QUERYINFO_TYPE_METHOD:
+                switch (*pStrA) {
+                        
+                    case 'N':
+                        if (str_Compare("New", (char *)pStrA) == 0) {
+                            return RW_DateTime_New;
+                        }
+                        break;
+                        
+                    case 'P':
+    #ifdef  RW_DATETIME_JSON_SUPPORT
+                        if (str_Compare("ParseJsonFields", (char *)pStrA) == 0) {
+                            return RW_DateTime_ParseJsonFields;
+                        }
+                        if (str_Compare("ParseJsonObject", (char *)pStrA) == 0) {
+                            return RW_DateTime_ParseJsonObject;
+                        }
+    #endif
+                        break;
+
+                    case 'T':
+    #ifdef  RW_DATETIME_JSON_SUPPORT
+                        if (str_Compare("ToJsonFields", (char *)pStrA) == 0) {
+                            return RW_DateTime_ToJsonFields;
+                        }
+                        if (str_Compare("ToJson", (char *)pStrA) == 0) {
+                            return RW_DateTime_ToJson;
+                        }
+    #endif
+                        break;
+
+                     case 'W':
+                        if (str_Compare("WhoAmI", (char *)pStrA) == 0) {
+                            return RW_DateTimeClass_WhoAmI;
+                        }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+                
+            default:
+                break;
+        }
+        
+        return NULL;
+    }
+
+
+
+
+    static
+    bool            RW_DateTime_IsKindOf (
+        uint16_t        classID
+    )
+    {
+        OBJ_DATA        *pObj;
+        const
+        OBJ_INFO        *pInfo;
+
+        if (OBJ_IDENT_RW_DATETIME == classID) {
+           return true;
+        }
+        if (OBJ_IDENT_OBJ == classID) {
+           return true;
+        }
+
+        pObj = obj_getInfo(RW_DateTime_Class())->pClassSuperObject;
+        if (pObj == obj_BaseClass())
+            ;
+        else {
+            pInfo = obj_getInfo(pObj);
+            return pInfo->pDefaultVtbls->pIsKindOf(classID);
+        }
+        
+        return false;
+    }
+
+
+    // Dealloc() should be put into the Internal Header as well
+    // for classes that get inherited from.
+    void            RW_DateTime_Dealloc (
+        OBJ_ID          objId
+    );
+
+
+    OBJ_ID          RW_DateTime_Class (
+        void
+    )
+    {
+        return (OBJ_ID)&RW_DateTime_ClassObj;
+    }
+
+
+    static
+    uint16_t        RW_DateTime_WhoAmI (
+        void
+    )
+    {
+        return OBJ_IDENT_RW_DATETIME;
+    }
+
+
+
+
+
+    //===========================================================
+    //                  Object Vtbl Definition
+    //===========================================================
+
+    #ifdef  RW_DATETIME_SINGLETON
+    // A Shared object ignores Retain() and Release() except for
+    // initialization and termination. So, there must be an
+    // independent VTbl from the normal which does support Retain()
+    // and Release().
+    const
+    RW_DATETIME_VTBL    RW_DateTime_VtblShared = {
+        {
+            &RW_DateTime_Info,
+            RW_DateTime_IsKindOf,
+            obj_RetainNull,
+            obj_ReleaseNull,
+            RW_DateTime_Dealloc,
+            RW_DateTime_Class,
+            RW_DateTime_WhoAmI,
+            (P_OBJ_QUERYINFO)RW_DateTime_QueryInfo,
+            (P_OBJ_TOSTRING)RW_DateTime_ToDebugString,
+            NULL,           // RW_DateTime_Enable,
+            NULL,           // RW_DateTime_Disable,
+            NULL,           // (P_OBJ_ASSIGN)RW_DateTime_Assign,
+            NULL,           // (P_OBJ_COMPARE)RW_DateTime_Compare,
+            NULL,           // (P_OBJ_PTR)RW_DateTime_Copy,
+            NULL,           // (P_OBJ_PTR)RW_DateTime_DeepCopy,
+            NULL            // (P_OBJ_HASH)RW_DateTime_Hash,
+        },
+        // Put other object method names below this.
+        // Properties:
+        // Methods:
+        //RW_DateTime_IsEnabled,
+     
+    };
+    #endif
+
+
+    // This VTbl supports Retain() and Release() which is
+    // used by objects other than the Shared object. These
+    // objects can still be shared among other objects. It
+    // just that they are deleted when their usage count
+    // goes to zero.
+    const
+    RW_DATETIME_VTBL    RW_DateTime_Vtbl = {
+        {
+            &RW_DateTime_Info,
+            RW_DateTime_IsKindOf,
+            obj_RetainStandard,
+            obj_ReleaseStandard,
+            RW_DateTime_Dealloc,
+            RW_DateTime_Class,
+            RW_DateTime_WhoAmI,
+            (P_OBJ_QUERYINFO)RW_DateTime_QueryInfo,
+            (P_OBJ_TOSTRING)RW_DateTime_ToDebugString,
+            NULL,           // RW_DateTime_Enable,
+            NULL,           // RW_DateTime_Disable,
+            (P_OBJ_ASSIGN)RW_DateTime_Assign,
+            (P_OBJ_COMPARE)RW_DateTime_Compare,
+            (P_OBJ_PTR)RW_DateTime_Copy,
+            (P_OBJ_PTR)RW_DateTime_DeepCopy,
+            (P_OBJ_HASH)RW_DateTime_Hash,
+        },
+        // Put other object method names below this.
+        // Properties:
+        // Methods:
+        //RW_DateTime_IsEnabled,
+     
+    };
+
+
+
+    static
+    const
+    OBJ_INFO            RW_DateTime_Info = {
+        "RW_DateTime",
+        "Specific Date and Time",
+        (OBJ_DATA *)&RW_DateTime_ClassObj,
+    #ifdef  RW_DATETIME_SUPER_DEFINED
+        (OBJ_DATA *)&obj_ClassObj,
+    #else
+        (OBJ_DATA *)&obj_ClassObj,
+    #endif
+        (OBJ_IUNKNOWN *)&RW_DateTime_Vtbl,
+        sizeof(RW_DATETIME_DATA)
+    };
+
+
+
+#ifdef  __cplusplus
+}
+#endif
+
+

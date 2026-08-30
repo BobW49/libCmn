@@ -1,0 +1,19 @@
+{
+    program: {
+        "name":"sgrep",
+        "deps":["Cmn"],
+        "headers_private":["sgrep.h"],
+        "main":"sgrep.c"
+    }
+    "objects": {
+        //"exec":{"srcDeps":["mainProgram.h"], "test":true},
+        //"main":{"srcDeps":["mainProgram.h"], "test":true},
+    },
+    "routines": [
+        "sgrep.c"
+    ],
+    "macosx": [
+    ],
+    "win32": [
+    ],
+}

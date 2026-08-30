@@ -1,0 +1,19 @@
+{
+    program: {
+        "name":"md5Util",
+        "libDeps":["Cmn"],
+        "headers_private":["mainProgram.h"],
+        "main":"mainProgram.c"
+    }
+    "objects": {
+        "exec":{"srcDeps":["mainProgram.h"], "test":true},
+        "main":{"srcDeps":["mainProgram.h"], "test":true},
+    },
+    "routines": [
+        "mainProgram.c"
+    ],
+    "macosx": [
+    ],
+    "win32": [
+    ],
+}

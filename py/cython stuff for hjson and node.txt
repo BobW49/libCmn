@@ -1,0 +1,230 @@
+Yes, I can translate these C headers (`hjson.h`, `Node.h`, `NodeHash.h`, and `NodeArray.h`) to Cython! This involves creating Cython declaration files (.pxd) that wrap the C structures, functions, and constants, allowing Python/Cython code to interface with your C library. The .pxd files declare the C types and methods externally, so you can import them in .pyx files for implementation or use.
+
+I’ve assumed a basic setup:
+- The C library is compiled as a shared library (e.g., `libcmn.so` or `libcmn.dll`).
+- Types like `OBJ_ID`, `ERESULT`, `ASTR_DATA`, `PATH_DATA`, `NODE_DATA`, etc., are defined in other headers (e.g., `cmn_defs.h`). You’d need to include those in a base .pxd (e.g., `cmn_defs.pxd`).
+- I’ve focused on extern declarations for structures and functions, using Cython’s `cdef extern from "header.h"`.
+- Memory management (e.g., releasing nodes) remains manual, as in your C code.
+- For unions (e.g., in `Token`), I’ve used Cython’s union declaration.
+- I’ve omitted some truncated parts from your documents, assuming they’re incomplete, but the core is covered.
+
+Below are the translated .pxd files as artifacts. You can place them in your Cython project (e.g., `hjson.pxd`, `Node.pxd`, etc.) and compile with `cythonize`. If you have more headers (e.g., `AStr.h`, `Path.h`), let me know to expand.
+
+<xaiArtifact artifact_id="e9a4b7f2-4a3a-4b1e-9a37-5b7b9f4c2d4d" artifact_version_id="1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p" title="hjson.pxd" contentType="text/python">
+# distutils: language = c
+
+cdef extern from "hjson.h":
+    ctypedef struct HJSON_DATA:
+        pass
+
+    ctypedef struct NODEHASH_DATA:
+        pass
+
+    ctypedef struct PATH_DATA:
+        pass
+
+    ctypedef struct ASTR_DATA:
+        pass
+
+    ctypedef struct NODE_DATA:
+        pass
+
+    ctypedef struct ASTR_DATA:
+        pass
+
+    HJSON_DATA* hjson_Alloc()
+
+    HJSON_DATA* hjson_NewA(const char* pSzStr, uint16_t tabSize)
+
+    HJSON_DATA* hjson_NewAStr(ASTR_DATA* pSzStr, uint16_t tabSize)
+
+    HJSON_DATA* hjson_NewFromFile(FILE* pFile, uint16_t tabSize)
+
+    HJSON_DATA* hjson_NewFromPath(PATH_DATA* pPath, uint16_t tabSize)
+
+    NODEHASH_DATA* hjson_getFileObject(HJSON_DATA* this)
+
+    PATH_DATA* hjson_getPath(HJSON_DATA* this)
+
+    bint hjson_setPath(HJSON_DATA* this, PATH_DATA* pValue)
+
+    HJSON_DATA* hjson_InitAStr(HJSON_DATA* this, ASTR_DATA* pAStr, uint16_t tabSize)
+
+    HJSON_DATA* hjson_InitFile(HJSON_DATA* this, FILE* pFile, uint16_t tabSize)
+
+    HJSON_DATA* hjson_InitPath(HJSON_DATA* this, PATH_DATA* pFilePath, uint16_t tabSize)
+
+    NODE_DATA* hjson_ParseFileHash(HJSON_DATA* this)
+
+    NODE_DATA* hjson_ParseFileValue(HJSON_DATA* this)
+
+    ASTR_DATA* hjson_ToDebugString(HJSON_DATA* this, int indent)
+</xaiArtifact>
+
+<xaiArtifact artifact_id="f0g1h2i3-j4k5-l6m7-n8o9-p0q1r2s3t4u5" title="Node.pxd" contentType="text/python">
+# distutils: language = c
+
+cdef extern from "Node.h":
+    ctypedef struct NODE_DATA:
+        pass
+
+    ctypedef struct NODE_CLASS_DATA:
+        pass
+
+    ctypedef struct ASTR_DATA:
+        pass
+
+    ctypedef struct NAME_DATA:
+        pass
+
+    ctypedef struct NODEHASH_DATA:
+        pass
+
+    ctypedef struct PATH_DATA:
+        pass
+
+    ctypedef struct SRCLOC_DATA:
+        pass
+
+    cdef enum:
+        OBJ_IDENT_NODE = 0  # Placeholder; use actual from cmn_defs.h
+
+    NODE_DATA* Node_Alloc()
+
+    NODE_DATA* Node_NewA(const char* pNameA)
+
+    NODE_DATA* Node_NewName(NAME_DATA* pName)
+
+    NODE_DATA* Node_NewNameObj(NAME_DATA* pName, OBJ_ID pObj)
+
+    NODE_DATA* Node_NewUtf8(const char* pNameA)
+
+    NODE_DATA* Node_NewUtf8Obj(const char* pNameA, OBJ_ID pObj)
+
+    NODE_DATA* Node_Init(NODE_DATA* this)
+
+    NAME_DATA* Node_getName(NODE_DATA* this)
+
+    OBJ_ID Node_getData(NODE_DATA* this)
+
+    bint Node_setData(NODE_DATA* this, OBJ_ID pValue)
+
+    OBJ_ID Node_getExtra(NODE_DATA* this)
+
+    bint Node_setExtra(NODE_DATA* this, OBJ_ID pValue)
+
+    bint Node_getFlagNoDuplicates(NODE_DATA* this)
+
+    void Node_setFlagNoDuplicates(NODE_DATA* this, bint value)
+
+    SRCLOC_DATA* Node_getSrcLoc(NODE_DATA* this)
+
+    bint Node_setSrcLoc(NODE_DATA* this, SRCLOC_DATA* pValue)
+
+    int Node_Compare(NODE_DATA* this, NODE_DATA* pOther)
+
+    NODE_DATA* Node_Copy(NODE_DATA* this)
+
+    ASTR_DATA* Node_ToDebugString(NODE_DATA* this, int indent)
+</xaiArtifact>
+
+<xaiArtifact artifact_id="v6w7x8y9-z0a1-b2c3-d4e5-f6g7h8i9j0k1" title="NodeHash.pxd" contentType="text/python">
+# distutils: language = c
+
+cdef extern from "NodeHash.h":
+    ctypedef struct NODEHASH_DATA:
+        pass
+
+    ctypedef struct NODEHASH_CLASS_DATA:
+        pass
+
+    ctypedef struct NODE_DATA:
+        pass
+
+    ctypedef struct ASTR_DATA:
+        pass
+
+    ctypedef struct NAME_DATA:
+        pass
+
+    ctypedef struct PATH_DATA:
+        pass
+
+    cdef enum:
+        NODEHASH_JSON_SUPPORT = 1
+
+    NODEHASH_DATA* NodeHash_Alloc()
+
+    NODEHASH_DATA* NodeHash_New()
+
+    NODEHASH_DATA* NodeHash_NewWithSize(uint16_t size)
+
+    ERESULT NodeHash_AddA(NODEHASH_DATA* this, const char* pNameA, NODE_DATA* pNode)
+
+    ERESULT NodeHash_AddUtf8(NODEHASH_DATA* this, const char* pNameA, NODE_DATA* pNode)
+
+    ERESULT NodeHash_AddName(NODEHASH_DATA* this, NAME_DATA* pName, NODE_DATA* pNode)
+
+    ERESULT NodeHash_DeleteA(NODEHASH_DATA* this, const char* pNameA)
+
+    NODE_DATA* NodeHash_FindA(NODEHASH_DATA* this, const char* pNameA)
+
+    NODE_DATA* NodeHash_FindUtf8(NODEHASH_DATA* this, const char* pNameA)
+
+    NODEHASH_DATA* NodeHash_Init(NODEHASH_DATA* this)
+
+    NODEHASH_DATA* NodeHash_Copy(NODEHASH_DATA* this)
+
+    ERESULT NodeHash_ForEach(NODEHASH_DATA* this, P_ERESULT_EXIT3 pScan, OBJ_ID pObj, void* pArg3)
+
+    ASTR_DATA* NodeHash_ToDebugString(NODEHASH_DATA* this, int indent)
+</xaiArtifact>
+
+<xaiArtifact artifact_id="l2m3n4o5-p6q7-r8s9-t0u1-v2w3x4y5z6a7" title="NodeArray.pxd" contentType="text/python">
+# distutils: language = c
+
+cdef extern from "NodeArray.h":
+    ctypedef struct NODEARRAY_DATA:
+        pass
+
+    ctypedef struct NODEARRAY_CLASS_DATA:
+        pass
+
+    ctypedef struct NODE_DATA:
+        pass
+
+    ctypedef struct ASTR_DATA:
+        pass
+
+    cdef enum:
+        NODEARRAY_JSON_SUPPORT = 1
+
+    NODEARRAY_DATA* NodeArray_Alloc()
+
+    NODEARRAY_DATA* NodeArray_New()
+
+    NODEARRAY_DATA* NodeArray_NewWithSize(uint16_t size)
+
+    ERESULT NodeArray_Append(NODEARRAY_DATA* this, NODE_DATA* pNode)
+
+    ERESULT NodeArray_Delete(NODEARRAY_DATA* this, uint32_t index)
+
+    NODE_DATA* NodeArray_Get(NODEARRAY_DATA* this, uint32_t index)
+
+    NODEARRAY_DATA* NodeArray_Init(NODEARRAY_DATA* this)
+
+    NODEARRAY_DATA* NodeArray_Copy(NODEARRAY_DATA* this)
+
+    ERESULT NodeArray_ForEach(NODEARRAY_DATA* this, P_ERESULT_EXIT3 pScan, OBJ_ID pObj, void* pArg3)
+
+    ASTR_DATA* NodeArray_ToDebugString(NODEARRAY_DATA* this, int indent)
+</xaiArtifact>
+
+### Explanation and Next Steps
+- **.pxd Files**: These are Cython declaration files that mirror the C headers. Use them to wrap your C library—compile your C code into a shared library, then import the .pxd in .pyx files for Python bindings.
+- **Dependencies**: The .pxd files assume other types (e.g., `ASTR_DATA`, `PATH_DATA`) are declared in separate .pxd (e.g., `AStr.pxd`, `Path.pxd`). Create those if needed.
+- **Type Numbers**: Your mention of object type numbers (from `cmn_defs.h`, managed by `obj` class) can be exposed in Cython as enums or constants (e.g., `cdef enum OBJ_IDENT_NODE = 1`).
+- **Usage in Python**: In a .pyx file, import the .pxd and use the functions (e.g., `cdef HJSON_DATA* hjson = hjson_NewAStr(astring, 4)`).
+- **Compilation**: Use `cythonize -i your_bindings.pyx` to build.
+
+If this matches what you had in mind, let me know how to refine (e.g., add more headers like `AStr.h`, `Path.h`). We can brainstorm bindings for your Django Realtor project or `genMake` next! 😄

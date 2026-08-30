@@ -1,0 +1,522 @@
+// vi: nu:noai:ts=4:sw=4
+
+//****************************************************************
+//              %{DESC} (%{NAMEL}) Object Support
+//****************************************************************
+
+//	Class Object Metods and Tables for '%{NAMEL}'
+//	Generated %{DATE} %{TIME}
+
+
+/*
+ This is free and unencumbered software released into the public domain.
+ 
+ Anyone is free to copy, modify, publish, use, compile, sell, or
+ distribute this software, either in source code form or as a compiled
+ binary, for any purpose, commercial or non-commercial, and by any
+ means.
+ 
+ In jurisdictions that recognize copyright laws, the author or authors
+ of this software dedicate any and all copyright interest in the
+ software to the public domain. We make this dedication for the benefit
+ of the public at large and to the detriment of our heirs and
+ successors. We intend this dedication to be an overt act of
+ relinquishment in perpetuity of all present and future rights to this
+ software under copyright law.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+	 
+ For more information, please refer to <http://unlicense.org/>
+ */
+
+
+
+
+#define			%{NAMEU}_OBJECT_C	    1
+#include        <%{NAMEL}_internal.h>
+#ifdef  %{NAMEU}_SINGLETON
+#include        <psxLock.h>
+#endif
+
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+		
+		
+
+	//===========================================================
+	//                  Class Object Definition
+	//===========================================================
+
+#if !defined(__arm64__)
+#pragma pack(push, 1)
+#endif
+	struct %{NAMEL}_class_data_s	{
+		// Warning - OBJ_DATA must be first in this object!
+		OBJ_DATA        super;
+		
+		// Common Data
+	#ifdef  %{NAMEU}_SINGLETON
+		volatile
+		%{NAMEU}_DATA %{col(25)}*pSingleton;
+	#endif
+		//uint32_t       misc;
+		//OBJ_ID         pObjCatalog;
+	};
+#if !defined(__arm64__)
+#pragma pack(pop)
+#endif
+
+
+
+
+	//-----------------------------------------------------------
+	//                  Class Methods
+	//-----------------------------------------------------------
+
+
+
+	static
+	void *          %{NAMEL}Class_QueryInfo (
+		OBJ_ID          objId,
+		uint32_t        type,
+		void            *pData
+	);
+
+
+	static
+	const
+	OBJ_INFO        	%{NAMEL}_Info;            // Forward Reference
+
+
+
+
+	static
+	bool            %{NAMEL}Class_IsKindOf (
+		uint16_t		classID
+	)
+	{
+		OBJ_DATA        *pObj;
+		
+		if (OBJ_IDENT_%{NAMEU}_CLASS == classID) {
+		   return true;
+		}
+		if (OBJ_IDENT_OBJ_CLASS == classID) {
+		   return true;
+		}
+		
+		pObj = obj_getInfo(%{NAMEL}_Class())->pClassSuperObject;
+		if (pObj == obj_BaseClass())
+			;
+		else {
+			return obj_getVtbl(pObj)->pIsKindOf(classID);
+		}
+		
+		return false;
+	}
+
+
+	static
+	uint16_t		%{NAMEL}Class_WhoAmI (
+		void
+	)
+	{
+		return OBJ_IDENT_%{NAMEU}_CLASS;
+	}
+
+
+
+
+	//===========================================================
+	//                 Class Object Vtbl Definition
+	//===========================================================
+
+	static
+	const
+	%{NAMEU}_CLASS_VTBL %{col(25)}class_Vtbl = {
+		{
+			&%{NAMEL}_Info,
+			%{NAMEL}Class_IsKindOf,
+			obj_RetainNull,
+			obj_ReleaseNull,
+			NULL,
+			%{NAMEL}_Class,
+			%{NAMEL}Class_WhoAmI,
+			(P_OBJ_QUERYINFO)%{NAMEL}Class_QueryInfo,
+			NULL                        // %{NAMEL}Class_ToDebugString
+		},
+		(void *)%{NAMEL}_New
+	};
+
+
+
+	//-----------------------------------------------------------
+	//						Class Object
+	//-----------------------------------------------------------
+
+	%{NAMEU}_CLASS_DATA %{col(25)NAMEL}_ClassObj = {
+		{
+			(const OBJ_IUNKNOWN *)&class_Vtbl,  	// pVtbl
+			sizeof(%{NAMEU}_CLASS_DATA), %{col(53)}// cbSize
+			0,                                      // cbFlags
+			1,                                      // cbRetainCount
+			{0}                                     // cbMisc
+		},
+		//0
+	};
+
+
+
+	//---------------------------------------------------------------
+	//          S i n g l e t o n  M e t h o d s
+	//---------------------------------------------------------------
+
+	#ifdef  %{NAMEU}_SINGLETON
+	extern
+	const
+	%{NAMEU}_VTBL %{col(25)NAMEL}_VtblShared;
+
+
+	%{NAMEU}_DATA * %{col(21)NAMEL}_getSingleton (
+		void
+	)
+	{
+		return (OBJ_ID)(%{NAMEL}_ClassObj.pSingleton);
+	}
+
+
+	bool        	%{NAMEL}_setSingleton (
+		%{NAMEU}_DATA %{col(25)}*pValue
+	)
+	{
+		PSXLOCK_DATA    *pLock = OBJ_NIL;
+		bool            fRc;
+		
+		pLock = psxLock_New( );
+		if (OBJ_NIL == pLock) {
+			DEBUG_BREAK();
+			return false;
+		}
+		fRc = psxLock_Lock(pLock);
+		if (!fRc) {
+			DEBUG_BREAK();
+			obj_Release(pLock);
+			pLock = OBJ_NIL;
+			return false;
+		}
+		
+		obj_Retain(pValue);
+		if (%{NAMEL}_ClassObj.pSingleton) {
+			obj_Release((OBJ_ID)(%{NAMEL}_ClassObj.pSingleton));
+		}
+		%{NAMEL}_ClassObj.pSingleton = pValue;
+		
+		fRc = psxLock_Unlock(pLock);
+		obj_Release(pLock);
+		pLock = OBJ_NIL;
+		return true;
+	}
+
+
+
+	%{NAMEU}_DATA * %{col(21)NAMEL}_Shared (
+		void
+	)
+	{
+		%{NAMEU}_DATA %{col(25)}*this = (OBJ_ID)(%{NAMEL}_ClassObj.pSingleton);
+		
+		if (NULL == this) {
+			this = %{NAMEL}_New( );
+			obj_setVtbl(this, (void *)&%{NAMEL}_VtblShared);
+			%{NAMEL}_setSingleton(this);
+			obj_Release(this);          // Shared controls object retention now.
+			// %{NAMEL}_ClassObj.pSingleton = OBJ_NIL;
+		}
+		
+		return this;
+	}
+
+
+
+	void            %{NAMEL}_SharedReset (
+		void
+	)
+	{
+		%{NAMEU}_DATA %{col(25)}*this = (OBJ_ID)(%{NAMEL}_ClassObj.pSingleton);
+		
+		if (this) {
+			obj_setVtbl(this, (void *)&%{NAMEL}_Vtbl);
+			obj_Release(this);
+			%{NAMEL}_ClassObj.pSingleton = OBJ_NIL;
+		}
+		
+	}
+
+
+
+	#endif
+
+
+
+	//---------------------------------------------------------------
+	//                     Q u e r y  I n f o
+	//---------------------------------------------------------------
+
+	static
+	void *          %{NAMEL}Class_QueryInfo (
+		OBJ_ID          objId,
+		uint32_t        type,
+		void            *pData
+	)
+	{
+		%{NAMEU}_CLASS_DATA %{col(25)}*this = objId;
+		const
+		char            *pStrA = pData;
+		
+		if (OBJ_NIL == this) {
+			return NULL;
+		}
+		
+		switch (type) {
+		  
+			case OBJ_QUERYINFO_TYPE_OBJECT_SIZE:
+				return (void *)sizeof(%{NAMEU}_DATA);
+				break;
+				
+			case OBJ_QUERYINFO_TYPE_CLASS_OBJECT:
+				return this;
+				break;
+				
+			// Query for an address to specific data within the object.  
+			case OBJ_QUERYINFO_TYPE_DATA_PTR:
+				switch (*pStrA) {
+	 
+					case 'C':
+						if (str_Compare("ClassInfo", (char *)pStrA) == 0) {
+							return (void *)&%{NAMEL}_Info;
+						}
+						break;
+						
+					case 'S':
+						if (str_Compare("SuperClass", (char *)pStrA) == 0) {
+							return (void *)&%{NAMEL}_Info.pClassSuperObject;
+						}
+						break;
+						
+					default:
+						break;
+				}
+				break;
+				
+			case OBJ_QUERYINFO_TYPE_INFO:
+				return (void *)obj_getInfo(this);
+				break;
+				
+			case OBJ_QUERYINFO_TYPE_METHOD:
+				switch (*pStrA) {
+						
+					case 'N':
+						if (str_Compare("New", (char *)pStrA) == 0) {
+							return %{NAMEL}_New;
+						}
+						break;
+						
+					case 'P':
+	#ifdef  %{NAMEU}_JSON_SUPPORT
+						if (str_Compare("ParseJsonFields", (char *)pStrA) == 0) {
+							return %{NAMEL}_ParseJsonFields;
+						}
+						if (str_Compare("ParseJsonObject", (char *)pStrA) == 0) {
+							return %{NAMEL}_ParseJsonObject;
+						}
+	#endif
+						break;
+
+					case 'T':
+	#ifdef  %{NAMEU}_JSON_SUPPORT
+						if (str_Compare("ToJsonFields", (char *)pStrA) == 0) {
+							return %{NAMEL}_ToJsonFields;
+						}
+						if (str_Compare("ToJson", (char *)pStrA) == 0) {
+							return %{NAMEL}_ToJson;
+						}
+	#endif
+						break;
+
+					 case 'W':
+						if (str_Compare("WhoAmI", (char *)pStrA) == 0) {
+							return %{NAMEL}Class_WhoAmI;
+						}
+						break;
+						
+					default:
+						break;
+				}
+				break;
+				
+			default:
+				break;
+		}
+		
+		return NULL;
+	}
+
+
+
+
+	static
+	bool           	%{NAMEL}_IsKindOf (
+		uint16_t		classID
+	)
+	{
+		OBJ_DATA        *pObj;
+		const
+		OBJ_INFO        *pInfo;
+
+		if (OBJ_IDENT_%{NAMEU} == classID) {
+		   return true;
+		}
+		if (OBJ_IDENT_OBJ == classID) {
+		   return true;
+		}
+
+		pObj = obj_getInfo(%{NAMEL}_Class())->pClassSuperObject;
+		if (pObj == obj_BaseClass())
+			;
+		else {
+			pInfo = obj_getInfo(pObj);
+			return pInfo->pDefaultVtbls->pIsKindOf(classID);
+		}
+		
+		return false;
+	}
+
+
+	// Dealloc() should be put into the Internal Header as well
+	// for classes that get inherited from.
+	void            %{NAMEL}_Dealloc (
+		OBJ_ID          objId
+	);
+
+
+	OBJ_ID          %{NAMEL}_Class (
+		void
+	)
+	{
+		return (OBJ_ID)&%{NAMEL}_ClassObj;
+	}
+
+
+	static
+	uint16_t		%{NAMEL}_WhoAmI (
+		void
+	)
+	{
+		return OBJ_IDENT_%{NAMEU};
+	}
+
+
+
+
+
+	//===========================================================
+	//                  Object Vtbl Definition
+	//===========================================================
+
+	#ifdef  %{NAMEU}_SINGLETON
+	// A Shared object ignores Retain() and Release() except for
+	// initialization and termination. So, there must be an
+	// independent VTbl from the normal which does support Retain()
+	// and Release().
+	const
+	%{NAMEU}_VTBL %{col(25)NAMEL}_VtblShared = {
+		{
+			&%{NAMEL}_Info,
+			%{NAMEL}_IsKindOf,
+			obj_RetainNull,
+			obj_ReleaseNull,
+			%{NAMEL}_Dealloc,
+			%{NAMEL}_Class,
+			%{NAMEL}_WhoAmI,
+			(P_OBJ_QUERYINFO)%{NAMEL}_QueryInfo,
+			(P_OBJ_TOSTRING)%{NAMEL}_ToDebugString,
+			NULL,			// %{NAMEL}_Enable,
+			NULL,			// %{NAMEL}_Disable,
+			NULL,			// (P_OBJ_ASSIGN)%{NAMEL}_Assign,
+			NULL,			// (P_OBJ_COMPARE)%{NAMEL}_Compare,
+			NULL, 			// (P_OBJ_PTR)%{NAMEL}_Copy,
+			NULL, 			// (P_OBJ_PTR)%{NAMEL}_DeepCopy,
+			NULL 			// (P_OBJ_HASH)%{NAMEL}_Hash,
+		},
+		// Put other object method names below this.
+		// Properties:
+		// Methods:
+		//%{NAMEL}_IsEnabled,
+	 
+	};
+	#endif
+
+
+	// This VTbl supports Retain() and Release() which is
+	// used by objects other than the Shared object. These
+	// objects can still be shared among other objects. It
+	// just that they are deleted when their usage count
+	// goes to zero.
+	const
+	%{NAMEU}_VTBL %{col(25)NAMEL}_Vtbl = {
+		{
+			&%{NAMEL}_Info,
+			%{NAMEL}_IsKindOf,
+			obj_RetainStandard,
+			obj_ReleaseStandard,
+			%{NAMEL}_Dealloc,
+			%{NAMEL}_Class,
+			%{NAMEL}_WhoAmI,
+			(P_OBJ_QUERYINFO)%{NAMEL}_QueryInfo,
+			(P_OBJ_TOSTRING)%{NAMEL}_ToDebugString,
+			NULL,			// %{NAMEL}_Enable,
+			NULL,			// %{NAMEL}_Disable,
+			NULL,			// (P_OBJ_ASSIGN)%{NAMEL}_Assign,
+			NULL,			// (P_OBJ_COMPARE)%{NAMEL}_Compare,
+			NULL, 			// (P_OBJ_PTR)%{NAMEL}_Copy,
+			NULL, 			// (P_OBJ_PTR)%{NAMEL}_DeepCopy,
+			NULL 			// (P_OBJ_HASH)%{NAMEL}_Hash,
+		},
+		// Put other object method names below this.
+		// Properties:
+		// Methods:
+		//%{NAMEL}_IsEnabled,
+	 
+	};
+
+
+
+	static
+	const
+	OBJ_INFO        	%{NAMEL}_Info = {
+		"%{NAMEL}",
+		"%{DESC}",
+		(OBJ_DATA *)&%{NAMEL}_ClassObj,
+	#ifdef  %{NAMEU}_SUPER_DEFINED
+		(OBJ_DATA *)&%{SUPERL}_ClassObj,
+	#else
+		(OBJ_DATA *)&obj_ClassObj,
+	#endif
+		(OBJ_IUNKNOWN *)&%{NAMEL}_Vtbl,
+		sizeof(%{NAMEU}_DATA)
+	};
+
+
+
+#ifdef	__cplusplus
+}
+#endif
+
+

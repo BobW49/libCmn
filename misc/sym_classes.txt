@@ -1,0 +1,21 @@
+# genEnum --prefix=Sym --name=Class --files misc/sym_classes.txt
+UNKNOWN
+CON_ADDR,"Address Constant"
+CON_INT,"Integer Constant"
+CON_REAL,"Real Constant"
+CON_REL,"Relocatable Address Constant"
+CON_STR,"String Constant"
+ENUM
+FUNC,"Function/Method/Subroutine"
+LABEL_CODE,"Code Label"
+LABEL_DATA,"Data Label"
+MACRO
+REGISTER
+REGISTER_DOUBLE
+SEG_CODE,"Code Segment"
+SEG_DATA,"Data Segment"
+SEG_EXTRA,"Extra Segment"
+SEG_STACK,"Stack Segment"
+STRUCT
+UNION
+VOID

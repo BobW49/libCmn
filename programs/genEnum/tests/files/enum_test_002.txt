@@ -1,0 +1,16 @@
+# This should not affect anything!
+        UNKNOWN, 	Unknown
+        CHAR,		Character,	22
+        UCHAR,		Unsigned Character,
+        HALF,		Signed Half Word
+
+        UHALF,		Unsigned Half Word,,abc
+        WORD,,,def
+        UWORD,,,ghi
+
+        DBLWORD
+        UDBLWORD
+        QUAD
+        UQUAD
+        VOID
+        POINTER
