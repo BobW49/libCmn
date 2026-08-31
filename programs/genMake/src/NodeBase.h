@@ -208,11 +208,13 @@ extern "C" {
                 ;
      arches     :   "X86"
                 |   "X86_64"
-                |   "MIPS"
-                |   "ARM"
+                |   "MIPS32"
+                |   "ARM32"
+                |   "ARM64"
                 ;
      oss        :   "linux"
-                |   "macos"
+                |   "macos32"
+                |   "macos64"
                 |   "win32"
                 |   "win64"
                 ;
@@ -536,7 +538,7 @@ extern "C" {
 
 
     /*!
-     Compare the two provided objects.
+     Compare the Names of the two provided objects.
      @return    0 if this == other
                 -1 if this < other
                 1 if this > other

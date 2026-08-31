@@ -390,7 +390,7 @@ NODETEST_VTBL     NodeTest_Vtbl = {
         NULL,			// NodeTest_Enable,
         NULL,			// NodeTest_Disable,
         NULL,			// (P_OBJ_ASSIGN)NodeTest_Assign,
-        NULL,			// (P_OBJ_COMPARE)NodeTest_Compare,
+        (P_OBJ_COMPARE)NodeTest_Compare,
         NULL, 			// (P_OBJ_PTR)NodeTest_Copy,
         NULL, 			// (P_OBJ_PTR)NodeTest_DeepCopy,
         NULL 			// (P_OBJ_HASH)NodeTest_Hash,

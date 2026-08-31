@@ -758,6 +758,45 @@ extern "C" {
     
     
     //---------------------------------------------------------------
+    //                      C o m p a r e
+    //---------------------------------------------------------------
+    
+    /*!
+     Compare the two provided objects.
+     @return    ERESULT_SUCCESS_EQUAL if this == other
+                ERESULT_SUCCESS_LESS_THAN if this < other
+                ERESULT_SUCCESS_GREATER_THAN if this > other
+     */
+    int             NodeRtn_Compare (
+        NODERTN_DATA    *this,
+        NODERTN_DATA    *pOther
+    )
+    {
+        //ERESULT         eRc = ERESULT_SUCCESS;
+        int             iRc;
+        
+#ifdef NDEBUG
+#else
+        if (!NodeRtn_Validate(this)) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_OBJECT;
+            return 2;
+        }
+        if (!NodeRtn_Validate(pOther)) {
+            DEBUG_BREAK();
+            //return ERESULT_INVALID_PARAMETER;
+            return 2;
+        }
+#endif
+        
+        iRc = NodeBase_Compare(NodeRtn_getNodeBase(this), NodeRtn_getNodeBase(pOther));
+        
+        return iRc;
+    }
+    
+   
+ 
+    //---------------------------------------------------------------
     //                          C o p y
     //---------------------------------------------------------------
     

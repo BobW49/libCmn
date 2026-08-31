@@ -1561,11 +1561,9 @@ extern "C" {
         }
 #endif
         
-        pArray = (OBJARRAY_DATA *)NodeArray_getArray(this->pRtns);
-        eRc = ObjArray_SortAscending(pArray, (P_OBJ_COMPARE)NodeBase_Compare);
+        eRc = NodeArray_SortAscending(this->pRtns);
         
-        pArray = (OBJARRAY_DATA *)NodeArray_getArray(this->pTests);
-        eRc = ObjArray_SortAscending(pArray, (P_OBJ_COMPARE)NodeBase_Compare);
+        eRc = NodeArray_SortAscending(this->pTests);
 
         // Return to caller.
         return ERESULT_SUCCESS;

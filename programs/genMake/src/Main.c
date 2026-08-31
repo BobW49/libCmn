@@ -81,13 +81,23 @@ extern "C" {
         MAIN_DATA       *this,
         ASTR_DATA       *pStr
     );
+    ERESULT         Main_ArgOsType (
+        MAIN_DATA       *this,
+        ASTR_DATA       *pStr
+    );
     ERESULT         Main_DefaultsMacos32 (
+        MAIN_DATA       *this
+    );
+    ERESULT         Main_DefaultsMacos64 (
         MAIN_DATA       *this
     );
     ERESULT         Main_DefaultsMsc32 (
         MAIN_DATA       *this
     );
     ERESULT         Main_DefaultsMsc64 (
+        MAIN_DATA       *this
+    );
+    ERESULT         Main_DefaultsOsType (
         MAIN_DATA       *this
     );
 
@@ -153,6 +163,16 @@ extern "C" {
             0,
             (void *)Main_ArgMacos64,
             (void *)"Generate MacOS Makefile for X86_64 (default)"
+        },
+        {
+            "ostype",
+            'X',
+            CMDUTL_ARG_OPTION_NONE,
+            CMDUTL_TYPE_EXEC,
+            0,
+            0,
+            (void *)Main_ArgOsType,
+            (void *)"Generate for ostype (mac64|win64) (default:current)"
         },
         {
             "win32",
@@ -244,7 +264,7 @@ extern "C" {
         return eRc;
     }
     
-    
+
     ERESULT         Main_ArgLibInclude (
         MAIN_DATA       *this,
         ASTR_DATA       *pStr
@@ -268,6 +288,46 @@ extern "C" {
     }
     
     
+    ERESULT         Main_ArgOsType (
+        MAIN_DATA       *this,
+        ASTR_DATA       *pStr
+    )
+    {
+        ERESULT         eRc;
+        uint16_t        osArch = OSARCH_UNKNOWN;    // See OSARCH
+        
+        // Do initialization.
+        TRC_OBJ(this, "Main_ArgOsType(%s)\n", pStr ? AStr_getData(pStr) : "");
+#ifdef NDEBUG
+#else
+        if( !Main_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+        
+        if (OBJ_NIL == pStr) {
+            return ERESULT_INVALID_PARAMETER;
+        }
+        if (AStr_CompareA(pStr, "macos32")) {
+            eRc = Main_DefaultsMacos32(this);
+        } else if (AStr_CompareA(pStr, "macos64")) {
+            eRc = Main_DefaultsMacos64(this);
+        } else if (AStr_CompareA(pStr, "win32")) {
+            eRc = Main_DefaultsMsc32(this);
+        } else if (AStr_CompareA(pStr, "win64")) {
+            eRc = Main_DefaultsMsc64(this);
+        } else {
+            return ERESULT_INVALID_PARAMETER;
+        }
+        
+        eRc = Main_SetupArch(this, osArch);
+
+        // Return to caller.
+        return eRc;
+    }
+    
+
     ERESULT         Main_ArgMacos32 (
         MAIN_DATA       *this,
         ASTR_DATA       *pStr
@@ -403,6 +463,27 @@ extern "C" {
 #endif
         
         this->osType = OSTYPE_MACOS32;
+
+        // Return to caller.
+        return ERESULT_SUCCESS;
+    }
+    
+    
+    ERESULT         Main_DefaultsMacos64 (
+        MAIN_DATA       *this
+    )
+    {
+
+        // Do initialization.
+#ifdef NDEBUG
+#else
+        if( !Main_Validate(this) ) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+#endif
+        
+        this->osType = OSTYPE_MACOS64;
 
         // Return to caller.
         return ERESULT_SUCCESS;
@@ -1273,7 +1354,7 @@ extern "C" {
     
     
     //---------------------------------------------------------------
-    //               C r e a t e  I n p u t  P a t h
+    //               C h e c k  I n p u t  P a t h
     //---------------------------------------------------------------
 
     PATH_DATA *     Main_CheckInputPath (
@@ -1302,7 +1383,7 @@ extern "C" {
             return OBJ_NIL;
         }
 #endif
-        TRC_OBJ(this, "Main_CreateOutputPath(%s)\n", pStr ? AStr_getData(pStr) : "");
+        TRC_OBJ(this, "Main_CheckInputPath(%s)\n", pStr ? AStr_getData(pStr) : "");
         
         pPath = Path_NewFromAStr(pStr);
         Appl_ErrorFatalOnBool(
@@ -2425,9 +2506,7 @@ extern "C" {
             exit(EXIT_FAILURE);
         }
 
-        if ((0 == Appl_getQuiet(Main_getAppl(this))) && Appl_getVerbose(Main_getAppl(this))) {
-            fprintf(stdout, "\t\tpath, %s, created.\n", Path_getData(pMakepath));
-        }
+        fprintf(stdout, "\t\t%s\n", Path_getData(pMakepath));
 
         // Return to caller.
         obj_Release(pMakepath);

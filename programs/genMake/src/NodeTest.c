@@ -705,6 +705,43 @@ extern "C" {
     
     
     //---------------------------------------------------------------
+    //                      C o m p a r e
+    //---------------------------------------------------------------
+    
+    /*!
+     Compare the names of the two provided objects.
+     @return    ERESULT_SUCCESS_EQUAL if this == other
+                ERESULT_SUCCESS_LESS_THAN if this < other
+                ERESULT_SUCCESS_GREATER_THAN if this > other
+     */
+    int             NodeTest_Compare (
+        NODETEST_DATA   *this,
+        NODETEST_DATA   *pOther
+    )
+    {
+        //ERESULT         eRc = ERESULT_SUCCESS_EQUAL;
+        int             iRc;
+        
+#ifdef NDEBUG
+#else
+        if (!NodeTest_Validate(this)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_OBJECT;
+        }
+        if (!NodeTest_Validate(pOther)) {
+            DEBUG_BREAK();
+            return ERESULT_INVALID_PARAMETER;
+        }
+#endif
+
+        iRc = NodeBase_Compare(NodeTest_getNodeBase(this), NodeTest_getNodeBase(pOther));
+
+        return iRc;
+    }
+    
+   
+ 
+    //---------------------------------------------------------------
     //                          C o p y
     //---------------------------------------------------------------
     

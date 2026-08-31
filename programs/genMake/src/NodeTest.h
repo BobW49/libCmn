@@ -300,6 +300,18 @@ extern "C" {
     );
 
 
+    /*!
+     Compare the names of the two provided objects.
+     @return    ERESULT_SUCCESS_EQUAL if this == other
+                ERESULT_SUCCESS_LESS_THAN if this < other
+                ERESULT_SUCCESS_GREATER_THAN if this > other
+     */
+    int             NodeTest_Compare (
+        NODETEST_DATA   *this,
+        NODETEST_DATA   *pOther
+    );
+
+    
     NODETEST_DATA * NodeTest_Init (
         NODETEST_DATA   *this
     );

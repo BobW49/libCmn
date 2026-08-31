@@ -320,6 +320,18 @@ extern "C" {
     );
 
 
+    /*!
+     Compare the two provided objects.
+     @return    ERESULT_SUCCESS_EQUAL if this == other
+                ERESULT_SUCCESS_LESS_THAN if this < other
+                ERESULT_SUCCESS_GREATER_THAN if this > other
+     */
+    int             NodeRtn_Compare (
+        NODERTN_DATA    *this,
+        NODERTN_DATA    *pOther
+    );
+
+
     NODERTN_DATA *  NodeRtn_Init (
         NODERTN_DATA    *this
     );

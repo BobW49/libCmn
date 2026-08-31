@@ -44,7 +44,7 @@ import      os
 import      sys
 import      time
 sys.path.insert(0, './scripts')
-import      util
+import      cmnUtil
 
 
 args = None                                 # pylint: disable=C0103
